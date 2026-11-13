@@ -1,0 +1,70 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Capabilities for the main Quantum Maze window",
+  "windows": [
+    "main"
+  ],
+  "permissions": [
+    "core:default",
+    "core:window:allow-set-fullscreen",
+    "core:window:allow-set-title",
+    "core:window:allow-close",
+    "core:window:allow-destroy",
+    "dialog:allow-open",
+    "dialog:allow-save",
+    "dialog:allow-message",
+    "dialog:allow-ask",
+    "dialog:allow-confirm",
+    {
+      "identifier": "opener:allow-open-url",
+      "allow": [
+        {
+          "url": "https://*"
+        },
+        {
+          "url": "http://*"
+        },
+        {
+          "url": "mailto:*"
+        }
+      ]
+    },
+    {
+      "identifier": "opener:allow-open-path",
+      "allow": [
+        {
+          "path": "**/*.pdf"
+        },
+        {
+          "path": "**/*.PDF"
+        },
+        {
+          "path": "**/*.docx"
+        },
+        {
+          "path": "**/*.pptx"
+        },
+        {
+          "path": "**/*.html"
+        },
+        {
+          "path": "**/*.htm"
+        },
+        {
+          "path": "**/*.md"
+        },
+        {
+          "path": "**/*.zip"
+        },
+        {
+          "path": "**/*.tex"
+        },
+        {
+          "path": "**/*.txt"
+        }
+      ]
+    },
+    "opener:allow-reveal-item-in-dir"
+  ]
+}

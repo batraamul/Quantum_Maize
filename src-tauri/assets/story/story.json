@@ -1,0 +1,140 @@
+{
+  "version": 1,
+  "meta": {
+    "title": "Reading the Sky",
+    "subtitle": "How a single radar sweep turns into tomorrow's forecast",
+    "author": "",
+    "date": "",
+    "description": "An interactive story built with Quantum Maze."
+  },
+  "theme": {
+    "preset": "saffron",
+    "accent": "",
+    "font": "serif",
+    "animation": "fade-up",
+    "progressBar": true,
+    "navDots": true
+  },
+  "blocks": [
+    {
+      "id": "b1",
+      "type": "hero",
+      "kicker": "Interactive Explainer",
+      "title": "Reading the Sky",
+      "subtitle": "Scroll to follow one radar sweep from the antenna to the forecast desk",
+      "image": "assets/hero.jpg",
+      "effect": "kenburns",
+      "overlay": 0.45,
+      "align": "center"
+    },
+    {
+      "id": "b2",
+      "type": "text",
+      "heading": "",
+      "text": "Every few minutes a weather radar sends a pulse of energy into the atmosphere and **listens** for the echo. Raindrops, hail and even insects reflect a little of that energy back.\n\nThis story walks through what happens next, using *scroll-driven* sections, animated figures and interactive comparisons.",
+      "dropcap": true
+    },
+    {
+      "id": "b3",
+      "type": "stats",
+      "items": [
+        { "value": 360, "prefix": "", "suffix": "°", "label": "Azimuth covered in one sweep" },
+        { "value": 250, "prefix": "", "suffix": " km", "label": "Typical detection range" },
+        { "value": 6, "prefix": "", "suffix": " min", "label": "Volume scan repeat cycle" }
+      ]
+    },
+    {
+      "id": "b4",
+      "type": "scrolly",
+      "steps": [
+        { "image": "assets/radar.gif", "text": "**The sweep.** The antenna rotates continuously, tilting upward after each revolution to build a three-dimensional volume." },
+        { "image": "assets/terrain.jpg", "text": "**The ground.** Terrain and buildings also return echoes. These *clutter* signals must be filtered before rain can be measured." },
+        { "image": "assets/after.jpg", "text": "**The product.** After filtering and calibration, the echoes become a map of rainfall intensity that forecasters can read at a glance." }
+      ]
+    },
+    {
+      "id": "b5",
+      "type": "compare",
+      "before": "assets/before.jpg",
+      "after": "assets/after.jpg",
+      "beforeLabel": "Low resolution",
+      "afterLabel": "Enhanced",
+      "caption": "Drag the handle to compare a coarse product with an enhanced one."
+    },
+    {
+      "id": "b6",
+      "type": "quote",
+      "text": "A forecast is only as good as the observations that feed it.",
+      "by": "Forecasting proverb"
+    },
+    {
+      "id": "b7",
+      "type": "timeline",
+      "items": [
+        { "date": "T + 0 s", "title": "Pulse transmitted", "text": "A short burst of microwave energy leaves the antenna.", "image": "" },
+        { "date": "T + 2 ms", "title": "Echo received", "text": "Reflections return from targets up to a few hundred kilometres away.", "image": "" },
+        { "date": "T + 6 min", "title": "Volume complete", "text": "All elevation angles are scanned and products are generated.", "image": "" },
+        { "date": "T + 10 min", "title": "Forecast updated", "text": "Nowcasting systems extrapolate the motion of storm cells.", "image": "" }
+      ]
+    },
+    {
+      "id": "b8",
+      "type": "chart",
+      "title": "Echoes detected by elevation angle (illustrative data)",
+      "labels": ["0.5°", "1.5°", "2.5°", "3.5°", "4.5°"],
+      "values": [920, 760, 540, 380, 210],
+      "unit": " echoes"
+    },
+    {
+      "id": "b9",
+      "type": "hotspots",
+      "image": "assets/terrain.jpg",
+      "caption": "Tap the markers to explore the scene.",
+      "points": [
+        { "x": 22, "y": 35, "title": "Radar site", "text": "Placed on high ground for a clear view of the horizon." },
+        { "x": 64, "y": 58, "title": "Valley", "text": "Low terrain can be hidden behind ridges — a beam blockage zone." },
+        { "x": 80, "y": 25, "title": "Ridge line", "text": "A source of ground clutter at the lowest elevation angle." }
+      ]
+    },
+    {
+      "id": "b10",
+      "type": "cards",
+      "flip": true,
+      "items": [
+        { "icon": "📡", "title": "Reflectivity", "text": "How much energy comes back — related to rain intensity." },
+        { "icon": "🌀", "title": "Velocity", "text": "Doppler shift reveals motion toward or away from the radar." },
+        { "icon": "💧", "title": "Polarimetry", "text": "Horizontal vs vertical pulses distinguish rain, hail and snow." }
+      ]
+    },
+    {
+      "id": "b11",
+      "type": "gallery",
+      "mode": "carousel",
+      "images": [
+        { "src": "assets/hero.jpg", "caption": "Dusk over the hills" },
+        { "src": "assets/terrain.jpg", "caption": "Terrain model" },
+        { "src": "assets/radar.gif", "caption": "Animated sweep" }
+      ]
+    },
+    {
+      "id": "b12",
+      "type": "quiz",
+      "question": "Why does the radar tilt upward after each rotation?",
+      "options": ["To avoid birds", "To scan a full 3-D volume of the atmosphere", "To cool the antenna"],
+      "answer": 1,
+      "explanation": "Stacking several elevation angles builds a three-dimensional picture of storms."
+    },
+    {
+      "id": "b13",
+      "type": "divider",
+      "style": "wave"
+    },
+    {
+      "id": "b14",
+      "type": "text",
+      "heading": "Make it yours",
+      "text": "Replace these blocks with your own research story. Add images from the **Assets** panel, choose a colour theme, and export a single self-contained web page to share.",
+      "dropcap": false
+    }
+  ]
+}

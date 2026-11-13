@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14235c"/><stop offset="1" stop-color="#070b1f"/></linearGradient>
+    <linearGradient id="path" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#ff8a3d"/><stop offset="1" stop-color="#ffd166"/></linearGradient>
+    <radialGradient id="core"><stop offset="0" stop-color="#ffffff"/><stop offset=".45" stop-color="#9fd3ff"/><stop offset="1" stop-color="#4b7bff" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect x="64" y="64" width="896" height="896" rx="200" fill="url(#bg)"/>
+  <g fill="none" stroke="#5f7fff" stroke-width="34" stroke-linecap="round" opacity=".9">
+    <path d="M232 232 H792 V792 H232 V360"/>
+    <path d="M360 360 H664 V664 H360 V488"/>
+    <path d="M488 488 H536"/>
+    <path d="M232 520 H296"/><path d="M728 400 H792"/><path d="M520 232 V296"/><path d="M600 728 V792"/>
+  </g>
+  <path d="M232 296 H312 V424 H424 V600 H600 V424 H512" fill="none" stroke="url(#path)" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="512" cy="512" r="96" fill="url(#core)"/>
+  <g fill="none" stroke="#9fd3ff" stroke-width="10" opacity=".85">
+    <ellipse cx="512" cy="512" rx="150" ry="52" transform="rotate(30 512 512)"/>
+    <ellipse cx="512" cy="512" rx="150" ry="52" transform="rotate(-30 512 512)"/>
+  </g>
+  <circle cx="512" cy="512" r="22" fill="#fff"/>
+</svg>
