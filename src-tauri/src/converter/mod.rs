@@ -59,6 +59,18 @@ fn version(p: &Path) -> String {
     run_capture(c, Duration::from_secs(10)).map(|o| o.stdout.lines().next().unwrap_or("pandoc").to_string()).unwrap_or_else(|_| "pandoc".into())
 }
 
+/// Parses "pandoc 3.1.3" / "pandoc.exe 2.9.2.1" into (major, minor).
+pub fn parse_version(line: &str) -> Option<(u32, u32)> {
+    let v = line.split_whitespace().nth(1)?;
+    let mut it = v.split('.').map(|x| x.parse::<u32>().ok());
+    Some((it.next()??, it.next().flatten().unwrap_or(0)))
+}
+
+/// The most useful line of a failed Pandoc run (skips the generic "Try pandoc --help").
+fn pandoc_error(stderr: &str) -> String {
+    stderr.lines().map(str::trim).filter(|l| !l.is_empty() && !l.starts_with("Try pandoc")).last().unwrap_or("unknown error").to_string()
+}
+
 fn warnings_from(stderr: &str) -> Vec<String> {
     stderr.lines().filter(|l| l.contains("[WARNING]") || l.to_lowercase().contains("could not")).map(|l| l.replace("[WARNING] ", "").trim().to_string()).take(200).collect()
 }
@@ -163,7 +175,7 @@ pub fn docx_to_latex(docx: &Path, dest: &Path, tex_bin: Option<&str>) -> AppResu
     cmd.current_dir(dest).arg("--from=docx").arg("--to=latex").arg("--standalone").arg("--wrap=preserve").arg("--extract-media=.").arg("--verbose").arg(docx);
     let out = run_capture(cmd, Duration::from_secs(300))?;
     if out.code != Some(0) {
-        return Err(AppError::Other(format!("Pandoc failed: {}", out.stderr.lines().last().unwrap_or("unknown error"))));
+        return Err(AppError::Other(format!("Pandoc failed: {}", pandoc_error(&out.stderr))));
     }
     let doc = out.stdout;
     let (preamble, body) = match (doc.find("\\begin{document}"), doc.rfind("\\end{document}")) {
@@ -252,16 +264,29 @@ pub fn latex_to_docx(root: &Path, main: &str, dest_docx: &Path, tex_bin: Option<
     }
     let mut cmd = hidden_command(&pd);
     cmd.current_dir(root).arg("--from=latex").arg("--to=docx").arg("--verbose").arg(format!("--resource-path=.{}figures{}images", if cfg!(windows) { ";" } else { ":" }, if cfg!(windows) { ";" } else { ":" }));
+    // --citeproc exists from Pandoc 2.11; older releases (e.g. Ubuntu 22.04's 2.9) use the
+    // separate pandoc-citeproc filter, if it is installed.
+    let ver_line = version(&pd);
+    let modern = parse_version(&ver_line).map(|v| v >= (2, 11)).unwrap_or(true);
+    let mut citations_resolved = true;
     if !bibs.is_empty() {
-        cmd.arg("--citeproc");
-        for b in &bibs {
-            cmd.arg(format!("--bibliography={b}"));
+        if modern {
+            cmd.arg("--citeproc");
+        } else if let Some(f) = detect::find_tool("pandoc-citeproc", tex_bin) {
+            cmd.arg(format!("--filter={}", f.display()));
+        } else {
+            citations_resolved = false;
+        }
+        if citations_resolved {
+            for b in &bibs {
+                cmd.arg(format!("--bibliography={b}"));
+            }
         }
     }
     cmd.arg("-o").arg(dest_docx).arg(&main_abs);
     let out = run_capture(cmd, Duration::from_secs(300))?;
     if out.code != Some(0) || !dest_docx.exists() {
-        return Err(AppError::Other(format!("Pandoc failed: {}", out.stderr.lines().last().unwrap_or("unknown error"))));
+        return Err(AppError::Other(format!("Pandoc failed: {}", pandoc_error(&out.stderr))));
     }
     let clean: String = all.lines().map(|l| l.split('%').next().unwrap_or("")).collect::<Vec<_>>().join("\n");
     let mut manual = Vec::new();
@@ -289,11 +314,14 @@ pub fn latex_to_docx(root: &Path, main: &str, dest_docx: &Path, tex_bin: Option<
     if ["$", "\\[", "\\(", "\\begin{equation", "\\begin{align", "\\begin{multline", "\\begin{gather"].iter().any(|n| clean.contains(n)) {
         manual.push("Equations are converted to native Word equations; check complex alignments and numbering.".into());
     }
+    if !citations_resolved {
+        manual.push(format!("{ver_line} is older than 2.11 and pandoc-citeproc is not installed, so citations and the reference list were not generated. Install a current Pandoc from https://pandoc.org/installing.html."));
+    }
     manual.push("Page layout (columns, margins, floats placement) follows Word defaults, not the LaTeX class — apply the journal's Word template if it has one.".into());
     Ok(ConversionReport {
         direction: "LaTeX → DOCX".into(),
         output: dest_docx.display().to_string(),
-        pandoc_version: version(&pd),
+        pandoc_version: ver_line,
         counts: vec![
             ("Sections".into(), clean.matches("\\section").count()),
             ("Figures".into(), clean.matches("\\begin{figure").count()),
@@ -311,6 +339,14 @@ pub fn latex_to_docx(root: &Path, main: &str, dest_docx: &Path, tex_bin: Option<
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn pandoc_versions() {
+        assert_eq!(parse_version("pandoc 3.1.3"), Some((3, 1)));
+        assert_eq!(parse_version("pandoc.exe 2.9.2.1"), Some((2, 9)));
+        assert!(parse_version("pandoc 2.9.2.1").unwrap() < (2, 11));
+        assert_eq!(pandoc_error("pandoc: Unknown option --citeproc.\nTry pandoc --help for more information.\n"), "pandoc: Unknown option --citeproc.");
+    }
 
     #[test]
     fn unicode_symbols_become_latex_outside_verbatim() {

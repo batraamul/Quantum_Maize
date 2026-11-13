@@ -34,17 +34,49 @@ Optional: **Pandoc** for Word conversion (`sudo apt install pandoc`, or pandoc.o
 
 ## Install
 
-Linux packages are in `src-tauri/target/release/bundle/` after a build:
+Download the installer for your system from the repository's **Releases** page (or, for any build, from **Actions → build → Artifacts**). Then install a TeX distribution if you don't have one — Quantum Maze uses it but does not include it.
+
+The builds are not code-signed, so Windows and macOS show a warning the first time. That is expected; the steps below get past it.
+
+### Windows 10/11
+
+1. Download `Quantum.Maze_0.2.0_x64-setup.exe` (or the `.msi` if your IT department prefers MSI packages).
+2. Run it. If **"Windows protected your PC"** appears, click **More info → Run anyway**.
+3. Install a TeX distribution: **MiKTeX** (miktex.org, set "Install missing packages on the fly" to *Yes*) or **TeX Live** (tug.org/texlive).
+4. Optional, for Word conversion: **Pandoc** (pandoc.org/installing.html).
+5. Start Quantum Maze from the Start menu. The setup wizard finds MiKTeX/TeX Live; if not, point it at the TeX `bin` folder.
+
+### macOS 11 or later (Apple Silicon and Intel)
+
+1. Download `Quantum.Maze_0.2.0_universal.dmg`, open it and drag **Quantum Maze** to **Applications**.
+2. The first time, macOS may say the app "cannot be opened because the developer cannot be verified" or "is damaged". Either right-click the app → **Open** → **Open**, or run once in Terminal:
+   `xattr -dr com.apple.quarantine "/Applications/Quantum Maze.app"`
+3. Install **MacTeX** (tug.org/mactex) — or BasicTeX plus the packages you need.
+4. Optional: `brew install pandoc` for Word conversion.
+
+### Linux (x86-64)
+
+| Distribution | Command |
+| --- | --- |
+| Debian, Ubuntu, Mint | `sudo apt install ./quantum-maze_0.2.0_amd64.deb` |
+| Fedora, RHEL, openSUSE | `sudo dnf install ./quantum-maze-0.2.0-1.x86_64.rpm` |
+| Any other | `chmod +x Quantum.Maze_0.2.0_amd64.AppImage && ./Quantum.Maze_0.2.0_amd64.AppImage` (needs `libfuse2`; otherwise prefix with `APPIMAGE_EXTRACT_AND_RUN=1`) |
+
+TeX and tools on Debian/Ubuntu:
 
 ```bash
-sudo apt install "./Quantum Maze_0.2.0_amd64.deb"      # Debian, Ubuntu
-sudo dnf install "./Quantum Maze-0.2.0-1.x86_64.rpm"   # Fedora, RHEL
-chmod +x "Quantum Maze_0.2.0_amd64.AppImage" && "./Quantum Maze_0.2.0_amd64.AppImage"   # any distribution
+sudo apt install texlive-latex-extra texlive-xetex texlive-luatex texlive-bibtex-extra texlive-publishers biber latexmk pandoc
 ```
 
-Windows (`.exe`, `.msi`) and macOS (`.dmg`) installers are produced by the CI workflow in `.github/workflows/build.yml` on native runners. That workflow has never been run, so those installers are untested.
+Fedora: `sudo dnf install texlive-scheme-medium latexmk biber pandoc`. Ubuntu 22.04's Pandoc (2.9) works but cannot format citations in LaTeX → Word; install a current Pandoc from pandoc.org for that.
 
-Uninstalling removes the application only. Settings stay in the per-user data directory (shown in Settings → About) and projects are never touched.
+### Uninstall
+
+Windows: Settings → Apps. macOS: drag the app to the Bin. Linux: `sudo apt remove quantum-maze` / `sudo dnf remove quantum-maze`, or delete the AppImage. Settings stay in the per-user data directory (shown in Settings → About); your projects are never touched.
+
+### Building installers yourself
+
+Every push to `main` builds all platforms on GitHub Actions (`.github/workflows/build.yml`). Pushing a tag such as `v0.2.1` also publishes them as a GitHub Release. To sign the macOS build, add the `APPLE_*` repository secrets listed in the workflow.
 
 ## Using the journal library
 

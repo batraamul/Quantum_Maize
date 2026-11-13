@@ -48,18 +48,34 @@ jobs:
       - name: Rust tests
         run: cargo test --manifest-path src-tauri/Cargo.toml
         continue-on-error: ${{ runner.os != 'Linux' }}
-      - name: Build installers
-        run: npx tauri build ${{ matrix.args }}
+      # macOS signing: with the APPLE_* secrets set, the app is signed (and notarized when
+      # APPLE_ID/APPLE_PASSWORD/APPLE_TEAM_ID are set too). Without them it is ad-hoc signed,
+      # which Apple Silicon requires for the app to start at all.
+      - name: macOS signing setup
+        if: runner.os == 'macOS'
+        shell: bash
         env:
-          APPIMAGE_EXTRACT_AND_RUN: 1
-          NO_STRIP: true
-          # Code signing / notarization: set these secrets to enable. Unsigned otherwise.
           APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
           APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
           APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        run: |
+          if [ -n "$APPLE_CERTIFICATE" ]; then
+            for v in APPLE_CERTIFICATE APPLE_CERTIFICATE_PASSWORD APPLE_SIGNING_IDENTITY APPLE_ID APPLE_PASSWORD APPLE_TEAM_ID; do
+              if [ -n "${!v}" ]; then
+                { echo "$v<<EOF_SECRET"; echo "${!v}"; echo "EOF_SECRET"; } >> "$GITHUB_ENV"
+              fi
+            done
+          else
+            echo "APPLE_SIGNING_IDENTITY=-" >> "$GITHUB_ENV"
+          fi
+      - name: Build installers
+        run: npx tauri build ${{ matrix.args }}
+        env:
+          APPIMAGE_EXTRACT_AND_RUN: 1
+          NO_STRIP: true
       - uses: actions/upload-artifact@v4
         with:
           name: quantum-maze-${{ matrix.name }}
@@ -84,6 +100,6 @@ jobs:
         with:
           name: Quantum Maze ${{ github.ref_name }}
           body: |
-            Unsigned builds. Windows SmartScreen and macOS Gatekeeper will warn on first launch — see README "Install".
+            Unsigned builds (macOS: ad-hoc signed). Windows SmartScreen and macOS Gatekeeper will warn on first launch — see README "Install".
             A TeX distribution (TeX Live, MacTeX or MiKTeX) must be installed separately. Pandoc is optional (Word conversion).
           files: artifacts/**/*
