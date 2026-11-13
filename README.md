@@ -34,7 +34,7 @@ Optional: **Pandoc** for Word conversion (`sudo apt install pandoc`, or pandoc.o
 
 ## Install
 
-Download the installer for your system from the repository's **Releases** page (or, for any build, from **Actions → build → Artifacts**). Then install a TeX distribution if you don't have one — Quantum Maze uses it but does not include it.
+Download the installer for your system from the [latest release](https://github.com/batraamul/Quantum_Maize/releases/latest) (or, for any build, from **Actions → build → Artifacts**). Then install a TeX distribution if you don't have one — Quantum Maze uses it but does not include it.
 
 The builds are not code-signed, so Windows and macOS show a warning the first time. That is expected; the steps below get past it.
 
@@ -58,8 +58,8 @@ The builds are not code-signed, so Windows and macOS show a warning the first ti
 
 | Distribution | Command |
 | --- | --- |
-| Debian, Ubuntu, Mint | `sudo apt install ./quantum-maze_0.2.0_amd64.deb` |
-| Fedora, RHEL, openSUSE | `sudo dnf install ./quantum-maze-0.2.0-1.x86_64.rpm` |
+| Debian, Ubuntu, Mint | `sudo apt install ./Quantum.Maze_0.2.0_amd64.deb` |
+| Fedora, RHEL, openSUSE | `sudo dnf install ./Quantum.Maze-0.2.0-1.x86_64.rpm` |
 | Any other | `chmod +x Quantum.Maze_0.2.0_amd64.AppImage && ./Quantum.Maze_0.2.0_amd64.AppImage` (needs `libfuse2`; otherwise prefix with `APPIMAGE_EXTRACT_AND_RUN=1`) |
 
 TeX and tools on Debian/Ubuntu:
