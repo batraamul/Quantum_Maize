@@ -76,7 +76,7 @@ Windows: Settings → Apps. macOS: drag the app to the Bin. Linux: `sudo apt rem
 
 ### Building installers yourself
 
-Every push to `main` builds all platforms on GitHub Actions (`.github/workflows/build.yml`). Pushing a tag such as `v0.2.1` also publishes them as a GitHub Release. To sign the macOS build, add the `APPLE_*` repository secrets listed in the workflow.
+Every push to `main` builds all platforms on GitHub Actions (`.github/workflows/build.yml`) and, when the build succeeds, publishes them as the GitHub Release `v<version>` (version taken from `package.json`; bump it for a new release). To sign the macOS build, add the `APPLE_*` repository secrets listed in the workflow.
 
 ## Using the journal library
 

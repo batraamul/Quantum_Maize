@@ -88,18 +88,32 @@ jobs:
             src-tauri/target/**/release/bundle/msi/*.msi
             src-tauri/target/**/release/bundle/dmg/*.dmg
 
+  # Publishes the installers as a GitHub Release named after package.json's version
+  # (v0.2.0, …) after a successful build of main or of a v* tag. Re-running for the same
+  # version replaces that release's files.
   release:
-    if: startsWith(github.ref, 'refs/tags/v')
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v'))
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+      - id: v
+        run: echo "tag=v$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
       - uses: actions/download-artifact@v4
         with: { path: artifacts }
       - run: find artifacts -type f | sort
       - uses: softprops/action-gh-release@v2
         with:
-          name: Quantum Maze ${{ github.ref_name }}
+          tag_name: ${{ steps.v.outputs.tag }}
+          target_commitish: ${{ github.sha }}
+          name: Quantum Maze ${{ steps.v.outputs.tag }}
+          make_latest: true
+          overwrite_files: true
           body: |
-            Unsigned builds (macOS: ad-hoc signed). Windows SmartScreen and macOS Gatekeeper will warn on first launch — see README "Install".
-            A TeX distribution (TeX Live, MacTeX or MiKTeX) must be installed separately. Pandoc is optional (Word conversion).
+            Installers for Windows (.exe, .msi), macOS (universal .dmg for Apple Silicon and Intel) and Linux (.deb, .rpm, .AppImage).
+
+            These builds are not code-signed (macOS: ad-hoc signed). Windows SmartScreen and macOS Gatekeeper warn on first launch — the README's **Install** section shows how to proceed.
+            A TeX distribution (MiKTeX/TeX Live on Windows, MacTeX on macOS, TeX Live on Linux) must be installed separately. Pandoc is optional (Word conversion).
+
+            Built and tested by CI on all three platforms; the app itself has been used hands-on only on Linux so far.
           files: artifacts/**/*
