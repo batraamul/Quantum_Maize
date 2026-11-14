@@ -271,9 +271,9 @@ fn run_compile(req: &CompileRequest, cancel: &Arc<AtomicBool>, mut emit: impl Fn
     // up to date; the existing log/PDF then describe the current sources.
     let up_to_date = tool == "latexmk" && exit_code == Some(0);
     let fresh = |p: &Path| mtime(p).is_some_and(|t| t >= start_time - Duration::from_secs(2));
-    // latexmk also skips the run (but exits 12) when nothing changed since a run that had
-    // errors. The existing log and PDF are then still the result for the current sources.
-    let no_rerun = tool == "latexmk" && exit_code == Some(12) && log_before.is_some() && mtime(&log_path) == log_before;
+    // latexmk also skips the run when nothing changed since a run that had errors (newer
+    // versions then exit 12, older ones 0). The existing log and PDF are then still the result for the current sources.
+    let no_rerun = tool == "latexmk" && matches!(exit_code, Some(0) | Some(12)) && log_before.is_some() && mtime(&log_path) == log_before;
     let current = |p: &Path| p.exists() && (fresh(p) || up_to_date || no_rerun);
     let mut diagnostics = Vec::new();
     if current(&log_path) {
