@@ -1,0 +1,9 @@
+{
+ "id": "software-defined-radio",
+ "title": "When Radio Becomes Software",
+ "category": "Radio",
+ "description": "Long explainer on software-defined radio: I/Q sampling, front ends, DSP chains, GNU Radio, hardware and uses.",
+ "sections": 20,
+ "preset": "midnight",
+ "cover": "assets/hero.svg"
+}

@@ -1,0 +1,9 @@
+{
+ "id": "wireless-sensor-networks",
+ "title": "Many Small Listeners",
+ "category": "Networks",
+ "description": "Long explainer on wireless sensor networks: nodes, duty cycling, multi-hop routing, standards and deployments.",
+ "sections": 20,
+ "preset": "emerald",
+ "cover": "assets/hero.svg"
+}

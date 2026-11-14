@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { open as openDialog } from "@tauri-apps/plugin-dialog";
-import { ArrowDown, ArrowUp, Braces, Copy, Download, ImagePlus, Palette, Plus, RefreshCw, Trash2, Type } from "lucide-react";
+import { ArrowDown, ArrowUp, Braces, Copy, Download, ImagePlus, Palette, Plus, RefreshCw, Trash2, Type, BookmarkPlus } from "lucide-react";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import { api, errorMessage } from "../services/api";
 import { allFiles, refreshTree, toast, ui, useApp } from "../app/store";
@@ -291,6 +291,9 @@ export function StoryWorkbench() {
             {missing.length > 0 && <span className="badge warn" style={{ marginLeft: 8 }} title={missing.join("\n")}>{missing.length} missing media</span>}
             <div style={{ marginLeft: "auto" }} className="row">
               <button className="icon-btn" title="Reload preview" onClick={() => setNonce((n) => n + 1)}><RefreshCw size={15} /></button>
+              <button className="btn" style={{ height: 26 }} title="Reuse this story's layout for new stories" onClick={() => ui.openDialog("storyTemplate")}>
+                <BookmarkPlus size={14} /> Save as template
+              </button>
               <button className="btn" style={{ height: 26 }} onClick={() => ui.openDialog("storyExport")}>
                 <Download size={14} /> Export web page
               </button>

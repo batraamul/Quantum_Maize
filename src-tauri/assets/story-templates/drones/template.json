@@ -1,0 +1,9 @@
+{
+ "id": "drones",
+ "title": "Drones: Small Aircraft, Big Ideas",
+ "category": "Aerospace",
+ "description": "Long explainer on unmanned aircraft: airframes, flight controllers, sensors, links, regulations and uses.",
+ "sections": 20,
+ "preset": "quantum",
+ "cover": "assets/hero.svg"
+}

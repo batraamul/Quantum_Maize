@@ -1,0 +1,369 @@
+{
+ "version": 1,
+ "meta": {
+  "title": "How Aircraft Fly",
+  "subtitle": "From four simple forces to a cockpit full of computers",
+  "author": "",
+  "date": "",
+  "description": "Long explainer on flight: forces, engines, avionics, navigation and safety, with a history timeline and quiz."
+ },
+ "theme": {
+  "preset": "midnight",
+  "accent": "",
+  "font": "sans",
+  "animation": "fade-up",
+  "progressBar": true,
+  "navDots": true
+ },
+ "blocks": [
+  {
+   "type": "hero",
+   "kicker": "AVIATION",
+   "title": "How Aircraft Fly",
+   "subtitle": "From four simple forces to a cockpit full of computers",
+   "image": "assets/hero.svg",
+   "effect": "kenburns",
+   "overlay": 0.5,
+   "align": "center",
+   "id": "t01"
+  },
+  {
+   "type": "text",
+   "heading": "",
+   "text": "Every aircraft, from a paper glider to a wide-body jet, stays in the air for the same reason: its wings turn forward motion into an upward force. Everything else in aviation exists to create that motion, control it and bring the aircraft down safely.\n\nThis story walks through the physics, the machinery and the electronics that make routine flight possible, and the history that led here.",
+   "dropcap": true,
+   "id": "t02"
+  },
+  {
+   "type": "stats",
+   "items": [
+    {
+     "value": 1903,
+     "prefix": "",
+     "suffix": "",
+     "label": "Year of the Wright brothers' first powered flight",
+     "plain": true
+    },
+    {
+     "value": 12,
+     "prefix": "",
+     "suffix": " s",
+     "label": "Duration of that first flight",
+     "plain": false
+    },
+    {
+     "value": 4,
+     "prefix": "",
+     "suffix": "",
+     "label": "Forces acting on every aircraft",
+     "plain": false
+    },
+    {
+     "value": 35000,
+     "prefix": "≈",
+     "suffix": " ft",
+     "label": "Typical cruise altitude of a jet airliner",
+     "plain": false
+    }
+   ],
+   "id": "t03"
+  },
+  {
+   "type": "divider",
+   "style": "wave",
+   "id": "t04"
+  },
+  {
+   "type": "text",
+   "heading": "The four forces",
+   "text": "**Lift** acts upward and is produced by air flowing over the wing. **Weight** pulls the aircraft down. **Thrust** from the engines pushes it forward, and **drag** resists that motion. In steady, level flight lift equals weight and thrust equals drag. A pilot climbs, descends, speeds up or slows down by deliberately unbalancing them.",
+   "dropcap": false,
+   "id": "t05"
+  },
+  {
+   "type": "scrolly",
+   "side": "right",
+   "steps": [
+    {
+     "image": "assets/step-1.svg",
+     "text": "**Lift.** A wing is shaped and angled so that it deflects air downward. The air pushes back up on the wing. Lift grows with airspeed, wing area and angle of attack, until the airflow separates and the wing stalls."
+    },
+    {
+     "image": "assets/step-2.svg",
+     "text": "**Thrust.** Propellers and jet engines both accelerate air backward. A turbofan gets most of its thrust from the large fan at the front, which is why modern airliner engines are so wide."
+    },
+    {
+     "image": "assets/step-3.svg",
+     "text": "**Control.** Ailerons roll the aircraft, the elevator pitches the nose up or down and the rudder yaws it left or right. Flaps and slats reshape the wing for slow flight during take-off and landing."
+    },
+    {
+     "image": "assets/step-4.svg",
+     "text": "**Navigation.** Satellite positioning, inertial sensors and ground radio aids tell the aircraft where it is. The flight management system turns a planned route into steering commands."
+    }
+   ],
+   "id": "t06"
+  },
+  {
+   "type": "hotspots",
+   "image": "assets/diagram.svg",
+   "caption": "Tap the markers to explore each stage.",
+   "points": [
+    {
+     "x": 16.2,
+     "y": 32.6,
+     "title": "Pitot-static probes",
+     "text": "Measure total and static air pressure. The difference gives airspeed; static pressure gives altitude."
+    },
+    {
+     "x": 36.2,
+     "y": 58.6,
+     "title": "Air data computer",
+     "text": "Converts raw pressures and temperature into airspeed, altitude, Mach number and vertical speed."
+    },
+    {
+     "x": 56.2,
+     "y": 32.6,
+     "title": "Flight management",
+     "text": "Holds the route and performance data and computes the most efficient path and speeds."
+    },
+    {
+     "x": 76.2,
+     "y": 58.6,
+     "title": "Flight control computers",
+     "text": "In fly-by-wire aircraft they interpret pilot inputs, apply protections and command the actuators."
+    },
+    {
+     "x": 96.2,
+     "y": 32.6,
+     "title": "Control surfaces",
+     "text": "Hydraulic or electric actuators move ailerons, elevators, rudder, spoilers and flaps."
+    }
+   ],
+   "id": "t07"
+  },
+  {
+   "type": "text",
+   "heading": "Why flying is so safe",
+   "text": "Commercial aviation relies on **redundancy**: critical systems are duplicated or triplicated, and aircraft are certified to keep flying after an engine failure. Just as important is a culture of reporting. Incidents are investigated to find causes, not blame, and the lessons are fed back into design, training and procedures.",
+   "dropcap": false,
+   "id": "t08"
+  },
+  {
+   "type": "cards",
+   "flip": true,
+   "items": [
+    {
+     "icon": "🪽",
+     "title": "Angle of attack",
+     "text": "The angle between the wing and the oncoming air. Too high and the wing stalls, whatever the airspeed.",
+     "image": ""
+    },
+    {
+     "icon": "🌀",
+     "title": "Turbofan",
+     "text": "A jet engine whose large front fan bypasses most of the air around the core for quiet, efficient thrust.",
+     "image": ""
+    },
+    {
+     "icon": "🧭",
+     "title": "Inertial reference",
+     "text": "Gyroscopes and accelerometers that track attitude and position without any outside signal.",
+     "image": ""
+    },
+    {
+     "icon": "📡",
+     "title": "ADS-B",
+     "text": "Aircraft broadcast their GNSS position so controllers and other aircraft can see them.",
+     "image": ""
+    },
+    {
+     "icon": "🛬",
+     "title": "ILS",
+     "text": "Instrument Landing System: radio beams that guide an aircraft down to the runway in poor visibility.",
+     "image": ""
+    },
+    {
+     "icon": "⚖️",
+     "title": "Centre of gravity",
+     "text": "Loading must keep the balance point within limits, or the aircraft becomes hard or impossible to control.",
+     "image": ""
+    }
+   ],
+   "id": "t09"
+  },
+  {
+   "type": "image",
+   "src": "assets/section.svg",
+   "caption": "Replace with your own photograph or figure.",
+   "credit": "",
+   "width": "wide",
+   "effect": "zoom-in",
+   "id": "t10"
+  },
+  {
+   "type": "timeline",
+   "items": [
+    {
+     "date": "1903",
+     "title": "First powered flight",
+     "text": "Orville and Wilbur Wright fly the Wright Flyer at Kitty Hawk, North Carolina.",
+     "image": ""
+    },
+    {
+     "date": "1919",
+     "title": "Atlantic crossed non-stop",
+     "text": "John Alcock and Arthur Brown fly from Newfoundland to Ireland in a Vickers Vimy.",
+     "image": ""
+    },
+    {
+     "date": "1939",
+     "title": "First jet aircraft",
+     "text": "The Heinkel He 178 makes the first flight powered by a turbojet.",
+     "image": ""
+    },
+    {
+     "date": "1947",
+     "title": "Sound barrier broken",
+     "text": "Chuck Yeager exceeds Mach 1 in the rocket-powered Bell X-1.",
+     "image": ""
+    },
+    {
+     "date": "1952",
+     "title": "Jet airliners enter service",
+     "text": "The de Havilland Comet begins the first scheduled jet passenger flights.",
+     "image": ""
+    },
+    {
+     "date": "1969",
+     "title": "The wide-body era",
+     "text": "The Boeing 747 makes its first flight, and Concorde flies for the first time the same year.",
+     "image": ""
+    }
+   ],
+   "id": "t11"
+  },
+  {
+   "type": "chart",
+   "title": "Typical cruise speed (approximate)",
+   "labels": [
+    "ATR 72 turboprop",
+    "Airbus A320",
+    "Boeing 787",
+    "Concorde"
+   ],
+   "values": [
+    510,
+    830,
+    900,
+    2150
+   ],
+   "unit": " km/h",
+   "id": "t12"
+  },
+  {
+   "type": "compare",
+   "before": "assets/before.svg",
+   "after": "assets/after.svg",
+   "beforeLabel": "Through haze",
+   "afterLabel": "Enhanced vision",
+   "caption": "Drag the handle: sensors and image processing help crews see a runway that the eye cannot. Replace with your own pair of images.",
+   "id": "t13"
+  },
+  {
+   "type": "quote",
+   "text": "Lift is not a mystery force. A wing pushes air down, and the air pushes the wing up.",
+   "by": "Key idea",
+   "id": "t14"
+  },
+  {
+   "type": "gallery",
+   "mode": "carousel",
+   "images": [
+    {
+     "src": "assets/gallery-1.svg",
+     "caption": "Flight paths converge on busy airspace"
+    },
+    {
+     "src": "assets/gallery-2.svg",
+     "caption": "Above the weather at cruise altitude"
+    },
+    {
+     "src": "assets/gallery-3.svg",
+     "caption": "Surveillance radar keeps traffic separated"
+    }
+   ],
+   "id": "t15"
+  },
+  {
+   "type": "text",
+   "heading": "What comes next",
+   "text": "Aviation's main challenge is its climate impact. Engineers are working on sustainable aviation fuels, more efficient engines and airframes, hydrogen and battery-electric propulsion for shorter routes, and smarter air-traffic management that cuts wasted fuel. Each option trades energy density, cost and infrastructure against emissions.",
+   "dropcap": false,
+   "id": "t16"
+  },
+  {
+   "type": "cards",
+   "flip": false,
+   "items": [
+    {
+     "icon": "✈️",
+     "title": "Air transport",
+     "text": "Passengers and cargo moved quickly across continents.",
+     "image": ""
+    },
+    {
+     "icon": "🚁",
+     "title": "Rescue and medical",
+     "text": "Helicopters and air ambulances reach places roads cannot.",
+     "image": ""
+    },
+    {
+     "icon": "🌦️",
+     "title": "Weather and science",
+     "text": "Research aircraft sample storms, aerosols and the upper atmosphere.",
+     "image": ""
+    },
+    {
+     "icon": "🛰️",
+     "title": "Surveillance and mapping",
+     "text": "Aerial survey, border patrol and disaster assessment.",
+     "image": ""
+    }
+   ],
+   "id": "t17"
+  },
+  {
+   "type": "quiz",
+   "question": "In steady, level flight, which statement is true?",
+   "options": [
+    "Lift is greater than weight",
+    "Lift equals weight and thrust equals drag",
+    "Thrust is greater than drag",
+    "Drag equals weight"
+   ],
+   "answer": 1,
+   "explanation": "With no acceleration the forces balance in pairs: lift with weight, thrust with drag.",
+   "id": "t18"
+  },
+  {
+   "type": "quiz",
+   "question": "What does a pitot tube measure?",
+   "options": [
+    "Engine temperature",
+    "Total air pressure, used to find airspeed",
+    "Fuel flow",
+    "Magnetic heading"
+   ],
+   "answer": 1,
+   "explanation": "The pitot tube senses total pressure. Subtracting static pressure gives dynamic pressure, and from that airspeed.",
+   "id": "t19"
+  },
+  {
+   "type": "text",
+   "heading": "Key terms and next steps",
+   "text": "**Stall**: loss of lift when the angle of attack is too high. **Mach number**: speed divided by the local speed of sound. **Fly-by-wire**: flight controls that send electrical commands to actuators through computers. **Bypass ratio**: air passing around a turbofan's core divided by air passing through it.\n\n**Using this template.** Every block is editable: change the text in the panel on the right, replace the generated artwork with your own photographs, diagrams, GIFs or videos, and delete or reorder sections freely. Check figures against a current source before you publish.",
+   "dropcap": false,
+   "id": "t20"
+  }
+ ]
+}

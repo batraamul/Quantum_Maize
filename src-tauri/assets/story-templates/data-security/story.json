@@ -1,0 +1,369 @@
+{
+ "version": 1,
+ "meta": {
+  "title": "Keeping Information Safe",
+  "subtitle": "Confidentiality, integrity and availability in practice",
+  "author": "",
+  "date": "",
+  "description": "Long explainer on data security: the CIA triad, access control, encryption, backups, incident response and law."
+ },
+ "theme": {
+  "preset": "midnight",
+  "accent": "",
+  "font": "sans",
+  "animation": "fade-up",
+  "progressBar": true,
+  "navDots": true
+ },
+ "blocks": [
+  {
+   "type": "hero",
+   "kicker": "DATA SECURITY",
+   "title": "Keeping Information Safe",
+   "subtitle": "Confidentiality, integrity and availability in practice",
+   "image": "assets/hero.svg",
+   "effect": "kenburns",
+   "overlay": 0.5,
+   "align": "center",
+   "id": "t01"
+  },
+  {
+   "type": "text",
+   "heading": "",
+   "text": "Data is valuable to its owner and to anyone who would steal, alter or hold it to ransom. Data security is the set of practices that keeps information confidential, correct and available to the people entitled to it.\n\nTechnology is only part of the answer. Most incidents begin with a weak password, an unpatched system or a convincing email.",
+   "dropcap": true,
+   "id": "t02"
+  },
+  {
+   "type": "stats",
+   "items": [
+    {
+     "value": 3,
+     "prefix": "",
+     "suffix": "",
+     "label": "Goals of the CIA triad: confidentiality, integrity, availability",
+     "plain": false
+    },
+    {
+     "value": 2,
+     "prefix": "",
+     "suffix": "",
+     "label": "Independent proofs of identity in two-factor authentication",
+     "plain": false
+    },
+    {
+     "value": 72,
+     "prefix": "",
+     "suffix": " h",
+     "label": "Deadline to report many personal-data breaches under the EU's GDPR",
+     "plain": false
+    },
+    {
+     "value": 256,
+     "prefix": "",
+     "suffix": " bit",
+     "label": "Key length of AES-256 encryption",
+     "plain": false
+    }
+   ],
+   "id": "t03"
+  },
+  {
+   "type": "divider",
+   "style": "wave",
+   "id": "t04"
+  },
+  {
+   "type": "text",
+   "heading": "Three goals",
+   "text": "**Confidentiality** means only authorised people can read the data. **Integrity** means it cannot be changed without detection. **Availability** means it is there when needed. Every control, from a door lock to a backup, serves one or more of these goals, and a good design balances them against cost and convenience.",
+   "dropcap": false,
+   "id": "t05"
+  },
+  {
+   "type": "scrolly",
+   "side": "right",
+   "steps": [
+    {
+     "image": "assets/step-1.svg",
+     "text": "**Classify.** Know what data you hold, where it is and how sensitive it is. You cannot protect what you have not identified."
+    },
+    {
+     "image": "assets/step-2.svg",
+     "text": "**Control access.** Grant each person and system the least access needed, and verify identity with more than a password."
+    },
+    {
+     "image": "assets/step-3.svg",
+     "text": "**Encrypt.** Protect data in storage and in transit so that a stolen disk or intercepted message reveals nothing."
+    },
+    {
+     "image": "assets/step-4.svg",
+     "text": "**Monitor and back up.** Log activity, watch for anomalies and keep tested backups that an attacker cannot reach."
+    }
+   ],
+   "id": "t06"
+  },
+  {
+   "type": "hotspots",
+   "image": "assets/diagram.svg",
+   "caption": "Tap the markers to explore each stage.",
+   "points": [
+    {
+     "x": 16.2,
+     "y": 32.6,
+     "title": "Identify",
+     "text": "Inventory assets, data and risks."
+    },
+    {
+     "x": 36.2,
+     "y": 58.6,
+     "title": "Protect",
+     "text": "Access control, encryption, patching and training."
+    },
+    {
+     "x": 56.2,
+     "y": 32.6,
+     "title": "Detect",
+     "text": "Logging, monitoring and alerting on suspicious activity."
+    },
+    {
+     "x": 76.2,
+     "y": 58.6,
+     "title": "Respond",
+     "text": "Contain an incident, investigate it and notify those affected."
+    },
+    {
+     "x": 96.2,
+     "y": 32.6,
+     "title": "Recover",
+     "text": "Restore systems and data, then learn from what happened."
+    }
+   ],
+   "id": "t07"
+  },
+  {
+   "type": "text",
+   "heading": "People and process",
+   "text": "Attackers usually take the easiest route, and that is often a person. Phishing emails, reused passwords and misdirected files cause a large share of breaches. Regular training, multi-factor authentication, prompt patching and a rehearsed incident plan prevent more harm than most expensive tools.",
+   "dropcap": false,
+   "id": "t08"
+  },
+  {
+   "type": "cards",
+   "flip": true,
+   "items": [
+    {
+     "icon": "🔺",
+     "title": "CIA triad",
+     "text": "Confidentiality, integrity and availability: the three aims of security.",
+     "image": ""
+    },
+    {
+     "icon": "🔑",
+     "title": "Least privilege",
+     "text": "Give every account only the access its task requires.",
+     "image": ""
+    },
+    {
+     "icon": "📲",
+     "title": "Multi-factor authentication",
+     "text": "Combining something you know, have or are to prove identity.",
+     "image": ""
+    },
+    {
+     "icon": "🔒",
+     "title": "Encryption at rest and in transit",
+     "text": "Protecting stored data and data moving over networks.",
+     "image": ""
+    },
+    {
+     "icon": "💾",
+     "title": "3-2-1 backups",
+     "text": "Three copies, on two kinds of media, one of them off-site.",
+     "image": ""
+    },
+    {
+     "icon": "🚫",
+     "title": "Zero trust",
+     "text": "Verify every request, whatever network it comes from.",
+     "image": ""
+    }
+   ],
+   "id": "t09"
+  },
+  {
+   "type": "image",
+   "src": "assets/section.svg",
+   "caption": "Replace with your own photograph or figure.",
+   "credit": "",
+   "width": "wide",
+   "effect": "zoom-in",
+   "id": "t10"
+  },
+  {
+   "type": "timeline",
+   "items": [
+    {
+     "date": "1988",
+     "title": "The Morris worm",
+     "text": "One of the first worms to spread widely across the internet shows how fragile connected systems are.",
+     "image": ""
+    },
+    {
+     "date": "1995",
+     "title": "SSL",
+     "text": "Netscape releases SSL 2.0, the ancestor of the TLS that secures the web.",
+     "image": ""
+    },
+    {
+     "date": "2001",
+     "title": "AES",
+     "text": "The Advanced Encryption Standard is adopted as a US federal standard.",
+     "image": ""
+    },
+    {
+     "date": "2017",
+     "title": "WannaCry",
+     "text": "Ransomware spreads worldwide through unpatched systems, disrupting hospitals and industry.",
+     "image": ""
+    },
+    {
+     "date": "2018",
+     "title": "GDPR",
+     "text": "The EU's General Data Protection Regulation takes effect.",
+     "image": ""
+    },
+    {
+     "date": "2023",
+     "title": "India's DPDP Act",
+     "text": "The Digital Personal Data Protection Act is enacted.",
+     "image": ""
+    }
+   ],
+   "id": "t11"
+  },
+  {
+   "type": "chart",
+   "title": "Password strength if chosen truly at random",
+   "labels": [
+    "8 lower-case letters",
+    "8 mixed characters",
+    "12 mixed characters",
+    "16 mixed characters"
+   ],
+   "values": [
+    37.6,
+    52.4,
+    78.7,
+    104.9
+   ],
+   "unit": " bits",
+   "id": "t12"
+  },
+  {
+   "type": "compare",
+   "before": "assets/before.svg",
+   "after": "assets/after.svg",
+   "beforeLabel": "Unprotected record",
+   "afterLabel": "Encrypted record",
+   "caption": "Drag the handle: without the key, encrypted data is unreadable. Replace with your own illustration.",
+   "id": "t13"
+  },
+  {
+   "type": "quote",
+   "text": "Security is not a product you install. It is a habit an organisation keeps.",
+   "by": "Key idea",
+   "id": "t14"
+  },
+  {
+   "type": "gallery",
+   "mode": "carousel",
+   "images": [
+    {
+     "src": "assets/gallery-1.svg",
+     "caption": "Layers of defence around data"
+    },
+    {
+     "src": "assets/gallery-2.svg",
+     "caption": "Encrypted streams in transit"
+    },
+    {
+     "src": "assets/gallery-3.svg",
+     "caption": "Trust relationships between systems"
+    }
+   ],
+   "id": "t15"
+  },
+  {
+   "type": "text",
+   "heading": "Trade-offs",
+   "text": "Stronger controls cost time and convenience, and people work around controls that obstruct them. Cloud services move data outside the organisation's walls. Laws in different countries impose different duties. Good security therefore starts from risk: what could go wrong, how likely it is, and what it would cost.",
+   "dropcap": false,
+   "id": "t16"
+  },
+  {
+   "type": "cards",
+   "flip": false,
+   "items": [
+    {
+     "icon": "🏦",
+     "title": "Finance",
+     "text": "Protecting accounts, payments and records.",
+     "image": ""
+    },
+    {
+     "icon": "🏥",
+     "title": "Health",
+     "text": "Guarding patient confidentiality and safety.",
+     "image": ""
+    },
+    {
+     "icon": "🏛️",
+     "title": "Government",
+     "text": "Citizen data and critical services.",
+     "image": ""
+    },
+    {
+     "icon": "🔬",
+     "title": "Research",
+     "text": "Unpublished results and personal data in studies.",
+     "image": ""
+    }
+   ],
+   "id": "t17"
+  },
+  {
+   "type": "quiz",
+   "question": "A ransomware attack that encrypts a hospital's files mainly harms which goal?",
+   "options": [
+    "Confidentiality",
+    "Integrity",
+    "Availability",
+    "Authenticity"
+   ],
+   "answer": 2,
+   "explanation": "The data are still there but cannot be used, so availability is lost. Tested offline backups are the main defence.",
+   "id": "t18"
+  },
+  {
+   "type": "quiz",
+   "question": "Which is an example of two-factor authentication?",
+   "options": [
+    "Two passwords",
+    "A password plus a code from an authenticator app",
+    "A long password",
+    "A username and a password"
+   ],
+   "answer": 1,
+   "explanation": "The factors must be of different kinds: something you know and something you have.",
+   "id": "t19"
+  },
+  {
+   "type": "text",
+   "heading": "Key terms and next steps",
+   "text": "**Threat**: something that could cause harm. **Vulnerability**: a weakness a threat can use. **Risk**: likelihood combined with impact. **Phishing**: deceptive messages that trick people into revealing secrets. **Incident response**: the planned handling of a breach.\n\n**Using this template.** Every block is editable: change the text in the panel on the right, replace the generated artwork with your own photographs, diagrams, GIFs or videos, and delete or reorder sections freely. Check figures against a current source before you publish.",
+   "dropcap": false,
+   "id": "t20"
+  }
+ ]
+}

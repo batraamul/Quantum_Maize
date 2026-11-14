@@ -93,6 +93,13 @@ pub fn run() {
             commands::export_story,
             commands::import_story_asset,
             commands::import_figure,
+            commands::list_story_templates,
+            commands::story_template_cover,
+            commands::create_story_from_template,
+            commands::save_story_template,
+            commands::delete_story_template,
+            commands::export_story_template,
+            commands::import_story_template,
             commands::export_pptx,
         ])
         .run(tauri::generate_context!())

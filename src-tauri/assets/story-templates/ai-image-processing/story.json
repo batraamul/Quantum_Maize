@@ -1,0 +1,369 @@
+{
+ "version": 1,
+ "meta": {
+  "title": "Teaching Machines to Improve Images",
+  "subtitle": "Denoising, deblurring and super-resolution with neural networks",
+  "author": "",
+  "date": "",
+  "description": "Long explainer on learned image restoration: degradation, networks, losses, metrics and deployment on edge devices."
+ },
+ "theme": {
+  "preset": "quantum",
+  "accent": "",
+  "font": "sans",
+  "animation": "fade-up",
+  "progressBar": true,
+  "navDots": true
+ },
+ "blocks": [
+  {
+   "type": "hero",
+   "kicker": "AI IMAGE PROCESSING",
+   "title": "Teaching Machines to Improve Images",
+   "subtitle": "Denoising, deblurring and super-resolution with neural networks",
+   "image": "assets/hero.svg",
+   "effect": "kenburns",
+   "overlay": 0.5,
+   "align": "center",
+   "id": "t01"
+  },
+  {
+   "type": "text",
+   "heading": "",
+   "text": "A camera never records a perfect picture. Lenses blur, sensors add noise and small or distant cameras capture too few pixels. Image processing tries to undo that damage.\n\nClassical methods used hand-designed filters. Neural networks instead learn, from many examples, what clean images look like and how to recover them.",
+   "dropcap": true,
+   "id": "t02"
+  },
+  {
+   "type": "stats",
+   "items": [
+    {
+     "value": 16,
+     "prefix": "",
+     "suffix": "×",
+     "label": "More pixels after 4× super-resolution in each direction",
+     "plain": false
+    },
+    {
+     "value": 256,
+     "prefix": "",
+     "suffix": "",
+     "label": "Intensity levels in an 8-bit channel",
+     "plain": false
+    },
+    {
+     "value": 3,
+     "prefix": "",
+     "suffix": "",
+     "label": "Colour channels in an RGB image",
+     "plain": false
+    },
+    {
+     "value": 2014,
+     "prefix": "",
+     "suffix": "",
+     "label": "Year SRCNN applied deep learning to super-resolution",
+     "plain": true
+    }
+   ],
+   "id": "t03"
+  },
+  {
+   "type": "divider",
+   "style": "wave",
+   "id": "t04"
+  },
+  {
+   "type": "text",
+   "heading": "Restoration as an inverse problem",
+   "text": "A degraded image can be modelled as a clean image that was blurred, reduced in size, and then corrupted by noise. Restoration runs this process backward. Because many clean images could have produced the same degraded one, the problem is **ill-posed**, and the network must supply plausible detail from what it has learned.",
+   "dropcap": false,
+   "id": "t05"
+  },
+  {
+   "type": "scrolly",
+   "side": "right",
+   "steps": [
+    {
+     "image": "assets/step-1.svg",
+     "text": "**Degrade.** Training pairs are made by taking sharp images and applying blur, downsampling, noise and compression to imitate a real camera."
+    },
+    {
+     "image": "assets/step-2.svg",
+     "text": "**Learn.** A network receives the degraded image and predicts the clean one. A loss function scores the difference and the weights are adjusted."
+    },
+    {
+     "image": "assets/step-3.svg",
+     "text": "**Restore.** At run time the trained network maps a new low-quality image to a restored one in a single forward pass."
+    },
+    {
+     "image": "assets/step-4.svg",
+     "text": "**Measure.** Results are judged with fidelity metrics such as PSNR and SSIM, with perceptual metrics, and by how well later tasks perform."
+    }
+   ],
+   "id": "t06"
+  },
+  {
+   "type": "hotspots",
+   "image": "assets/diagram.svg",
+   "caption": "Tap the markers to explore each stage.",
+   "points": [
+    {
+     "x": 16.2,
+     "y": 32.6,
+     "title": "Acquisition",
+     "text": "The sensor, optics and motion that decide what the camera actually records."
+    },
+    {
+     "x": 36.2,
+     "y": 58.6,
+     "title": "Pre-processing",
+     "text": "Demosaicing, colour conversion, normalisation and tiling of large frames."
+    },
+    {
+     "x": 56.2,
+     "y": 32.6,
+     "title": "Neural network",
+     "text": "Convolutional, attention-based or generative model that predicts the restored image."
+    },
+    {
+     "x": 76.2,
+     "y": 58.6,
+     "title": "Post-processing",
+     "text": "Tile blending, colour restoration and clipping to the valid range."
+    },
+    {
+     "x": 96.2,
+     "y": 32.6,
+     "title": "Quality metrics",
+     "text": "PSNR, SSIM, perceptual scores and task-based measures such as detection accuracy."
+    }
+   ],
+   "id": "t07"
+  },
+  {
+   "type": "text",
+   "heading": "Fidelity versus appearance",
+   "text": "Networks trained only to minimise pixel error give high PSNR but smooth, slightly soft results. Adding **perceptual** and **adversarial** losses yields sharper, more convincing texture, at the risk of inventing detail that was never in the scene. For scientific, forensic or surveillance use, that trade-off must be stated openly.",
+   "dropcap": false,
+   "id": "t08"
+  },
+  {
+   "type": "cards",
+   "flip": true,
+   "items": [
+    {
+     "icon": "🧽",
+     "title": "Denoising",
+     "text": "Removing sensor noise while keeping fine texture and edges.",
+     "image": ""
+    },
+    {
+     "icon": "🔍",
+     "title": "Super-resolution",
+     "text": "Estimating a high-resolution image from one or more low-resolution inputs.",
+     "image": ""
+    },
+    {
+     "icon": "📐",
+     "title": "PSNR",
+     "text": "Peak signal-to-noise ratio: a logarithmic measure of pixel error against a reference.",
+     "image": ""
+    },
+    {
+     "icon": "🧩",
+     "title": "SSIM",
+     "text": "Structural similarity: compares local brightness, contrast and structure.",
+     "image": ""
+    },
+    {
+     "icon": "✂️",
+     "title": "Pruning",
+     "text": "Removing filters or weights that contribute little, to shrink and speed up a network.",
+     "image": ""
+    },
+    {
+     "icon": "🎓",
+     "title": "Knowledge distillation",
+     "text": "Training a small 'student' network to imitate a large 'teacher'.",
+     "image": ""
+    }
+   ],
+   "id": "t09"
+  },
+  {
+   "type": "image",
+   "src": "assets/section.svg",
+   "caption": "Replace with your own photograph or figure.",
+   "credit": "",
+   "width": "wide",
+   "effect": "zoom-in",
+   "id": "t10"
+  },
+  {
+   "type": "timeline",
+   "items": [
+    {
+     "date": "1957",
+     "title": "First digital image",
+     "text": "Russell Kirsch scans a photograph into a computer at the US National Bureau of Standards.",
+     "image": ""
+    },
+    {
+     "date": "1992",
+     "title": "JPEG standard",
+     "text": "Lossy compression makes digital photographs practical to store and send.",
+     "image": ""
+    },
+    {
+     "date": "2012",
+     "title": "Deep learning breakthrough",
+     "text": "AlexNet wins the ImageNet challenge and renews interest in convolutional networks.",
+     "image": ""
+    },
+    {
+     "date": "2014",
+     "title": "SRCNN",
+     "text": "A three-layer convolutional network outperforms classical super-resolution methods.",
+     "image": ""
+    },
+    {
+     "date": "2017",
+     "title": "SRGAN",
+     "text": "Adversarial training produces photo-realistic texture at 4× magnification.",
+     "image": ""
+    },
+    {
+     "date": "2020",
+     "title": "Diffusion models",
+     "text": "Denoising diffusion models show strong image generation and are soon applied to restoration.",
+     "image": ""
+    }
+   ],
+   "id": "t11"
+  },
+  {
+   "type": "chart",
+   "title": "Pixels to predict grow with the square of the scale factor",
+   "labels": [
+    "×2",
+    "×3",
+    "×4",
+    "×8"
+   ],
+   "values": [
+    4,
+    9,
+    16,
+    64
+   ],
+   "unit": "× pixels",
+   "id": "t12"
+  },
+  {
+   "type": "compare",
+   "before": "assets/before.svg",
+   "after": "assets/after.svg",
+   "beforeLabel": "Low resolution",
+   "afterLabel": "Restored",
+   "caption": "Drag the handle to compare input and output. Replace these with your own low-resolution and restored images.",
+   "id": "t13"
+  },
+  {
+   "type": "quote",
+   "text": "A restoration network does not recover lost information. It makes an educated estimate of what was most likely there.",
+   "by": "Key idea",
+   "id": "t14"
+  },
+  {
+   "type": "gallery",
+   "mode": "carousel",
+   "images": [
+    {
+     "src": "assets/gallery-1.svg",
+     "caption": "Feature maps respond to edges and texture"
+    },
+    {
+     "src": "assets/gallery-2.svg",
+     "caption": "A scene rebuilt on a finer pixel grid"
+    },
+    {
+     "src": "assets/gallery-3.svg",
+     "caption": "Layers of a network pass information forward"
+    }
+   ],
+   "id": "t15"
+  },
+  {
+   "type": "text",
+   "heading": "From the laboratory to the edge",
+   "text": "The best models are large and slow. Drones, phones and embedded cameras need networks that run in real time on limited power. Pruning, quantisation, distillation and efficient architectures cut cost, and each must be checked for its effect on quality. Models also degrade on images unlike their training data.",
+   "dropcap": false,
+   "id": "t16"
+  },
+  {
+   "type": "cards",
+   "flip": false,
+   "items": [
+    {
+     "icon": "🛰️",
+     "title": "Remote sensing",
+     "text": "Sharper satellite and aerial imagery for mapping and monitoring.",
+     "image": ""
+    },
+    {
+     "icon": "🩻",
+     "title": "Medical imaging",
+     "text": "Lower-dose scans restored to diagnostic quality.",
+     "image": ""
+    },
+    {
+     "icon": "📱",
+     "title": "Photography",
+     "text": "Night modes and digital zoom in phone cameras.",
+     "image": ""
+    },
+    {
+     "icon": "🚓",
+     "title": "Surveillance",
+     "text": "Clearer detail for detection and recognition tasks.",
+     "image": ""
+    }
+   ],
+   "id": "t17"
+  },
+  {
+   "type": "quiz",
+   "question": "Why is single-image super-resolution called 'ill-posed'?",
+   "options": [
+    "It needs a lot of memory",
+    "Many different high-resolution images reduce to the same low-resolution image",
+    "It only works on grey images",
+    "It cannot be trained"
+   ],
+   "answer": 1,
+   "explanation": "Information is lost in downsampling, so the inverse has no unique answer. The network chooses a plausible one.",
+   "id": "t18"
+  },
+  {
+   "type": "quiz",
+   "question": "A model trained only with pixel-wise error tends to give results that are:",
+   "options": [
+    "Sharp but noisy",
+    "High in PSNR but somewhat smooth",
+    "Always wrong in colour",
+    "Smaller than the input"
+   ],
+   "answer": 1,
+   "explanation": "Minimising average pixel error favours the mean of plausible answers, which looks soft.",
+   "id": "t19"
+  },
+  {
+   "type": "text",
+   "heading": "Key terms and next steps",
+   "text": "**Degradation model**: the assumed blur, downsampling and noise. **Receptive field**: the input region that influences one output pixel. **Quantisation**: using fewer bits per weight. **Hallucination**: plausible but invented detail.\n\n**Using this template.** Every block is editable: change the text in the panel on the right, replace the generated artwork with your own photographs, diagrams, GIFs or videos, and delete or reorder sections freely. Check figures against a current source before you publish.",
+   "dropcap": false,
+   "id": "t20"
+  }
+ ]
+}

@@ -1,0 +1,9 @@
+{
+ "id": "cryptography",
+ "title": "Secrets, Keys and Proof",
+ "category": "Security",
+ "description": "Long explainer on cryptography: symmetric and public-key ciphers, hashes, signatures, TLS and post-quantum methods.",
+ "sections": 20,
+ "preset": "quantum",
+ "cover": "assets/hero.svg"
+}

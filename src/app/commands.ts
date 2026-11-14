@@ -117,6 +117,7 @@ export const commands: Record<string, Command> = {
   convert: { id: "convert", label: "Conversion Centre (Word ⇄ LaTeX)…", run: () => ui.openDialog("convert") },
   present: { id: "present", label: "Present Slides", shortcut: "F5", run: () => ui.openDialog("present"), enabled: () => isDeck() && !!useApp.getState().pdfData },
   exportPptx: { id: "exportPptx", label: "Presentation as PowerPoint (.pptx)…", run: () => ui.openDialog("pptx"), enabled: isDeck },
+  saveStoryTemplate: { id: "saveStoryTemplate", label: "Save Story as Template…", run: () => ui.openDialog("storyTemplate"), enabled: isStory },
   exportStory: { id: "exportStory", label: "Interactive Story as Web Page…", run: () => ui.openDialog("storyExport"), enabled: isStory },
   exportDocx: { id: "exportDocx", label: "Word Document (.docx)…", run: () => ui.openDialog("convert"), enabled: isLatex },
   insertTable: { id: "insertTable", label: "Table Designer…", shortcut: "Ctrl+Alt+T", run: () => ui.openDialog("table"), enabled: hasEditor },

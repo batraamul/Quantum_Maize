@@ -1,0 +1,9 @@
+{
+ "id": "aviation",
+ "title": "How Aircraft Fly",
+ "category": "Aerospace",
+ "description": "Long explainer on flight: forces, engines, avionics, navigation and safety, with a history timeline and quiz.",
+ "sections": 20,
+ "preset": "midnight",
+ "cover": "assets/hero.svg"
+}

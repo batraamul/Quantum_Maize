@@ -67,7 +67,7 @@ function block(b: Block, url: AssetUrl): string {
     }
     case "stats":
       return `<section class="blk stats" id="${id}"><div class="stat-grid">${arr<Record<string, unknown>>(b.items)
-        .map((s) => `<div class="stat rv"><div class="n"><span>${esc(s.prefix)}</span><b data-to="${num(s.value)}">0</b><span>${esc(s.suffix)}</span></div><div class="l">${esc(s.label)}</div></div>`)
+        .map((s) => `<div class="stat rv"><div class="n"><span>${esc(s.prefix)}</span><b data-to="${num(s.value)}"${s.plain ? ' data-plain="1"' : ""}>0</b><span>${esc(s.suffix)}</span></div><div class="l">${esc(s.label)}</div></div>`)
         .join("")}</div></section>`;
     case "timeline":
       return `<section class="blk timeline" id="${id}"><ol>${arr<Record<string, unknown>>(b.items)
@@ -223,7 +223,7 @@ var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isInter
 $('b[data-to]',e.target).forEach(count);if(e.target.matches('b[data-to]'))count(e.target);}})},{threshold:0.18});
 $('.rv,.chart,.divider,.stat').forEach(function(el){io.observe(el)});
 function count(el){if(el.dataset.done)return;el.dataset.done=1;var to=parseFloat(el.dataset.to)||0;var dec=(String(to).split('.')[1]||'').length;var t0=performance.now();
-(function step(t){var k=Math.min(1,(t-t0)/1600);var v=to*(1-Math.pow(1-k,3));el.textContent=v.toLocaleString(undefined,{minimumFractionDigits:dec,maximumFractionDigits:dec});if(k<1)requestAnimationFrame(step)})(t0)}
+(function step(t){var k=Math.min(1,(t-t0)/1600);var v=to*(1-Math.pow(1-k,3));el.textContent=v.toLocaleString(undefined,{minimumFractionDigits:dec,maximumFractionDigits:dec,useGrouping:!el.dataset.plain});if(k<1)requestAnimationFrame(step)})(t0)}
 var scr=$('.scrolly').map(function(s){return{layers:$('.layer',s),steps:$('.step',s),cur:-1}});
 function scrolly(){var mid=innerHeight/2;scr.forEach(function(o){var best=0,bd=1e9;o.steps.forEach(function(st,i){var r=st.querySelector('.card').getBoundingClientRect();var d=Math.abs((r.top+r.bottom)/2-mid);if(d<bd){bd=d;best=i}});if(best!==o.cur){o.cur=best;o.steps.forEach(function(x,i){x.classList.toggle('on',i===best)});o.layers.forEach(function(l,i){l.classList.toggle('on',i===best)})}})}
 addEventListener('scroll',scrolly,{passive:true});addEventListener('resize',scrolly);scrolly();

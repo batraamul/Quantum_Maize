@@ -1,0 +1,9 @@
+{
+ "id": "drone-forensics",
+ "title": "What a Drone Remembers",
+ "category": "Security",
+ "description": "Long explainer on drone forensics and small surveillance ('bug') drones: evidence sources, analysis, detection and law.",
+ "sections": 20,
+ "preset": "quantum",
+ "cover": "assets/hero.svg"
+}

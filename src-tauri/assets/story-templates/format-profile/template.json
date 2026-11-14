@@ -1,0 +1,9 @@
+{
+ "id": "format-profile",
+ "title": "Profile and Life Timeline",
+ "category": "Story formats",
+ "description": "Layout for a profile or tribute: opening scene, signature quote, long timeline, gallery and legacy.",
+ "sections": 11,
+ "preset": "emerald",
+ "cover": "assets/hero.svg"
+}

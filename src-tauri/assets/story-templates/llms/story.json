@@ -1,0 +1,369 @@
+{
+ "version": 1,
+ "meta": {
+  "title": "Machines That Predict the Next Word",
+  "subtitle": "Tokens, attention and the transformer",
+  "author": "",
+  "date": "",
+  "description": "Long explainer on large language models: tokenisation, embeddings, attention, training, limits and responsible use."
+ },
+ "theme": {
+  "preset": "paper",
+  "accent": "",
+  "font": "sans",
+  "animation": "fade-up",
+  "progressBar": true,
+  "navDots": true
+ },
+ "blocks": [
+  {
+   "type": "hero",
+   "kicker": "LARGE LANGUAGE MODELS",
+   "title": "Machines That Predict the Next Word",
+   "subtitle": "Tokens, attention and the transformer",
+   "image": "assets/hero.svg",
+   "effect": "kenburns",
+   "overlay": 0.5,
+   "align": "center",
+   "id": "t01"
+  },
+  {
+   "type": "text",
+   "heading": "",
+   "text": "A large language model does one thing: given some text, it estimates what comes next. Repeating that step, one token at a time, produces answers, essays, translations and computer code.\n\nThat such a simple objective yields such broad ability is one of the surprises of modern computing. Understanding the mechanism also makes the limits easier to see.",
+   "dropcap": true,
+   "id": "t02"
+  },
+  {
+   "type": "stats",
+   "items": [
+    {
+     "value": 2017,
+     "prefix": "",
+     "suffix": "",
+     "label": "Year the transformer architecture was published",
+     "plain": true
+    },
+    {
+     "value": 175,
+     "prefix": "",
+     "suffix": " B",
+     "label": "Parameters in GPT-3 (2020)",
+     "plain": false
+    },
+    {
+     "value": 50257,
+     "prefix": "",
+     "suffix": "",
+     "label": "Tokens in the GPT-2 vocabulary",
+     "plain": false
+    },
+    {
+     "value": 6,
+     "prefix": "",
+     "suffix": "",
+     "label": "Encoder layers in the original transformer",
+     "plain": false
+    }
+   ],
+   "id": "t03"
+  },
+  {
+   "type": "divider",
+   "style": "wave",
+   "id": "t04"
+  },
+  {
+   "type": "text",
+   "heading": "From text to prediction",
+   "text": "Text is split into **tokens**, each mapped to a vector of numbers. Layers of **self-attention** let every token gather information from the others in the context, building up a representation of meaning. The final layer converts that representation into a probability for every possible next token.",
+   "dropcap": false,
+   "id": "t05"
+  },
+  {
+   "type": "scrolly",
+   "side": "right",
+   "steps": [
+    {
+     "image": "assets/step-1.svg",
+     "text": "**Tokenise.** The input is broken into sub-word pieces from a fixed vocabulary, so rare words can still be represented."
+    },
+    {
+     "image": "assets/step-2.svg",
+     "text": "**Embed.** Each token becomes a vector, and position information is added so that word order is kept."
+    },
+    {
+     "image": "assets/step-3.svg",
+     "text": "**Attend.** In every layer, attention weighs how much each token should draw on every other token."
+    },
+    {
+     "image": "assets/step-4.svg",
+     "text": "**Predict.** The model outputs a probability distribution over the vocabulary, one token is chosen, and the loop repeats."
+    }
+   ],
+   "id": "t06"
+  },
+  {
+   "type": "hotspots",
+   "image": "assets/diagram.svg",
+   "caption": "Tap the markers to explore each stage.",
+   "points": [
+    {
+     "x": 16.2,
+     "y": 32.6,
+     "title": "Tokeniser",
+     "text": "Splits text into sub-word tokens and maps them to integer IDs."
+    },
+    {
+     "x": 36.2,
+     "y": 58.6,
+     "title": "Embeddings",
+     "text": "A learned vector for each token, plus information about its position."
+    },
+    {
+     "x": 56.2,
+     "y": 32.6,
+     "title": "Transformer layers",
+     "text": "Stacked attention and feed-forward blocks that refine the representation."
+    },
+    {
+     "x": 76.2,
+     "y": 58.6,
+     "title": "Output probabilities",
+     "text": "A score for every token in the vocabulary, turned into probabilities."
+    },
+    {
+     "x": 96.2,
+     "y": 32.6,
+     "title": "Decoding",
+     "text": "Sampling rules such as temperature and top-p that choose the next token."
+    }
+   ],
+   "id": "t07"
+  },
+  {
+   "type": "text",
+   "heading": "Training in two stages",
+   "text": "In **pre-training**, the model reads a very large body of text and learns to predict hidden or following tokens. No labels are needed. In **fine-tuning** and alignment, it is further trained on examples of the behaviour wanted, such as following instructions helpfully and declining harmful requests. Additional information can be supplied at run time by retrieving documents and placing them in the context.",
+   "dropcap": false,
+   "id": "t08"
+  },
+  {
+   "type": "cards",
+   "flip": true,
+   "items": [
+    {
+     "icon": "🔤",
+     "title": "Token",
+     "text": "The unit of text a model reads and writes; often a word fragment.",
+     "image": ""
+    },
+    {
+     "icon": "🧲",
+     "title": "Attention",
+     "text": "A mechanism that lets each position weigh the relevance of all others.",
+     "image": ""
+    },
+    {
+     "icon": "🪟",
+     "title": "Context window",
+     "text": "The maximum amount of text the model can consider at once.",
+     "image": ""
+    },
+    {
+     "icon": "🎛️",
+     "title": "Fine-tuning",
+     "text": "Further training of a pre-trained model for a task or style.",
+     "image": ""
+    },
+    {
+     "icon": "📚",
+     "title": "Retrieval-augmented generation",
+     "text": "Fetching relevant documents and giving them to the model with the question.",
+     "image": ""
+    },
+    {
+     "icon": "🌫️",
+     "title": "Hallucination",
+     "text": "Fluent output that is unsupported or false.",
+     "image": ""
+    }
+   ],
+   "id": "t09"
+  },
+  {
+   "type": "image",
+   "src": "assets/section.svg",
+   "caption": "Replace with your own photograph or figure.",
+   "credit": "",
+   "width": "wide",
+   "effect": "zoom-in",
+   "id": "t10"
+  },
+  {
+   "type": "timeline",
+   "items": [
+    {
+     "date": "1948",
+     "title": "Statistical language",
+     "text": "Claude Shannon models English text as a sequence of probable symbols.",
+     "image": ""
+    },
+    {
+     "date": "2013",
+     "title": "Word embeddings",
+     "text": "word2vec shows that word meanings can be captured as vectors learned from text.",
+     "image": ""
+    },
+    {
+     "date": "2017",
+     "title": "The transformer",
+     "text": "'Attention Is All You Need' replaces recurrence with self-attention.",
+     "image": ""
+    },
+    {
+     "date": "2018",
+     "title": "Pre-train, then adapt",
+     "text": "BERT and GPT show that one pre-trained model can be adapted to many tasks.",
+     "image": ""
+    },
+    {
+     "date": "2020",
+     "title": "GPT-3",
+     "text": "A much larger model performs new tasks from a few examples in its prompt.",
+     "image": ""
+    },
+    {
+     "date": "2022",
+     "title": "Chat assistants",
+     "text": "ChatGPT's release brings language models to a mass audience.",
+     "image": ""
+    }
+   ],
+   "id": "t11"
+  },
+  {
+   "type": "chart",
+   "title": "Parameters in four landmark models",
+   "labels": [
+    "GPT-1 (2018)",
+    "BERT-large (2018)",
+    "GPT-2 (2019)",
+    "GPT-3 (2020)"
+   ],
+   "values": [
+    0.12,
+    0.34,
+    1.5,
+    175
+   ],
+   "unit": " B",
+   "id": "t12"
+  },
+  {
+   "type": "compare",
+   "before": "assets/before.svg",
+   "after": "assets/after.svg",
+   "beforeLabel": "Text as we read it",
+   "afterLabel": "Text as token IDs",
+   "caption": "Drag the handle: the model never sees letters, only numbers. Replace with your own illustration.",
+   "id": "t13"
+  },
+  {
+   "type": "quote",
+   "text": "A language model is trained to be plausible. Being correct is something its users must check.",
+   "by": "Key idea",
+   "id": "t14"
+  },
+  {
+   "type": "gallery",
+   "mode": "carousel",
+   "images": [
+    {
+     "src": "assets/gallery-1.svg",
+     "caption": "Tokens attend to one another"
+    },
+    {
+     "src": "assets/gallery-2.svg",
+     "caption": "Streams of symbols"
+    },
+    {
+     "src": "assets/gallery-3.svg",
+     "caption": "Probabilities shift with context"
+    }
+   ],
+   "id": "t15"
+  },
+  {
+   "type": "text",
+   "heading": "Using them well",
+   "text": "Language models can state falsehoods confidently, reflect biases in their training text and miss recent events. Treat output as a draft: verify facts and citations, keep confidential data out of services you do not control, and keep a person responsible for decisions that matter. Evaluation on your own task is more informative than any general benchmark.",
+   "dropcap": false,
+   "id": "t16"
+  },
+  {
+   "type": "cards",
+   "flip": false,
+   "items": [
+    {
+     "icon": "✍️",
+     "title": "Writing and summarising",
+     "text": "Drafts, summaries and translation.",
+     "image": ""
+    },
+    {
+     "icon": "💻",
+     "title": "Programming",
+     "text": "Code completion, explanation and review.",
+     "image": ""
+    },
+    {
+     "icon": "🔎",
+     "title": "Search and question answering",
+     "text": "Answers grounded in retrieved documents.",
+     "image": ""
+    },
+    {
+     "icon": "🎓",
+     "title": "Tutoring",
+     "text": "Explanations adapted to a learner's level.",
+     "image": ""
+    }
+   ],
+   "id": "t17"
+  },
+  {
+   "type": "quiz",
+   "question": "What is a large language model trained to do?",
+   "options": [
+    "Look up facts in a database",
+    "Predict the next token given the preceding text",
+    "Translate text into binary",
+    "Compress files"
+   ],
+   "answer": 1,
+   "explanation": "Next-token prediction on very large text collections is the core training objective.",
+   "id": "t18"
+  },
+  {
+   "type": "quiz",
+   "question": "What does 'retrieval-augmented generation' add?",
+   "options": [
+    "More layers",
+    "Relevant documents placed in the context at run time",
+    "A larger vocabulary",
+    "Faster hardware"
+   ],
+   "answer": 1,
+   "explanation": "Retrieved passages give the model current, specific information to ground its answer.",
+   "id": "t19"
+  },
+  {
+   "type": "text",
+   "heading": "Key terms and next steps",
+   "text": "**Parameter**: a learned number in the network. **Prompt**: the text given to the model. **Temperature**: a setting that makes sampling more or less random. **Embedding**: a vector representing a token or passage. **Inference**: running a trained model.\n\n**Using this template.** Every block is editable: change the text in the panel on the right, replace the generated artwork with your own photographs, diagrams, GIFs or videos, and delete or reorder sections freely. Check figures against a current source before you publish.",
+   "dropcap": false,
+   "id": "t20"
+  }
+ ]
+}

@@ -1,0 +1,206 @@
+{
+ "version": 1,
+ "meta": {
+  "title": "Profile and Life Timeline",
+  "subtitle": "A person's story told through milestones and photographs",
+  "author": "",
+  "date": "",
+  "description": "Layout for a profile or tribute: opening scene, signature quote, long timeline, gallery and legacy."
+ },
+ "theme": {
+  "preset": "emerald",
+  "accent": "",
+  "font": "serif",
+  "animation": "fade-up",
+  "progressBar": true,
+  "navDots": true
+ },
+ "blocks": [
+  {
+   "type": "hero",
+   "kicker": "PROFILE",
+   "title": "[Name]",
+   "subtitle": "[What this person is known for, in one line]",
+   "image": "assets/hero.svg",
+   "effect": "kenburns",
+   "overlay": 0.4,
+   "align": "bottom-left",
+   "id": "t01"
+  },
+  {
+   "type": "text",
+   "heading": "",
+   "text": "[Open with a moment that shows the person's character.]\n\n[Give the essentials: who they are, what they did, why readers should care now.]",
+   "dropcap": false,
+   "id": "t02"
+  },
+  {
+   "type": "quote",
+   "text": "[The person's best-known words.]",
+   "by": "[Name, year]",
+   "id": "t03"
+  },
+  {
+   "type": "stats",
+   "items": [
+    {
+     "value": 0,
+     "prefix": "",
+     "suffix": "",
+     "label": "[Years active]"
+    },
+    {
+     "value": 0,
+     "prefix": "",
+     "suffix": "",
+     "label": "[Works, missions or matches]"
+    },
+    {
+     "value": 0,
+     "prefix": "",
+     "suffix": "",
+     "label": "[Awards]"
+    },
+    {
+     "value": 0,
+     "prefix": "",
+     "suffix": "",
+     "label": "[A number unique to them]"
+    }
+   ],
+   "id": "t04"
+  },
+  {
+   "type": "text",
+   "heading": "The journey",
+   "text": "[Introduce the timeline.]",
+   "dropcap": false,
+   "id": "t05"
+  },
+  {
+   "type": "timeline",
+   "items": [
+    {
+     "date": "[Year]",
+     "title": "[Birth and early life]",
+     "text": "[Detail.]",
+     "image": ""
+    },
+    {
+     "date": "[Year]",
+     "title": "[Education or first break]",
+     "text": "[Detail.]",
+     "image": ""
+    },
+    {
+     "date": "[Year]",
+     "title": "[First major achievement]",
+     "text": "[Detail.]",
+     "image": ""
+    },
+    {
+     "date": "[Year]",
+     "title": "[Setback]",
+     "text": "[Detail.]",
+     "image": ""
+    },
+    {
+     "date": "[Year]",
+     "title": "[Peak]",
+     "text": "[Detail.]",
+     "image": ""
+    },
+    {
+     "date": "[Year]",
+     "title": "[Recognition]",
+     "text": "[Detail.]",
+     "image": ""
+    },
+    {
+     "date": "[Year]",
+     "title": "[Recent years]",
+     "text": "[Detail.]",
+     "image": ""
+    }
+   ],
+   "id": "t06"
+  },
+  {
+   "type": "gallery",
+   "mode": "carousel",
+   "images": [
+    {
+     "src": "assets/photo-1.svg",
+     "caption": "[Year and occasion of photo 1]"
+    },
+    {
+     "src": "assets/photo-2.svg",
+     "caption": "[Year and occasion of photo 2]"
+    },
+    {
+     "src": "assets/photo-3.svg",
+     "caption": "[Year and occasion of photo 3]"
+    },
+    {
+     "src": "assets/photo-4.svg",
+     "caption": "[Year and occasion of photo 4]"
+    }
+   ],
+   "id": "t07"
+  },
+  {
+   "type": "text",
+   "heading": "In their own field",
+   "text": "[Explain the work itself in plain language: what was new or difficult about it.]",
+   "dropcap": false,
+   "id": "t08"
+  },
+  {
+   "type": "cards",
+   "flip": true,
+   "items": [
+    {
+     "icon": "🏅",
+     "title": "[Achievement 1]",
+     "text": "[Why it mattered.]",
+     "image": ""
+    },
+    {
+     "icon": "🔬",
+     "title": "[Achievement 2]",
+     "text": "[Why it mattered.]",
+     "image": ""
+    },
+    {
+     "icon": "📚",
+     "title": "[Achievement 3]",
+     "text": "[Why it mattered.]",
+     "image": ""
+    },
+    {
+     "icon": "🌱",
+     "title": "[Influence]",
+     "text": "[Who they inspired.]",
+     "image": ""
+    }
+   ],
+   "id": "t09"
+  },
+  {
+   "type": "image",
+   "src": "assets/photo-2.svg",
+   "caption": "[Caption]",
+   "credit": "[Photographer / source]",
+   "width": "wide",
+   "effect": "zoom-in",
+   "id": "t10"
+  },
+  {
+   "type": "text",
+   "heading": "Legacy",
+   "text": "[Close with what remains: institutions, ideas, people, unfinished work.]",
+   "dropcap": false,
+   "id": "t11"
+  }
+ ]
+}

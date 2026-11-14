@@ -1,0 +1,367 @@
+{
+ "version": 1,
+ "meta": {
+  "title": "When Things Start Talking",
+  "subtitle": "Sensors, gateways, protocols and platforms",
+  "author": "",
+  "date": "",
+  "description": "Long explainer on IoT: device layers, connectivity options, MQTT, edge and cloud, security and applications."
+ },
+ "theme": {
+  "preset": "monsoon",
+  "accent": "",
+  "font": "sans",
+  "animation": "fade-up",
+  "progressBar": true,
+  "navDots": true
+ },
+ "blocks": [
+  {
+   "type": "hero",
+   "kicker": "INTERNET OF THINGS",
+   "title": "When Things Start Talking",
+   "subtitle": "Sensors, gateways, protocols and platforms",
+   "image": "assets/hero.svg",
+   "effect": "kenburns",
+   "overlay": 0.5,
+   "align": "center",
+   "id": "t01"
+  },
+  {
+   "type": "text",
+   "heading": "",
+   "text": "The Internet of Things connects ordinary objects, such as meters, machines, vehicles and fields of crops, to networks so they can report their state and be controlled from afar.\n\nIndividually the devices are simple. The value comes from collecting their data, combining it and acting on it.",
+   "dropcap": true,
+   "id": "t02"
+  },
+  {
+   "type": "stats",
+   "items": [
+    {
+     "value": 1999,
+     "prefix": "",
+     "suffix": "",
+     "label": "Year Kevin Ashton coined the phrase 'Internet of Things'",
+     "plain": true
+    },
+    {
+     "value": 128,
+     "prefix": "",
+     "suffix": " bit",
+     "label": "Length of an IPv6 address, enough for every device",
+     "plain": false
+    },
+    {
+     "value": 1883,
+     "prefix": "",
+     "suffix": "",
+     "label": "Default TCP port of the MQTT messaging protocol",
+     "plain": true
+    },
+    {
+     "value": 2.4,
+     "prefix": "",
+     "suffix": " GHz",
+     "label": "Band shared by Wi-Fi, Bluetooth and Zigbee",
+     "plain": false
+    }
+   ],
+   "id": "t03"
+  },
+  {
+   "type": "divider",
+   "style": "wave",
+   "id": "t04"
+  },
+  {
+   "type": "text",
+   "heading": "Four layers",
+   "text": "An IoT system is usually described in layers. **Devices** sense and act. **Connectivity** carries their data, often through a gateway. A **platform** stores, processes and analyses it. **Applications** present information and trigger actions. Design choices at each layer trade range, data rate, battery life and cost.",
+   "dropcap": false,
+   "id": "t05"
+  },
+  {
+   "type": "scrolly",
+   "side": "right",
+   "steps": [
+    {
+     "image": "assets/step-1.svg",
+     "text": "**Sense.** A low-power node samples its sensors, perhaps only once every few minutes, and sleeps the rest of the time."
+    },
+    {
+     "image": "assets/step-2.svg",
+     "text": "**Send.** The reading travels by a short-range link to a gateway, or directly over a low-power wide-area or cellular network."
+    },
+    {
+     "image": "assets/step-3.svg",
+     "text": "**Store and analyse.** A broker or platform receives messages, stores time series and runs rules or models on them."
+    },
+    {
+     "image": "assets/step-4.svg",
+     "text": "**Act.** Dashboards, alerts and automatic commands close the loop back to people and machines."
+    }
+   ],
+   "id": "t06"
+  },
+  {
+   "type": "hotspots",
+   "image": "assets/diagram.svg",
+   "caption": "Tap the markers to explore each stage.",
+   "points": [
+    {
+     "x": 16.2,
+     "y": 32.6,
+     "title": "Things",
+     "text": "Sensors and actuators built around a microcontroller and a radio."
+    },
+    {
+     "x": 36.2,
+     "y": 58.6,
+     "title": "Gateway and edge",
+     "text": "Bridges local links to the internet and can filter or process data nearby."
+    },
+    {
+     "x": 56.2,
+     "y": 32.6,
+     "title": "Network",
+     "text": "Wi-Fi, cellular, LoRaWAN, NB-IoT or wired backhaul."
+    },
+    {
+     "x": 76.2,
+     "y": 58.6,
+     "title": "Cloud platform",
+     "text": "Message broker, device registry, storage and analytics."
+    },
+    {
+     "x": 96.2,
+     "y": 32.6,
+     "title": "Applications",
+     "text": "Dashboards, alerts, reports and integrations with other systems."
+    }
+   ],
+   "id": "t07"
+  },
+  {
+   "type": "text",
+   "heading": "Choosing a radio",
+   "text": "No single link suits every device. **Bluetooth Low Energy** and **Zigbee** cover rooms and buildings on tiny batteries. **Wi-Fi** offers high data rates but uses more power. **LoRaWAN** and **NB-IoT** reach kilometres at very low data rates, enough for a meter reading. The right choice follows from how much data must travel how far, how often, on how much energy.",
+   "dropcap": false,
+   "id": "t08"
+  },
+  {
+   "type": "cards",
+   "flip": true,
+   "items": [
+    {
+     "icon": "📨",
+     "title": "MQTT",
+     "text": "A lightweight publish/subscribe protocol in which devices send messages to topics on a broker.",
+     "image": ""
+    },
+    {
+     "icon": "📡",
+     "title": "LPWAN",
+     "text": "Low-power wide-area networks: long range, low data rate, years of battery life.",
+     "image": ""
+    },
+    {
+     "icon": "🏭",
+     "title": "Edge computing",
+     "text": "Processing data near where it is produced to cut delay and bandwidth.",
+     "image": ""
+    },
+    {
+     "icon": "👯",
+     "title": "Digital twin",
+     "text": "A live software model of a physical asset, updated from its sensors.",
+     "image": ""
+    },
+    {
+     "icon": "⬇️",
+     "title": "OTA update",
+     "text": "Delivering new firmware to devices over the network.",
+     "image": ""
+    },
+    {
+     "icon": "🪪",
+     "title": "Device identity",
+     "text": "Unique credentials that let a platform authenticate each device.",
+     "image": ""
+    }
+   ],
+   "id": "t09"
+  },
+  {
+   "type": "image",
+   "src": "assets/section.svg",
+   "caption": "Replace with your own photograph or figure.",
+   "credit": "",
+   "width": "wide",
+   "effect": "zoom-in",
+   "id": "t10"
+  },
+  {
+   "type": "timeline",
+   "items": [
+    {
+     "date": "1982",
+     "title": "A connected vending machine",
+     "text": "Students at Carnegie Mellon University link a drinks machine to the network to check its stock.",
+     "image": ""
+    },
+    {
+     "date": "1999",
+     "title": "The name and a protocol",
+     "text": "Kevin Ashton coins 'Internet of Things'; MQTT is created the same year for telemetry over poor links.",
+     "image": ""
+    },
+    {
+     "date": "2010",
+     "title": "Bluetooth Low Energy",
+     "text": "Bluetooth 4.0 adds a low-energy mode suited to coin-cell devices.",
+     "image": ""
+    },
+    {
+     "date": "2014",
+     "title": "MQTT standardised",
+     "text": "MQTT 3.1.1 becomes an OASIS standard.",
+     "image": ""
+    },
+    {
+     "date": "2015",
+     "title": "LoRaWAN 1.0",
+     "text": "The LoRa Alliance publishes its first long-range network specification.",
+     "image": ""
+    },
+    {
+     "date": "2016",
+     "title": "NB-IoT",
+     "text": "3GPP standardises narrowband cellular technology for simple, low-power devices.",
+     "image": ""
+    }
+   ],
+   "id": "t11"
+  },
+  {
+   "type": "chart",
+   "title": "Peak data rate of three low-power links",
+   "labels": [
+    "LoRaWAN",
+    "Zigbee",
+    "Bluetooth LE"
+   ],
+   "values": [
+    50,
+    250,
+    1000
+   ],
+   "unit": " kbit/s",
+   "id": "t12"
+  },
+  {
+   "type": "compare",
+   "before": "assets/before.svg",
+   "after": "assets/after.svg",
+   "beforeLabel": "A few sensors",
+   "afterLabel": "Dense coverage",
+   "caption": "Drag the handle: more nodes give finer coverage and more to manage. Replace with your own deployment maps.",
+   "id": "t13"
+  },
+  {
+   "type": "quote",
+   "text": "An IoT device is only as useful as the decision its data makes possible.",
+   "by": "Key idea",
+   "id": "t14"
+  },
+  {
+   "type": "gallery",
+   "mode": "carousel",
+   "images": [
+    {
+     "src": "assets/gallery-1.svg",
+     "caption": "Nodes forming a mesh"
+    },
+    {
+     "src": "assets/gallery-2.svg",
+     "caption": "Telemetry streams over time"
+    },
+    {
+     "src": "assets/gallery-3.svg",
+     "caption": "Coverage cells across an area"
+    }
+   ],
+   "id": "t15"
+  },
+  {
+   "type": "text",
+   "heading": "Security and scale",
+   "text": "Many IoT devices are cheap, rarely updated and left with default passwords, which makes them easy targets. Good practice includes unique credentials per device, encrypted links, signed firmware updates and the ability to revoke a compromised device. At scale, simply keeping track of thousands of devices, their batteries and their software versions becomes a major task.",
+   "dropcap": false,
+   "id": "t16"
+  },
+  {
+   "type": "cards",
+   "flip": false,
+   "items": [
+    {
+     "icon": "🏙️",
+     "title": "Smart cities",
+     "text": "Street lighting, parking, waste and air-quality monitoring.",
+     "image": ""
+    },
+    {
+     "icon": "🌾",
+     "title": "Agriculture",
+     "text": "Soil moisture, weather and irrigation control.",
+     "image": ""
+    },
+    {
+     "icon": "🏭",
+     "title": "Industry",
+     "text": "Condition monitoring and predictive maintenance.",
+     "image": ""
+    },
+    {
+     "icon": "🏥",
+     "title": "Health",
+     "text": "Wearables and remote patient monitoring.",
+     "image": ""
+    }
+   ],
+   "id": "t17"
+  },
+  {
+   "type": "quiz",
+   "question": "In MQTT, where do devices send their messages?",
+   "options": [
+    "Directly to each other",
+    "To a broker, on named topics",
+    "To a DNS server",
+    "To a web browser"
+   ],
+   "answer": 1,
+   "explanation": "MQTT is publish/subscribe. The broker forwards each message to clients subscribed to its topic.",
+   "id": "t18"
+  },
+  {
+   "type": "quiz",
+   "question": "Which link best suits a battery-powered meter sending a few bytes per hour over several kilometres?",
+   "options": [
+    "Wi-Fi",
+    "Bluetooth Low Energy",
+    "LoRaWAN",
+    "HDMI"
+   ],
+   "answer": 2,
+   "explanation": "LoRaWAN trades data rate for long range and very low energy use.",
+   "id": "t19"
+  },
+  {
+   "type": "text",
+   "heading": "Key terms and next steps",
+   "text": "**Node**: an end device. **Gateway**: a bridge between local and wide-area networks. **Broker**: a server that routes published messages. **Telemetry**: data sent from remote devices. **Payload**: the data carried in a message.\n\n**Using this template.** Every block is editable: change the text in the panel on the right, replace the generated artwork with your own photographs, diagrams, GIFs or videos, and delete or reorder sections freely. Check figures against a current source before you publish.",
+   "dropcap": false,
+   "id": "t20"
+  }
+ ]
+}

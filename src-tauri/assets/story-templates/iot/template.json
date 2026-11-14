@@ -1,0 +1,9 @@
+{
+ "id": "iot",
+ "title": "When Things Start Talking",
+ "category": "Networks",
+ "description": "Long explainer on IoT: device layers, connectivity options, MQTT, edge and cloud, security and applications.",
+ "sections": 20,
+ "preset": "monsoon",
+ "cover": "assets/hero.svg"
+}

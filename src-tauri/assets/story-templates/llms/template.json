@@ -1,0 +1,9 @@
+{
+ "id": "llms",
+ "title": "Machines That Predict the Next Word",
+ "category": "Artificial intelligence",
+ "description": "Long explainer on large language models: tokenisation, embeddings, attention, training, limits and responsible use.",
+ "sections": 20,
+ "preset": "paper",
+ "cover": "assets/hero.svg"
+}

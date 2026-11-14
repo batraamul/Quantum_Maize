@@ -1,0 +1,9 @@
+{
+ "id": "format-place-guide",
+ "title": "Place and Travel Guide",
+ "category": "Story formats",
+ "description": "Layout for an immersive guide to a place: clickable route map, day plan, photo gallery, then-and-now slider and practical tips.",
+ "sections": 16,
+ "preset": "saffron",
+ "cover": "assets/hero.svg"
+}

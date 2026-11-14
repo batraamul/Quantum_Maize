@@ -1,0 +1,371 @@
+{
+ "version": 1,
+ "meta": {
+  "title": "The Operating System Behind Almost Everything",
+  "subtitle": "Kernel, shell, files and the open-source model",
+  "author": "",
+  "date": "",
+  "description": "Long explainer on Linux: boot sequence, kernel, processes, file system, permissions, distributions and history."
+ },
+ "theme": {
+  "preset": "paper",
+  "accent": "",
+  "font": "sans",
+  "animation": "fade-up",
+  "progressBar": true,
+  "navDots": true
+ },
+ "blocks": [
+  {
+   "type": "hero",
+   "kicker": "LINUX",
+   "title": "The Operating System Behind Almost Everything",
+   "subtitle": "Kernel, shell, files and the open-source model",
+   "image": "assets/hero.svg",
+   "effect": "kenburns",
+   "overlay": 0.5,
+   "align": "center",
+   "id": "t01"
+  },
+  {
+   "type": "text",
+   "heading": "",
+   "text": "Linux runs phones, web servers, routers, televisions, spacecraft and every one of the world's 500 fastest supercomputers. Most people use it daily without knowing.\n\nIt began as one student's hobby and grew into the largest collaborative software project ever undertaken. This story explains what Linux is, how it is organised and why it spread so far.",
+   "dropcap": true,
+   "id": "t02"
+  },
+  {
+   "type": "stats",
+   "items": [
+    {
+     "value": 1991,
+     "prefix": "",
+     "suffix": "",
+     "label": "Year Linus Torvalds announced Linux",
+     "plain": true
+    },
+    {
+     "value": 10239,
+     "prefix": "",
+     "suffix": "",
+     "label": "Lines of code in the first release, version 0.01",
+     "plain": false
+    },
+    {
+     "value": 500,
+     "prefix": "",
+     "suffix": "",
+     "label": "Of the TOP500 supercomputers running Linux",
+     "plain": false
+    },
+    {
+     "value": 3,
+     "prefix": "",
+     "suffix": "",
+     "label": "Permission classes on every file: owner, group, others",
+     "plain": false
+    }
+   ],
+   "id": "t03"
+  },
+  {
+   "type": "divider",
+   "style": "wave",
+   "id": "t04"
+  },
+  {
+   "type": "text",
+   "heading": "Kernel and user space",
+   "text": "The **kernel** is the core program that controls the hardware. It schedules processes, manages memory, runs device drivers and enforces permissions. Everything else, from the shell to the web browser, runs in **user space** and asks the kernel for services through system calls. A **distribution** packages the kernel with the tools and applications that make a complete system.",
+   "dropcap": false,
+   "id": "t05"
+  },
+  {
+   "type": "scrolly",
+   "side": "right",
+   "steps": [
+    {
+     "image": "assets/step-1.svg",
+     "text": "**Firmware.** On power-up, UEFI or BIOS firmware tests the hardware and finds a device to boot from."
+    },
+    {
+     "image": "assets/step-2.svg",
+     "text": "**Bootloader.** A bootloader such as GRUB loads the kernel and an initial file system into memory."
+    },
+    {
+     "image": "assets/step-3.svg",
+     "text": "**Kernel.** The kernel initialises memory, drivers and the root file system, then starts the first process."
+    },
+    {
+     "image": "assets/step-4.svg",
+     "text": "**Init system.** The init system, commonly systemd, starts services and finally offers a login."
+    }
+   ],
+   "id": "t06"
+  },
+  {
+   "type": "hotspots",
+   "image": "assets/diagram.svg",
+   "caption": "Tap the markers to explore each stage.",
+   "points": [
+    {
+     "x": 16.2,
+     "y": 32.6,
+     "title": "Hardware",
+     "text": "Processor, memory, storage and peripherals."
+    },
+    {
+     "x": 36.2,
+     "y": 58.6,
+     "title": "Kernel",
+     "text": "Process scheduling, memory management, drivers, networking and file systems."
+    },
+    {
+     "x": 56.2,
+     "y": 32.6,
+     "title": "System libraries",
+     "text": "Code such as the C library that programs use to request kernel services."
+    },
+    {
+     "x": 76.2,
+     "y": 58.6,
+     "title": "Shell and utilities",
+     "text": "The command interpreter and the small tools it combines."
+    },
+    {
+     "x": 96.2,
+     "y": 32.6,
+     "title": "Applications",
+     "text": "Servers, desktops, containers and everything users actually run."
+    }
+   ],
+   "id": "t07"
+  },
+  {
+   "type": "text",
+   "heading": "Everything is a file",
+   "text": "Unix-like systems present devices, pipes and even kernel information through the same interface as ordinary files. Small programs that each do one job can therefore be chained together, the output of one feeding the next. This design, and the plain-text configuration that goes with it, is why Linux is so easy to automate.",
+   "dropcap": false,
+   "id": "t08"
+  },
+  {
+   "type": "cards",
+   "flip": true,
+   "items": [
+    {
+     "icon": "⚙️",
+     "title": "Kernel",
+     "text": "The privileged core that manages hardware and resources.",
+     "image": ""
+    },
+    {
+     "icon": "⌨️",
+     "title": "Shell",
+     "text": "A command interpreter, such as bash, that runs programs and scripts.",
+     "image": ""
+    },
+    {
+     "icon": "🌳",
+     "title": "File system hierarchy",
+     "text": "A single tree starting at /, with standard places such as /etc, /home and /var.",
+     "image": ""
+    },
+    {
+     "icon": "🏃",
+     "title": "Process",
+     "text": "A running program with its own memory and an identifying number.",
+     "image": ""
+    },
+    {
+     "icon": "🔐",
+     "title": "Permissions",
+     "text": "Read, write and execute rights for the owner, a group and everyone else.",
+     "image": ""
+    },
+    {
+     "icon": "📦",
+     "title": "Package manager",
+     "text": "A tool such as apt or dnf that installs, updates and removes software.",
+     "image": ""
+    }
+   ],
+   "id": "t09"
+  },
+  {
+   "type": "image",
+   "src": "assets/section.svg",
+   "caption": "Replace with your own photograph or figure.",
+   "credit": "",
+   "width": "wide",
+   "effect": "zoom-in",
+   "id": "t10"
+  },
+  {
+   "type": "timeline",
+   "items": [
+    {
+     "date": "1969",
+     "title": "Unix",
+     "text": "Ken Thompson and Dennis Ritchie begin Unix at Bell Labs.",
+     "image": ""
+    },
+    {
+     "date": "1983",
+     "title": "GNU",
+     "text": "Richard Stallman announces a project to build a free Unix-like system.",
+     "image": ""
+    },
+    {
+     "date": "1991",
+     "title": "Linux announced",
+     "text": "Linus Torvalds posts about his new kernel, 'just a hobby'.",
+     "image": ""
+    },
+    {
+     "date": "1992",
+     "title": "Under the GPL",
+     "text": "The kernel adopts the GNU General Public License, inviting wide contribution.",
+     "image": ""
+    },
+    {
+     "date": "2005",
+     "title": "Git",
+     "text": "Torvalds writes a version-control system to manage kernel development.",
+     "image": ""
+    },
+    {
+     "date": "2008",
+     "title": "Android",
+     "text": "The first Android phone ships, putting the Linux kernel into mobile devices.",
+     "image": ""
+    }
+   ],
+   "id": "t11"
+  },
+  {
+   "type": "chart",
+   "title": "Kernel source size, approximate",
+   "labels": [
+    "0.01 (1991)",
+    "1.0 (1994)",
+    "2.0 (1996)",
+    "2.6.0 (2003)",
+    "5.x (2020)"
+   ],
+   "values": [
+    0.01,
+    0.18,
+    0.78,
+    5.9,
+    27.8
+   ],
+   "unit": " M lines",
+   "id": "t12"
+  },
+  {
+   "type": "compare",
+   "before": "assets/before.svg",
+   "after": "assets/after.svg",
+   "beforeLabel": "Readable source",
+   "afterLabel": "Compiled machine code",
+   "caption": "Drag the handle: open source means anyone may read and change the left side. Replace with your own illustration.",
+   "id": "t13"
+  },
+  {
+   "type": "quote",
+   "text": "Linux succeeded less through a single brilliant design than through a way of working that let thousands of people improve it.",
+   "by": "Key idea",
+   "id": "t14"
+  },
+  {
+   "type": "gallery",
+   "mode": "carousel",
+   "images": [
+    {
+     "src": "assets/gallery-1.svg",
+     "caption": "Streams of data through a pipeline"
+    },
+    {
+     "src": "assets/gallery-2.svg",
+     "caption": "Drivers connect kernel and hardware"
+    },
+    {
+     "src": "assets/gallery-3.svg",
+     "caption": "Containers share one kernel"
+    }
+   ],
+   "id": "t15"
+  },
+  {
+   "type": "text",
+   "heading": "Where the difficulties lie",
+   "text": "Choice brings fragmentation: hundreds of distributions differ in packaging and defaults. Hardware support depends on makers releasing drivers or documentation. And because so much critical infrastructure depends on components maintained by small volunteer teams, funding and securing that shared code has become a serious concern.",
+   "dropcap": false,
+   "id": "t16"
+  },
+  {
+   "type": "cards",
+   "flip": false,
+   "items": [
+    {
+     "icon": "☁️",
+     "title": "Servers and cloud",
+     "text": "Most web servers and cloud instances.",
+     "image": ""
+    },
+    {
+     "icon": "📱",
+     "title": "Mobile",
+     "text": "Android is built on the Linux kernel.",
+     "image": ""
+    },
+    {
+     "icon": "🔬",
+     "title": "Supercomputing",
+     "text": "Scientific computing and weather prediction.",
+     "image": ""
+    },
+    {
+     "icon": "📟",
+     "title": "Embedded devices",
+     "text": "Routers, televisions, cars and single-board computers.",
+     "image": ""
+    }
+   ],
+   "id": "t17"
+  },
+  {
+   "type": "quiz",
+   "question": "What is the role of the kernel?",
+   "options": [
+    "It draws the desktop",
+    "It manages hardware and resources for all other programs",
+    "It installs packages",
+    "It stores user documents"
+   ],
+   "answer": 1,
+   "explanation": "The kernel schedules processes, manages memory and controls devices on behalf of user programs.",
+   "id": "t18"
+  },
+  {
+   "type": "quiz",
+   "question": "A file's permissions are 'rwxr-x---'. Who can read it?",
+   "options": [
+    "Everyone",
+    "Only the owner",
+    "The owner and members of the file's group",
+    "Nobody"
+   ],
+   "answer": 2,
+   "explanation": "The three triplets are owner (rwx), group (r-x) and others (---).",
+   "id": "t19"
+  },
+  {
+   "type": "text",
+   "heading": "Key terms and next steps",
+   "text": "**Distribution**: a packaged Linux system such as Debian, Ubuntu or Fedora. **Root**: the administrator account, and also the top directory /. **Daemon**: a background service. **System call**: a request from a program to the kernel. **Open source**: software whose source may be read, changed and shared.\n\n**Using this template.** Every block is editable: change the text in the panel on the right, replace the generated artwork with your own photographs, diagrams, GIFs or videos, and delete or reorder sections freely. Check figures against a current source before you publish.",
+   "dropcap": false,
+   "id": "t20"
+  }
+ ]
+}

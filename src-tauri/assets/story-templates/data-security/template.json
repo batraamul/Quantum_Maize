@@ -1,0 +1,9 @@
+{
+ "id": "data-security",
+ "title": "Keeping Information Safe",
+ "category": "Security",
+ "description": "Long explainer on data security: the CIA triad, access control, encryption, backups, incident response and law.",
+ "sections": 20,
+ "preset": "midnight",
+ "cover": "assets/hero.svg"
+}

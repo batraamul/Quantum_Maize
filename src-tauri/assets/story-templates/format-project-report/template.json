@@ -1,0 +1,9 @@
+{
+ "id": "format-project-report",
+ "title": "Project or Mission Report",
+ "category": "Story formats",
+ "description": "Layout for reporting a project: headline results, phases, system diagram with markers, milestones, results chart and lessons.",
+ "sections": 13,
+ "preset": "quantum",
+ "cover": "assets/hero.svg"
+}

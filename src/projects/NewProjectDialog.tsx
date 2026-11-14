@@ -5,6 +5,7 @@ import { FileText, FolderOpen, Globe, Layers, Library, PackageOpen, Presentation
 import { Modal } from "../components/Common";
 import { createProject, ui, useApp } from "../app/store";
 import type { StarterKind } from "../services/api";
+import { SAMPLE_ID, StoryTemplateGallery } from "../story/StoryTemplates";
 import type { Engine } from "../types";
 
 const THEMES = ["metropolis", "Madrid", "CambridgeUS", "Copenhagen", "Warsaw", "Berlin", "Singapore", "Boadilla", "AnnArbor", "default"];
@@ -20,6 +21,8 @@ export function NewProjectDialog() {
   const [color, setColor] = useState("quantum");
   const [aspect, setAspect] = useState("169");
   const [busy, setBusy] = useState(false);
+  const [storyTpl, setStoryTpl] = useState(SAMPLE_ID);
+  const [autoName, setAutoName] = useState("My Research Paper");
 
   useEffect(() => {
     (async () => {
@@ -32,15 +35,20 @@ export function NewProjectDialog() {
     })();
   }, []);
 
+  // The name follows the selection until the user types their own.
+  const suggest = (n: string) => {
+    if (name === autoName) setName(n);
+    setAutoName(n);
+  };
   const choose = (k: StarterKind, defName: string) => {
     setKind(k);
-    if (["My Research Paper", "My Presentation", "My Interactive Story", "Untitled"].includes(name)) setName(defName);
+    suggest(k === "story" && storyTpl !== SAMPLE_ID ? autoName : defName);
   };
   const invalid = !name.trim() || /[\\/:*?"<>|]/.test(name) || !dir;
   const create = async () => {
     if (invalid) return;
     setBusy(true);
-    const ok = await createProject(dir, name.trim(), kind, engine, kind === "presentation" ? { beamerTheme: theme, beamerColor: color, aspect } : undefined);
+    const ok = await createProject(dir, name.trim(), kind, engine, kind === "presentation" ? { beamerTheme: theme, beamerColor: color, aspect } : undefined, kind === "story" && storyTpl !== SAMPLE_ID ? storyTpl : undefined);
     setBusy(false);
     if (ok) ui.closeDialog();
   };
@@ -67,6 +75,7 @@ export function NewProjectDialog() {
           <span><div className="ct">Import ZIP / Overleaf…</div><div className="cd">An Overleaf download or any LaTeX archive.</div></span>
         </button>
       </div>
+      {kind === "story" && <StoryTemplateGallery value={storyTpl} onChange={(id, title) => { setStoryTpl(id); suggest(title); }} />}
       <div className="field">
         <label>Project name</label>
         <input className="input" value={name} autoFocus onChange={(e) => setName(e.target.value)} onKeyDown={(e) => e.key === "Enter" && create()} />

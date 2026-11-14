@@ -1,0 +1,9 @@
+{
+ "id": "format-data-story",
+ "title": "Data Story",
+ "category": "Story formats",
+ "description": "Layout for a numbers-led story: animated figures, two charts, method diagram, comparison slider and limits.",
+ "sections": 12,
+ "preset": "midnight",
+ "cover": "assets/hero.svg"
+}

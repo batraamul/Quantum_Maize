@@ -1,0 +1,369 @@
+{
+ "version": 1,
+ "meta": {
+  "title": "Computers You Never Notice",
+  "subtitle": "Microcontrollers, firmware and real-time behaviour",
+  "author": "",
+  "date": "",
+  "description": "Long explainer on embedded systems: microcontrollers, peripherals, interrupts, RTOS, power and reliability."
+ },
+ "theme": {
+  "preset": "emerald",
+  "accent": "",
+  "font": "sans",
+  "animation": "fade-up",
+  "progressBar": true,
+  "navDots": true
+ },
+ "blocks": [
+  {
+   "type": "hero",
+   "kicker": "EMBEDDED SYSTEMS",
+   "title": "Computers You Never Notice",
+   "subtitle": "Microcontrollers, firmware and real-time behaviour",
+   "image": "assets/hero.svg",
+   "effect": "kenburns",
+   "overlay": 0.5,
+   "align": "center",
+   "id": "t01"
+  },
+  {
+   "type": "text",
+   "heading": "",
+   "text": "Most computers have no keyboard or screen. They sit inside washing machines, cars, pacemakers and weather instruments, doing one job for years. These are embedded systems.\n\nThey are designed under tight limits on cost, memory, power and time, and they are expected never to crash.",
+   "dropcap": true,
+   "id": "t02"
+  },
+  {
+   "type": "stats",
+   "items": [
+    {
+     "value": 32,
+     "prefix": "",
+     "suffix": " KB",
+     "label": "Program memory of the ATmega328P used in the Arduino Uno",
+     "plain": false
+    },
+    {
+     "value": 2,
+     "prefix": "",
+     "suffix": " KB",
+     "label": "RAM in that same microcontroller",
+     "plain": false
+    },
+    {
+     "value": 16,
+     "prefix": "",
+     "suffix": " MHz",
+     "label": "Clock frequency of the Arduino Uno",
+     "plain": false
+    },
+    {
+     "value": 1971,
+     "prefix": "",
+     "suffix": "",
+     "label": "Year of the first commercial microprocessor, the Intel 4004",
+     "plain": true
+    }
+   ],
+   "id": "t03"
+  },
+  {
+   "type": "divider",
+   "style": "wave",
+   "id": "t04"
+  },
+  {
+   "type": "text",
+   "heading": "One chip, one job",
+   "text": "A **microcontroller** puts a processor, memory and peripherals such as timers, converters and serial ports on a single chip. Firmware reads inputs, makes decisions and drives outputs in an endless loop, often reacting to events through **interrupts** and sleeping in between to save power.",
+   "dropcap": false,
+   "id": "t05"
+  },
+  {
+   "type": "scrolly",
+   "side": "right",
+   "steps": [
+    {
+     "image": "assets/step-1.svg",
+     "text": "**Read.** Pins, converters and serial buses bring in switch states, sensor voltages and messages from other devices."
+    },
+    {
+     "image": "assets/step-2.svg",
+     "text": "**Decide.** Firmware filters the inputs, runs control laws or state machines and checks for faults."
+    },
+    {
+     "image": "assets/step-3.svg",
+     "text": "**Drive.** Outputs switch loads, generate PWM for motors and LEDs, and send data onward."
+    },
+    {
+     "image": "assets/step-4.svg",
+     "text": "**Sleep.** Between events the processor enters a low-power mode and wakes on a timer or an interrupt."
+    }
+   ],
+   "id": "t06"
+  },
+  {
+   "type": "hotspots",
+   "image": "assets/diagram.svg",
+   "caption": "Tap the markers to explore each stage.",
+   "points": [
+    {
+     "x": 16.2,
+     "y": 32.6,
+     "title": "Sensors and inputs",
+     "text": "Switches, analogue sensors and digital devices on I²C, SPI or UART."
+    },
+    {
+     "x": 36.2,
+     "y": 58.6,
+     "title": "Microcontroller",
+     "text": "CPU core, flash, RAM, clocks and on-chip peripherals."
+    },
+    {
+     "x": 56.2,
+     "y": 32.6,
+     "title": "Firmware",
+     "text": "Bare-metal loop or real-time operating system, drivers and application logic."
+    },
+    {
+     "x": 76.2,
+     "y": 58.6,
+     "title": "Actuators and outputs",
+     "text": "Motors, relays, displays and indicators, usually through driver circuits."
+    },
+    {
+     "x": 96.2,
+     "y": 32.6,
+     "title": "Power and communication",
+     "text": "Regulators, battery management and wired or wireless links."
+    }
+   ],
+   "id": "t07"
+  },
+  {
+   "type": "text",
+   "heading": "Real time means on time",
+   "text": "In a real-time system a correct answer delivered late is a wrong answer. An airbag controller or a flight controller must respond within a guaranteed deadline. Designers bound the worst-case execution time, give urgent work priority and keep interrupt handlers short. A real-time operating system schedules tasks so those deadlines are met predictably.",
+   "dropcap": false,
+   "id": "t08"
+  },
+  {
+   "type": "cards",
+   "flip": true,
+   "items": [
+    {
+     "icon": "⚡",
+     "title": "Interrupt",
+     "text": "A hardware signal that pauses normal code to service an urgent event.",
+     "image": ""
+    },
+    {
+     "icon": "🗓️",
+     "title": "RTOS",
+     "text": "A small operating system that schedules tasks by priority with predictable timing.",
+     "image": ""
+    },
+    {
+     "icon": "🐕",
+     "title": "Watchdog timer",
+     "text": "A timer that resets the system if firmware stops responding.",
+     "image": ""
+    },
+    {
+     "icon": "📍",
+     "title": "GPIO",
+     "text": "General-purpose input/output pins, configured in software.",
+     "image": ""
+    },
+    {
+     "icon": "🚀",
+     "title": "Bootloader",
+     "text": "A small program that starts the device and can load new firmware.",
+     "image": ""
+    },
+    {
+     "icon": "🔌",
+     "title": "I²C, SPI, UART",
+     "text": "The three most common serial buses linking chips on a board.",
+     "image": ""
+    }
+   ],
+   "id": "t09"
+  },
+  {
+   "type": "image",
+   "src": "assets/section.svg",
+   "caption": "Replace with your own photograph or figure.",
+   "credit": "",
+   "width": "wide",
+   "effect": "zoom-in",
+   "id": "t10"
+  },
+  {
+   "type": "timeline",
+   "items": [
+    {
+     "date": "1971",
+     "title": "Intel 4004",
+     "text": "The first commercial microprocessor, built for a desktop calculator.",
+     "image": ""
+    },
+    {
+     "date": "1974",
+     "title": "TMS 1000",
+     "text": "Texas Instruments sells a microcontroller with processor, memory and I/O on one chip.",
+     "image": ""
+    },
+    {
+     "date": "1980",
+     "title": "Intel 8051",
+     "text": "An 8-bit microcontroller family whose descendants are still in production.",
+     "image": ""
+    },
+    {
+     "date": "1985",
+     "title": "ARM1",
+     "text": "The first ARM processor runs; its low-power design later dominates embedded and mobile devices.",
+     "image": ""
+    },
+    {
+     "date": "2005",
+     "title": "Arduino",
+     "text": "An open, low-cost board brings microcontrollers to students, artists and hobbyists.",
+     "image": ""
+    },
+    {
+     "date": "2012",
+     "title": "Raspberry Pi",
+     "text": "A credit-card-sized Linux computer goes on sale.",
+     "image": ""
+    }
+   ],
+   "id": "t11"
+  },
+  {
+   "type": "chart",
+   "title": "On-chip RAM of popular microcontrollers",
+   "labels": [
+    "ATmega328P",
+    "STM32F103C8",
+    "RP2040",
+    "ESP32"
+   ],
+   "values": [
+    2,
+    20,
+    264,
+    520
+   ],
+   "unit": " KB",
+   "id": "t12"
+  },
+  {
+   "type": "compare",
+   "before": "assets/before.svg",
+   "after": "assets/after.svg",
+   "beforeLabel": "Discrete design",
+   "afterLabel": "Integrated design",
+   "caption": "Drag the handle: functions once spread over many parts now fit in one device. Replace with your own board photographs.",
+   "id": "t13"
+  },
+  {
+   "type": "quote",
+   "text": "In embedded work the best code is the code that is still running correctly ten years later.",
+   "by": "Key idea",
+   "id": "t14"
+  },
+  {
+   "type": "gallery",
+   "mode": "carousel",
+   "images": [
+    {
+     "src": "assets/gallery-1.svg",
+     "caption": "Tracks and pads on a controller board"
+    },
+    {
+     "src": "assets/gallery-2.svg",
+     "caption": "Signals on a serial bus"
+    },
+    {
+     "src": "assets/gallery-3.svg",
+     "caption": "A grid of memory cells"
+    }
+   ],
+   "id": "t15"
+  },
+  {
+   "type": "text",
+   "heading": "Designing for the field",
+   "text": "Embedded devices run unattended, often on batteries and in harsh conditions. Engineers must handle brown-outs, electrical noise and corrupted memory, provide safe firmware updates, and increasingly defend against attackers. Connected devices with weak security have become a route into larger networks.",
+   "dropcap": false,
+   "id": "t16"
+  },
+  {
+   "type": "cards",
+   "flip": false,
+   "items": [
+    {
+     "icon": "🚗",
+     "title": "Vehicles",
+     "text": "Dozens of controllers manage engine, brakes, airbags and infotainment.",
+     "image": ""
+    },
+    {
+     "icon": "🏠",
+     "title": "Appliances",
+     "text": "Thermostats, washing machines and air conditioners.",
+     "image": ""
+    },
+    {
+     "icon": "🩺",
+     "title": "Medical devices",
+     "text": "Infusion pumps, monitors and implants.",
+     "image": ""
+    },
+    {
+     "icon": "🎈",
+     "title": "Field instruments",
+     "text": "Data loggers, weather sensors and radiosondes.",
+     "image": ""
+    }
+   ],
+   "id": "t17"
+  },
+  {
+   "type": "quiz",
+   "question": "What is the purpose of a watchdog timer?",
+   "options": [
+    "Measure battery voltage",
+    "Reset the system if the firmware hangs",
+    "Keep the real-time clock",
+    "Speed up the processor"
+   ],
+   "answer": 1,
+   "explanation": "Firmware must 'kick' the watchdog regularly. If it stops, the watchdog forces a reset.",
+   "id": "t18"
+  },
+  {
+   "type": "quiz",
+   "question": "Which statement best describes a hard real-time system?",
+   "options": [
+    "It runs as fast as possible",
+    "Missing a deadline counts as a failure",
+    "It uses a graphical display",
+    "It has more than one processor"
+   ],
+   "answer": 1,
+   "explanation": "Timing guarantees, not raw speed, define real-time behaviour.",
+   "id": "t19"
+  },
+  {
+   "type": "text",
+   "heading": "Key terms and next steps",
+   "text": "**Firmware**: software stored in a device's non-volatile memory. **PWM**: pulse-width modulation. **ADC/DAC**: analogue-to-digital and digital-to-analogue converters. **ISR**: interrupt service routine. **Bare metal**: firmware running without an operating system.\n\n**Using this template.** Every block is editable: change the text in the panel on the right, replace the generated artwork with your own photographs, diagrams, GIFs or videos, and delete or reorder sections freely. Check figures against a current source before you publish.",
+   "dropcap": false,
+   "id": "t20"
+  }
+ ]
+}

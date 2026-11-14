@@ -1,0 +1,369 @@
+{
+ "version": 1,
+ "meta": {
+  "title": "Radios That Find Their Own Space",
+  "subtitle": "Sensing the spectrum, learning and sharing it without harm",
+  "author": "",
+  "date": "",
+  "description": "Long explainer on cognitive radio: spectrum sensing, dynamic access, learning, standards and regulation."
+ },
+ "theme": {
+  "preset": "monsoon",
+  "accent": "",
+  "font": "sans",
+  "animation": "fade-up",
+  "progressBar": true,
+  "navDots": true
+ },
+ "blocks": [
+  {
+   "type": "hero",
+   "kicker": "INTELLIGENT COGNITIVE RADIO",
+   "title": "Radios That Find Their Own Space",
+   "subtitle": "Sensing the spectrum, learning and sharing it without harm",
+   "image": "assets/hero.svg",
+   "effect": "kenburns",
+   "overlay": 0.5,
+   "align": "center",
+   "id": "t01"
+  },
+  {
+   "type": "text",
+   "heading": "",
+   "text": "Almost all useful radio spectrum is already assigned to someone. Yet measurements show that, at any place and moment, much of it sits idle. Licences reserve frequencies everywhere and always, while their owners use them only in some places and at some times.\n\nA cognitive radio observes its surroundings, finds the idle frequencies and uses them, and moves away the instant the rightful user returns.",
+   "dropcap": true,
+   "id": "t02"
+  },
+  {
+   "type": "stats",
+   "items": [
+    {
+     "value": 1999,
+     "prefix": "",
+     "suffix": "",
+     "label": "Year Joseph Mitola proposed cognitive radio",
+     "plain": true
+    },
+    {
+     "value": 2,
+     "prefix": "",
+     "suffix": "",
+     "label": "Classes of user: licensed primary and opportunistic secondary",
+     "plain": false
+    },
+    {
+     "value": 2011,
+     "prefix": "",
+     "suffix": "",
+     "label": "Year IEEE 802.22, the first cognitive-radio standard, was published",
+     "plain": true
+    },
+    {
+     "value": 100,
+     "prefix": "≤",
+     "suffix": " km",
+     "label": "Design range of an IEEE 802.22 rural broadband cell",
+     "plain": false
+    }
+   ],
+   "id": "t03"
+  },
+  {
+   "type": "divider",
+   "style": "wave",
+   "id": "t04"
+  },
+  {
+   "type": "text",
+   "heading": "The cognitive cycle",
+   "text": "A cognitive radio repeats a loop. It **senses** which frequencies are occupied, **analyses** the gaps, **decides** which to use and with what power and modulation, then **adapts** its transmission. It keeps listening while it works, and learns from experience which channels tend to be free.",
+   "dropcap": false,
+   "id": "t05"
+  },
+  {
+   "type": "scrolly",
+   "side": "right",
+   "steps": [
+    {
+     "image": "assets/step-1.svg",
+     "text": "**Sense.** The radio measures the band to detect signals from licensed users, even very weak ones."
+    },
+    {
+     "image": "assets/step-2.svg",
+     "text": "**Analyse.** It estimates how long each gap is likely to last and how good each channel would be."
+    },
+    {
+     "image": "assets/step-3.svg",
+     "text": "**Decide.** It selects a channel and transmission settings that meet its needs without disturbing others."
+    },
+    {
+     "image": "assets/step-4.svg",
+     "text": "**Adapt.** It transmits, keeps monitoring and hops elsewhere when a licensed user appears."
+    }
+   ],
+   "id": "t06"
+  },
+  {
+   "type": "hotspots",
+   "image": "assets/diagram.svg",
+   "caption": "Tap the markers to explore each stage.",
+   "points": [
+    {
+     "x": 16.2,
+     "y": 32.6,
+     "title": "Spectrum sensing",
+     "text": "Detecting primary users by energy, signal features or cooperation with other radios."
+    },
+    {
+     "x": 36.2,
+     "y": 58.6,
+     "title": "Spectrum decision",
+     "text": "Choosing the best available channel for the application."
+    },
+    {
+     "x": 56.2,
+     "y": 32.6,
+     "title": "Spectrum sharing",
+     "text": "Coordinating fairly with other secondary users."
+    },
+    {
+     "x": 76.2,
+     "y": 58.6,
+     "title": "Spectrum mobility",
+     "text": "Vacating a channel and continuing elsewhere without dropping the link."
+    },
+    {
+     "x": 96.2,
+     "y": 32.6,
+     "title": "Learning engine",
+     "text": "Using past observations to predict occupancy and improve decisions."
+    }
+   ],
+   "id": "t07"
+  },
+  {
+   "type": "text",
+   "heading": "The hidden-user problem",
+   "text": "A radio in a valley may hear nothing on a channel while a licensed receiver nearby is trying to listen to a distant transmitter. If the cognitive radio transmits, it causes interference it cannot detect. Solutions include **cooperative sensing**, where several radios pool their observations, and **geolocation databases**, which tell a device what channels are free at its position.",
+   "dropcap": false,
+   "id": "t08"
+  },
+  {
+   "type": "cards",
+   "flip": true,
+   "items": [
+    {
+     "icon": "👑",
+     "title": "Primary user",
+     "text": "The licence holder, who must be protected from interference.",
+     "image": ""
+    },
+    {
+     "icon": "🚶",
+     "title": "Secondary user",
+     "text": "A radio allowed to use spectrum only while the primary user is absent.",
+     "image": ""
+    },
+    {
+     "icon": "🕳️",
+     "title": "Spectrum hole",
+     "text": "A band assigned to a primary user but unused at a given time and place.",
+     "image": ""
+    },
+    {
+     "icon": "🔋",
+     "title": "Energy detection",
+     "text": "The simplest sensing method: measure power in a band and compare it with a threshold.",
+     "image": ""
+    },
+    {
+     "icon": "🔄",
+     "title": "Dynamic spectrum access",
+     "text": "Rules and techniques for sharing spectrum as conditions change.",
+     "image": ""
+    },
+    {
+     "icon": "🗄️",
+     "title": "Spectrum database",
+     "text": "An online service listing which channels a device may use where it is.",
+     "image": ""
+    }
+   ],
+   "id": "t09"
+  },
+  {
+   "type": "image",
+   "src": "assets/section.svg",
+   "caption": "Replace with your own photograph or figure.",
+   "credit": "",
+   "width": "wide",
+   "effect": "zoom-in",
+   "id": "t10"
+  },
+  {
+   "type": "timeline",
+   "items": [
+    {
+     "date": "1999",
+     "title": "The idea",
+     "text": "Joseph Mitola and Gerald Maguire describe radios that reason about their environment.",
+     "image": ""
+    },
+    {
+     "date": "2002",
+     "title": "Spectrum is under-used",
+     "text": "A US FCC task force reports that much assigned spectrum lies idle and recommends more flexible access.",
+     "image": ""
+    },
+    {
+     "date": "2005",
+     "title": "Brain-empowered wireless",
+     "text": "Simon Haykin sets out the signal-processing tasks a cognitive radio must perform.",
+     "image": ""
+    },
+    {
+     "date": "2008",
+     "title": "TV white spaces",
+     "text": "The FCC permits unlicensed devices in unused television channels.",
+     "image": ""
+    },
+    {
+     "date": "2011",
+     "title": "IEEE 802.22",
+     "text": "A standard for rural broadband over TV white spaces is published.",
+     "image": ""
+    },
+    {
+     "date": "2015",
+     "title": "Three-tier sharing",
+     "text": "The FCC adopts rules for the shared 3.5 GHz Citizens Broadband Radio Service.",
+     "image": ""
+    }
+   ],
+   "id": "t11"
+  },
+  {
+   "type": "chart",
+   "title": "Shannon capacity of a 1 MHz channel",
+   "labels": [
+    "0 dB SNR",
+    "10 dB SNR",
+    "20 dB SNR",
+    "30 dB SNR"
+   ],
+   "values": [
+    1.0,
+    3.46,
+    6.66,
+    9.97
+   ],
+   "unit": " Mbit/s",
+   "id": "t12"
+  },
+  {
+   "type": "compare",
+   "before": "assets/before.svg",
+   "after": "assets/after.svg",
+   "beforeLabel": "Licensed users only",
+   "afterLabel": "Gaps used by secondary users",
+   "caption": "Drag the handle: idle channels are filled without touching occupied ones. Replace with your own occupancy measurements.",
+   "id": "t13"
+  },
+  {
+   "type": "quote",
+   "text": "Spectrum is scarce on paper and plentiful in practice. Cognitive radio is the attempt to close that gap.",
+   "by": "Key idea",
+   "id": "t14"
+  },
+  {
+   "type": "gallery",
+   "mode": "carousel",
+   "images": [
+    {
+     "src": "assets/gallery-1.svg",
+     "caption": "Occupied and idle channels"
+    },
+    {
+     "src": "assets/gallery-2.svg",
+     "caption": "Radios sharing what they sense"
+    },
+    {
+     "src": "assets/gallery-3.svg",
+     "caption": "Sensing the surroundings"
+    }
+   ],
+   "id": "t15"
+  },
+  {
+   "type": "text",
+   "heading": "Why adoption is gradual",
+   "text": "Licence holders must be convinced that sharing will not harm their services. Sensing weak signals reliably is technically demanding, and mistakes cause real interference. Regulators need ways to certify radios whose behaviour is decided by software and, increasingly, by machine learning that is hard to audit.",
+   "dropcap": false,
+   "id": "t16"
+  },
+  {
+   "type": "cards",
+   "flip": false,
+   "items": [
+    {
+     "icon": "🏞️",
+     "title": "Rural broadband",
+     "text": "Long-range links in unused television channels.",
+     "image": ""
+    },
+    {
+     "icon": "🚨",
+     "title": "Emergency networks",
+     "text": "Communications that adapt when infrastructure is damaged.",
+     "image": ""
+    },
+    {
+     "icon": "🪖",
+     "title": "Tactical radio",
+     "text": "Links that avoid interference and jamming.",
+     "image": ""
+    },
+    {
+     "icon": "📶",
+     "title": "Future mobile networks",
+     "text": "Dynamic sharing between operators and services.",
+     "image": ""
+    }
+   ],
+   "id": "t17"
+  },
+  {
+   "type": "quiz",
+   "question": "What must a secondary user do when a primary user starts transmitting?",
+   "options": [
+    "Increase its power",
+    "Vacate the channel promptly",
+    "Ignore it",
+    "Change its antenna"
+   ],
+   "answer": 1,
+   "explanation": "Protection of the licensed user is the first rule of opportunistic access.",
+   "id": "t18"
+  },
+  {
+   "type": "quiz",
+   "question": "Why is cooperative sensing used?",
+   "options": [
+    "To save battery",
+    "To overcome shadowing that hides a primary user from a single radio",
+    "To increase data rate",
+    "To avoid needing a licence"
+   ],
+   "answer": 1,
+   "explanation": "Pooling observations from several positions reduces the chance of missing a primary signal.",
+   "id": "t19"
+  },
+  {
+   "type": "text",
+   "heading": "Key terms and next steps",
+   "text": "**White space**: unused spectrum between active channels. **Sensing threshold**: the level above which a channel is judged occupied. **False alarm / missed detection**: the two kinds of sensing error. **Underlay / overlay**: sharing by staying below an interference limit, or by using gaps. **Policy engine**: software that enforces regulatory rules.\n\n**Using this template.** Every block is editable: change the text in the panel on the right, replace the generated artwork with your own photographs, diagrams, GIFs or videos, and delete or reorder sections freely. Check figures against a current source before you publish.",
+   "dropcap": false,
+   "id": "t20"
+  }
+ ]
+}

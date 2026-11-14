@@ -8,6 +8,8 @@
 //! project. For export, tokens become embedded data URIs (single file) or
 //! copied files (web folder).
 
+pub mod library;
+
 use crate::error::{AppError, AppResult};
 use crate::security::resolve_in_root;
 use base64::Engine;

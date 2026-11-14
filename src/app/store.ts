@@ -58,7 +58,7 @@ export interface PromptRequest {
 
 export type Dialog =
   | null | "newProject" | "settings" | "setup" | "about" | "shortcuts" | "recovery" | "journals" | "import" | "convert"
-  | "pptx" | "present" | "table" | "equation" | "figure" | "storyExport";
+  | "pptx" | "present" | "table" | "equation" | "figure" | "storyExport" | "storyTemplate";
 
 export interface ImportRequest {
   mode: "project" | "template";
@@ -367,9 +367,11 @@ export async function openProject(path: string) {
   }
 }
 
-export async function createProject(parentDir: string, name: string, template: StarterKind, engine: Engine, options?: StarterOptions) {
+export async function createProject(parentDir: string, name: string, template: StarterKind, engine: Engine, options?: StarterOptions, storyTemplateId?: string) {
   try {
-    const info = await api.createProject(parentDir, name, template, engine, options);
+    const info = storyTemplateId
+      ? await api.createStoryFromTemplate(parentDir, name, storyTemplateId)
+      : await api.createProject(parentDir, name, template, engine, options);
     set((s) => ({ settings: s.settings ? { ...s.settings, lastProjectDir: parentDir } : s.settings }));
     await openProject(info.root);
     toast("success", "Project created", info.root);

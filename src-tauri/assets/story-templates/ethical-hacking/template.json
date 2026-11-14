@@ -1,0 +1,9 @@
+{
+ "id": "ethical-hacking",
+ "title": "Thinking Like an Attacker",
+ "category": "Security",
+ "description": "Long explainer on ethical hacking: authorisation, testing phases, vulnerability classes, disclosure and defence.",
+ "sections": 20,
+ "preset": "midnight",
+ "cover": "assets/hero.svg"
+}

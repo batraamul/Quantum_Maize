@@ -1,0 +1,9 @@
+{
+ "id": "cognitive-radio",
+ "title": "Radios That Find Their Own Space",
+ "category": "Radio",
+ "description": "Long explainer on cognitive radio: spectrum sensing, dynamic access, learning, standards and regulation.",
+ "sections": 20,
+ "preset": "monsoon",
+ "cover": "assets/hero.svg"
+}

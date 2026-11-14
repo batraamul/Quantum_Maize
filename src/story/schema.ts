@@ -84,7 +84,7 @@ export const BLOCKS: Record<BlockType, { label: string; icon: string; descriptio
   },
   stats: {
     label: "Animated numbers", icon: "🔢", description: "Counters that count up when they appear",
-    fields: [{ key: "items", label: "Numbers", kind: "list", itemLabel: "Number", item: [{ key: "value", label: "Value", kind: "number" }, T("prefix", "Prefix"), T("suffix", "Suffix"), T("label", "Label")] }],
+    fields: [{ key: "items", label: "Numbers", kind: "list", itemLabel: "Number", item: [{ key: "value", label: "Value", kind: "number" }, T("prefix", "Prefix"), T("suffix", "Suffix"), T("label", "Label"), { key: "plain", label: "No thousands separator (for years)", kind: "bool" }] }],
     make: () => ({ type: "stats", items: [{ value: 100, prefix: "", suffix: "%", label: "Label" }] }),
   },
   timeline: {

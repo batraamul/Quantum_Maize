@@ -15,6 +15,7 @@ import { checkExternalChanges, dirtyPaths, guardUnsaved, init, onBufferChanged, 
 import { JournalLibrary, ImportDialog } from "../journal-library/JournalLibrary";
 import { ConversionDialog } from "../conversion/ConversionDialog";
 import { PptxDialog, PresentMode } from "../presentation/PresentationTools";
+import { SaveStoryTemplateDialog } from "../story/StoryTemplates";
 import { StoryExportDialog } from "../story/StoryExportDialog";
 import { EquationDialog, FigureDialog, TableDesigner } from "../authoring/AuthoringDialogs";
 import { monaco } from "../editor/monacoSetup";
@@ -93,6 +94,7 @@ export function App() {
       {dialog === "pptx" && project && <PptxDialog />}
       {dialog === "present" && project && <PresentMode />}
       {dialog === "storyExport" && project && <StoryExportDialog />}
+      {dialog === "storyTemplate" && project && <SaveStoryTemplateDialog />}
       {dialog === "table" && <TableDesigner />}
       {dialog === "equation" && <EquationDialog />}
       {dialog === "figure" && <FigureDialog />}

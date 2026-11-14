@@ -1,0 +1,9 @@
+{
+ "id": "agentic-ai",
+ "title": "From Answering to Acting",
+ "category": "Artificial intelligence",
+ "description": "Long explainer on AI agents: the agent loop, tools, memory, multi-agent systems, reliability and oversight.",
+ "sections": 20,
+ "preset": "midnight",
+ "cover": "assets/hero.svg"
+}

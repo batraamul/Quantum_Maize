@@ -1,0 +1,9 @@
+{
+ "id": "format-photo-essay",
+ "title": "Photo Essay",
+ "category": "Story formats",
+ "description": "Layout for a picture-led story: full-width images, brief captions and linking text, grid gallery and comparison.",
+ "sections": 12,
+ "preset": "midnight",
+ "cover": "assets/hero.svg"
+}

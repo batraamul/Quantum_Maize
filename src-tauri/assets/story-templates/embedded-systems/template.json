@@ -1,0 +1,9 @@
+{
+ "id": "embedded-systems",
+ "title": "Computers You Never Notice",
+ "category": "Electronics",
+ "description": "Long explainer on embedded systems: microcontrollers, peripherals, interrupts, RTOS, power and reliability.",
+ "sections": 20,
+ "preset": "emerald",
+ "cover": "assets/hero.svg"
+}

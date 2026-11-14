@@ -21,8 +21,7 @@ import type {
   Settings,
   Snapshot,
   SourceLocation,
-  TexInstallation,
-} from "../types";
+  TexInstallation, StoryTemplate } from "../types";
 
 export function errorMessage(e: unknown): string {
   if (e && typeof e === "object" && "message" in e) return String((e as { message: unknown }).message);
@@ -90,6 +89,13 @@ export const api = {
   doiLookup: (doi: string) => invoke<string>("doi_lookup", { doi }),
   setStoryPreview: (root: string, html: string) => invoke<void>("set_story_preview", { root, html }),
   exportStory: (root: string, html: string, dest: string, single: boolean) => invoke<string[]>("export_story", { root, html, dest, single }),
+  listStoryTemplates: () => invoke<StoryTemplate[]>("list_story_templates"),
+  storyTemplateCover: (id: string) => invoke<string>("story_template_cover", { id }),
+  createStoryFromTemplate: (parentDir: string, name: string, templateId: string) => invoke<ProjectInfo>("create_story_from_template", { parentDir, name, templateId }),
+  saveStoryTemplate: (root: string, title: string, description: string, category: string) => invoke<StoryTemplate>("save_story_template", { root, title, description, category }),
+  deleteStoryTemplate: (id: string) => invoke<void>("delete_story_template", { id }),
+  exportStoryTemplate: (id: string, dest: string) => invoke<void>("export_story_template", { id, dest }),
+  importStoryTemplate: (source: string) => invoke<StoryTemplate>("import_story_template", { source }),
   importFigure: (root: string, source: string) => invoke<string>("import_figure", { root, source }),
   importStoryAsset: (root: string, source: string) => invoke<string>("import_story_asset", { root, source }),
   exportPptx: (deck: unknown, dest: string) => invoke<number>("export_pptx", { deck, dest }),

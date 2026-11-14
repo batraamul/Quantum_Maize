@@ -1,0 +1,371 @@
+{
+ "version": 1,
+ "meta": {
+  "title": "From Answering to Acting",
+  "subtitle": "How AI agents plan, use tools and work towards goals",
+  "author": "",
+  "date": "",
+  "description": "Long explainer on AI agents: the agent loop, tools, memory, multi-agent systems, reliability and oversight."
+ },
+ "theme": {
+  "preset": "midnight",
+  "accent": "",
+  "font": "sans",
+  "animation": "fade-up",
+  "progressBar": true,
+  "navDots": true
+ },
+ "blocks": [
+  {
+   "type": "hero",
+   "kicker": "AGENTIC AI",
+   "title": "From Answering to Acting",
+   "subtitle": "How AI agents plan, use tools and work towards goals",
+   "image": "assets/hero.svg",
+   "effect": "kenburns",
+   "overlay": 0.5,
+   "align": "center",
+   "id": "t01"
+  },
+  {
+   "type": "text",
+   "heading": "",
+   "text": "A chatbot answers a question and stops. An agent is given a goal and works towards it: it decides what to do, uses tools such as search, code execution or business software, looks at the results and decides again.\n\nThat loop makes agents useful for multi-step work. It also means errors can compound, so design and oversight matter.",
+   "dropcap": true,
+   "id": "t02"
+  },
+  {
+   "type": "stats",
+   "items": [
+    {
+     "value": 4,
+     "prefix": "",
+     "suffix": "",
+     "label": "Stages of the basic loop: plan, act, observe, repeat",
+     "plain": false
+    },
+    {
+     "value": 60,
+     "prefix": "≈",
+     "suffix": " %",
+     "label": "Chance a 10-step task succeeds if each step is 95% reliable",
+     "plain": false
+    },
+    {
+     "value": 2022,
+     "prefix": "",
+     "suffix": "",
+     "label": "Year the ReAct pattern of reasoning and acting was published",
+     "plain": true
+    },
+    {
+     "value": 2024,
+     "prefix": "",
+     "suffix": "",
+     "label": "Year the Model Context Protocol for connecting tools was introduced",
+     "plain": true
+    }
+   ],
+   "id": "t03"
+  },
+  {
+   "type": "divider",
+   "style": "wave",
+   "id": "t04"
+  },
+  {
+   "type": "text",
+   "heading": "The agent loop",
+   "text": "An agent wraps a language model in a loop. The model reads the goal and the history so far, then either calls a **tool** or gives a final answer. The tool's result is added to the history and the model decides the next step. The loop ends when the goal is met, a limit is reached or a person steps in.",
+   "dropcap": false,
+   "id": "t05"
+  },
+  {
+   "type": "scrolly",
+   "side": "right",
+   "steps": [
+    {
+     "image": "assets/step-1.svg",
+     "text": "**Plan.** The model breaks the goal into steps and chooses what to do first."
+    },
+    {
+     "image": "assets/step-2.svg",
+     "text": "**Act.** It calls a tool: a search, a database query, a calculation, a file edit or another agent."
+    },
+    {
+     "image": "assets/step-3.svg",
+     "text": "**Observe.** The tool's output returns to the model as new information, including any errors."
+    },
+    {
+     "image": "assets/step-4.svg",
+     "text": "**Repeat or stop.** The model revises its plan, continues, asks for help or reports the result."
+    }
+   ],
+   "id": "t06"
+  },
+  {
+   "type": "hotspots",
+   "image": "assets/diagram.svg",
+   "caption": "Tap the markers to explore each stage.",
+   "points": [
+    {
+     "x": 16.2,
+     "y": 32.6,
+     "title": "Goal and instructions",
+     "text": "What the agent is asked to do and the rules it must follow."
+    },
+    {
+     "x": 36.2,
+     "y": 58.6,
+     "title": "Model as planner",
+     "text": "A language model that reasons about the next action."
+    },
+    {
+     "x": 56.2,
+     "y": 32.6,
+     "title": "Tools",
+     "text": "Functions the agent may call: search, code, APIs and files."
+    },
+    {
+     "x": 76.2,
+     "y": 58.6,
+     "title": "Memory",
+     "text": "Working context for the current task and stored notes for later ones."
+    },
+    {
+     "x": 96.2,
+     "y": 32.6,
+     "title": "Guardrails and oversight",
+     "text": "Permissions, limits, logging and human approval for consequential actions."
+    }
+   ],
+   "id": "t07"
+  },
+  {
+   "type": "text",
+   "heading": "Why reliability dominates",
+   "text": "If each step of a task succeeds 95% of the time, ten steps in a row succeed only about 60% of the time, and twenty about 36%. Long tasks therefore need agents that notice and recover from their own mistakes: checking results, retrying, and verifying the final outcome. Splitting work among specialised agents, with one reviewing another, is a common way to add such checks.",
+   "dropcap": false,
+   "id": "t08"
+  },
+  {
+   "type": "cards",
+   "flip": true,
+   "items": [
+    {
+     "icon": "🧰",
+     "title": "Tool use",
+     "text": "The model outputs a structured request, and software runs it and returns the result.",
+     "image": ""
+    },
+    {
+     "icon": "🗺️",
+     "title": "Planning",
+     "text": "Breaking a goal into steps and revising them as results arrive.",
+     "image": ""
+    },
+    {
+     "icon": "🧠",
+     "title": "Memory",
+     "text": "Information kept beyond one model call: notes, files or a searchable store.",
+     "image": ""
+    },
+    {
+     "icon": "👥",
+     "title": "Multi-agent systems",
+     "text": "Several agents with different roles working on one task.",
+     "image": ""
+    },
+    {
+     "icon": "🙋",
+     "title": "Human in the loop",
+     "text": "A person approves, corrects or takes over at defined points.",
+     "image": ""
+    },
+    {
+     "icon": "💉",
+     "title": "Prompt injection",
+     "text": "Text in a web page or document that tries to give the agent instructions.",
+     "image": ""
+    }
+   ],
+   "id": "t09"
+  },
+  {
+   "type": "image",
+   "src": "assets/section.svg",
+   "caption": "Replace with your own photograph or figure.",
+   "credit": "",
+   "width": "wide",
+   "effect": "zoom-in",
+   "id": "t10"
+  },
+  {
+   "type": "timeline",
+   "items": [
+    {
+     "date": "1966",
+     "title": "Shakey",
+     "text": "SRI begins work on a robot that reasons about its own actions.",
+     "image": ""
+    },
+    {
+     "date": "1997",
+     "title": "Deep Blue",
+     "text": "A chess computer defeats the world champion in a match.",
+     "image": ""
+    },
+    {
+     "date": "2016",
+     "title": "AlphaGo",
+     "text": "Learning and search combine to defeat a top professional Go player.",
+     "image": ""
+    },
+    {
+     "date": "2022",
+     "title": "ReAct",
+     "text": "Researchers show that language models perform better when they interleave reasoning with actions.",
+     "image": ""
+    },
+    {
+     "date": "2023",
+     "title": "Tool calling goes mainstream",
+     "text": "Structured function calling becomes a standard feature of language-model services.",
+     "image": ""
+    },
+    {
+     "date": "2024",
+     "title": "Open tool protocols",
+     "text": "The Model Context Protocol offers a common way to connect models to tools and data.",
+     "image": ""
+    }
+   ],
+   "id": "t11"
+  },
+  {
+   "type": "chart",
+   "title": "Success of an n-step task at 95% per step",
+   "labels": [
+    "1 step",
+    "5 steps",
+    "10 steps",
+    "20 steps",
+    "50 steps"
+   ],
+   "values": [
+    95,
+    77,
+    60,
+    36,
+    8
+   ],
+   "unit": " %",
+   "id": "t12"
+  },
+  {
+   "type": "compare",
+   "before": "assets/before.svg",
+   "after": "assets/after.svg",
+   "beforeLabel": "One assistant",
+   "afterLabel": "A team of agents",
+   "caption": "Drag the handle: complex work is often split among cooperating agents. Replace with your own architecture diagrams.",
+   "id": "t13"
+  },
+  {
+   "type": "quote",
+   "text": "An agent's capability is set by its model. Its trustworthiness is set by its permissions, its checks and its oversight.",
+   "by": "Key idea",
+   "id": "t14"
+  },
+  {
+   "type": "gallery",
+   "mode": "carousel",
+   "images": [
+    {
+     "src": "assets/gallery-1.svg",
+     "caption": "Agents exchange results"
+    },
+    {
+     "src": "assets/gallery-2.svg",
+     "caption": "A goal at the centre of many actions"
+    },
+    {
+     "src": "assets/gallery-3.svg",
+     "caption": "Tool calls routed through a controller"
+    }
+   ],
+   "id": "t15"
+  },
+  {
+   "type": "text",
+   "heading": "Safety by design",
+   "text": "Agents act in the world, so mistakes have consequences. Give each agent only the access it needs, require approval before irreversible actions such as sending, deleting or paying, keep an audit log, and treat content read from the web or from documents as data, never as instructions. Test agents on realistic tasks, including ones designed to mislead them.",
+   "dropcap": false,
+   "id": "t16"
+  },
+  {
+   "type": "cards",
+   "flip": false,
+   "items": [
+    {
+     "icon": "🧑‍💻",
+     "title": "Software engineering",
+     "text": "Reading code, making changes, running tests.",
+     "image": ""
+    },
+    {
+     "icon": "🔬",
+     "title": "Research",
+     "text": "Searching, reading and synthesising sources.",
+     "image": ""
+    },
+    {
+     "icon": "🏢",
+     "title": "Operations",
+     "text": "Processing tickets, documents and routine workflows.",
+     "image": ""
+    },
+    {
+     "icon": "📊",
+     "title": "Data analysis",
+     "text": "Querying data, running code and reporting findings.",
+     "image": ""
+    }
+   ],
+   "id": "t17"
+  },
+  {
+   "type": "quiz",
+   "question": "What distinguishes an agent from a simple chatbot?",
+   "options": [
+    "It has a larger vocabulary",
+    "It takes actions with tools in a loop to reach a goal",
+    "It always runs offline",
+    "It cannot make mistakes"
+   ],
+   "answer": 1,
+   "explanation": "The plan–act–observe loop, with tools, is the defining feature.",
+   "id": "t18"
+  },
+  {
+   "type": "quiz",
+   "question": "What is 'prompt injection'?",
+   "options": [
+    "Adding more training data",
+    "Instructions hidden in content the agent reads, intended to hijack it",
+    "A way to speed up the model",
+    "A database error"
+   ],
+   "answer": 1,
+   "explanation": "Agents must treat retrieved content as untrusted data and not follow instructions found in it.",
+   "id": "t19"
+  },
+  {
+   "type": "text",
+   "heading": "Key terms and next steps",
+   "text": "**Orchestrator**: an agent that assigns work to others. **Sub-agent**: an agent started for a part of the task. **Guardrail**: a rule or check that limits actions. **Least privilege**: giving only the access a task needs. **Trace**: the recorded sequence of an agent's steps.\n\n**Using this template.** Every block is editable: change the text in the panel on the right, replace the generated artwork with your own photographs, diagrams, GIFs or videos, and delete or reorder sections freely. Check figures against a current source before you publish.",
+   "dropcap": false,
+   "id": "t20"
+  }
+ ]
+}

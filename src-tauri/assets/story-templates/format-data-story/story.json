@@ -1,0 +1,211 @@
+{
+ "version": 1,
+ "meta": {
+  "title": "Data Story",
+  "subtitle": "Lead with the numbers, then explain them",
+  "author": "",
+  "date": "",
+  "description": "Layout for a numbers-led story: animated figures, two charts, method diagram, comparison slider and limits."
+ },
+ "theme": {
+  "preset": "midnight",
+  "accent": "",
+  "font": "sans",
+  "animation": "fade-up",
+  "progressBar": true,
+  "navDots": true
+ },
+ "blocks": [
+  {
+   "type": "hero",
+   "kicker": "IN NUMBERS",
+   "title": "[The finding, stated plainly]",
+   "subtitle": "[What the data cover: place, period, source]",
+   "image": "assets/hero.svg",
+   "effect": "kenburns",
+   "overlay": 0.4,
+   "align": "left",
+   "id": "t01"
+  },
+  {
+   "type": "stats",
+   "items": [
+    {
+     "value": 0,
+     "prefix": "",
+     "suffix": "",
+     "label": "[Headline figure]"
+    },
+    {
+     "value": 0,
+     "prefix": "",
+     "suffix": "%",
+     "label": "[Share or rate]"
+    },
+    {
+     "value": 0,
+     "prefix": "",
+     "suffix": "×",
+     "label": "[How many times larger or smaller]"
+    },
+    {
+     "value": 0,
+     "prefix": "",
+     "suffix": "",
+     "label": "[Records analysed]"
+    }
+   ],
+   "id": "t02"
+  },
+  {
+   "type": "text",
+   "heading": "What the numbers say",
+   "text": "[State the main finding in two sentences.]\n\n[Say what was measured, over what period and by whom.]",
+   "dropcap": false,
+   "id": "t03"
+  },
+  {
+   "type": "chart",
+   "title": "[Chart 1 title] (replace with your data)",
+   "labels": [
+    "2021",
+    "2022",
+    "2023",
+    "2024",
+    "2025"
+   ],
+   "values": [
+    12,
+    18,
+    17,
+    25,
+    31
+   ],
+   "unit": "",
+   "id": "t04"
+  },
+  {
+   "type": "text",
+   "heading": "The trend",
+   "text": "[Explain what the first chart shows and what a reader should notice.]",
+   "dropcap": false,
+   "id": "t05"
+  },
+  {
+   "type": "chart",
+   "title": "[Chart 2 title] (replace with your data)",
+   "labels": [
+    "[Group A]",
+    "[Group B]",
+    "[Group C]",
+    "[Group D]"
+   ],
+   "values": [
+    55,
+    32,
+    21,
+    9
+   ],
+   "unit": " %",
+   "id": "t06"
+  },
+  {
+   "type": "text",
+   "heading": "The breakdown",
+   "text": "[Explain the differences between groups, regions or categories.]",
+   "dropcap": false,
+   "id": "t07"
+  },
+  {
+   "type": "hotspots",
+   "image": "assets/diagram.svg",
+   "caption": "[Diagram caption: how the data were collected and processed]",
+   "points": [
+    {
+     "x": 16.2,
+     "y": 32.6,
+     "title": "[Source]",
+     "text": "[Where the data come from.]"
+    },
+    {
+     "x": 36.2,
+     "y": 58.6,
+     "title": "[Collection]",
+     "text": "[How they were gathered.]"
+    },
+    {
+     "x": 56.2,
+     "y": 32.6,
+     "title": "[Cleaning]",
+     "text": "[What was removed or corrected.]"
+    },
+    {
+     "x": 76.2,
+     "y": 58.6,
+     "title": "[Analysis]",
+     "text": "[The method used.]"
+    },
+    {
+     "x": 96.2,
+     "y": 32.6,
+     "title": "[Result]",
+     "text": "[What it produced.]"
+    }
+   ],
+   "id": "t08"
+  },
+  {
+   "type": "compare",
+   "before": "assets/before.svg",
+   "after": "assets/after.svg",
+   "beforeLabel": "[Before]",
+   "afterLabel": "[After]",
+   "caption": "[Caption: what changed between the two.]",
+   "id": "t09"
+  },
+  {
+   "type": "cards",
+   "flip": false,
+   "items": [
+    {
+     "icon": "📈",
+     "title": "[Finding 1]",
+     "text": "[One sentence.]",
+     "image": ""
+    },
+    {
+     "icon": "📉",
+     "title": "[Finding 2]",
+     "text": "[One sentence.]",
+     "image": ""
+    },
+    {
+     "icon": "🧭",
+     "title": "[Finding 3]",
+     "text": "[One sentence.]",
+     "image": ""
+    },
+    {
+     "icon": "❓",
+     "title": "[What we don't know]",
+     "text": "[One sentence.]",
+     "image": ""
+    }
+   ],
+   "id": "t10"
+  },
+  {
+   "type": "quote",
+   "text": "[An expert's interpretation of the numbers.]",
+   "by": "[Name, affiliation]",
+   "id": "t11"
+  },
+  {
+   "type": "text",
+   "heading": "Method and limits",
+   "text": "[Describe the data source, the calculations and their weaknesses. Say what the data cannot show.]",
+   "dropcap": false,
+   "id": "t12"
+  }
+ ]
+}

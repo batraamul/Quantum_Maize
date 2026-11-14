@@ -1,6 +1,6 @@
 # Development status
 
-Last updated: 2026-11-13 · version 0.2.0
+Last updated: 2026-11-14 · version 0.3.0
 
 All seven phases of the product brief have working implementations on Linux, plus the two additions requested later (presentations with PowerPoint export, interactive stories) and the rename to Quantum Maze with a user-defined owner line. Everything in the "Verified" column below was exercised in the running application or by an automated test on Linux x86-64. Windows and macOS builds are configured but have **never been built or run**.
 
@@ -22,6 +22,7 @@ All seven phases of the product brief have working implementations on Linux, plu
 | 7 | Linux `.deb`, `.rpm` and AppImage; CI workflow for Windows/macOS | See "Release build" below |
 | + | Beamer presentations: starter with themes/colours, slide panel, presenter mode, PPTX export (exact and editable) | Integration test compiles 4 theme/colour combinations; PPTX opened in LibreOffice by test and by hand |
 | + | Interactive stories: 15 block types, 6 presets, live preview, export as single HTML or web folder | GUI: every block type operated; exported file inspected (no external URLs); unit tests for schema and renderer |
+| + | Story template library: 26 bundled templates (6 layouts, 20 topic explainers of 20 sections each), gallery with search and categories, save as template, export/import as ZIP | GUI: created stories from three templates, saved and exported a template; unit tests check every template loads, renders offline and ships exactly the media it uses; import rejects non-template ZIPs and drops scripts |
 | + | Owner profile (name, rank, organization) shown as "Quantum Maze by …" and used as default author | GUI |
 
 ## Tests
@@ -72,6 +73,12 @@ Run: `cd src-tauri && cargo test` and `npm test`.
 - The single-file export embeds all media as data URIs, so large videos make very large files; use the web-folder export for those.
 - The chart block draws animated bar charts from typed numbers; there is no line chart, map or 3-D block.
 - Flip-card animation falls back to a cross-fade where the webview lacks `backface-visibility` support (seen in the Linux test environment without GPU compositing).
+
+**Story templates**
+
+- The six layout templates follow formats common in immersive news features; they are original layouts with placeholder text, not copies of any publisher's pages or artwork.
+- Topic templates are introductory explainers written for this release. Dates and figures were checked from general knowledge, not against live sources; verify before publishing.
+- Bundled artwork is abstract, code-generated SVG. It is meant to be replaced with real photographs and diagrams.
 
 **Submission checks**
 

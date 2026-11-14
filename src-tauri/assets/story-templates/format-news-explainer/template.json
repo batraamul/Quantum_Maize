@@ -1,0 +1,9 @@
+{
+ "id": "format-news-explainer",
+ "title": "News Explainer",
+ "category": "Story formats",
+ "description": "Layout for explaining an event: summary, key numbers, scroll-through sequence, timeline, chart and reactions.",
+ "sections": 15,
+ "preset": "paper",
+ "cover": "assets/hero.svg"
+}

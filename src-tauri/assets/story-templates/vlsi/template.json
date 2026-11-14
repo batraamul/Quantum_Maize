@@ -1,0 +1,9 @@
+{
+ "id": "vlsi",
+ "title": "Billions of Switches on a Fingernail",
+ "category": "Electronics",
+ "description": "Long explainer on VLSI: CMOS, the design flow from RTL to layout, fabrication, scaling and its limits.",
+ "sections": 20,
+ "preset": "quantum",
+ "cover": "assets/hero.svg"
+}

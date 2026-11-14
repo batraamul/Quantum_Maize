@@ -1,0 +1,9 @@
+{
+ "id": "linux",
+ "title": "The Operating System Behind Almost Everything",
+ "category": "Computing",
+ "description": "Long explainer on Linux: boot sequence, kernel, processes, file system, permissions, distributions and history.",
+ "sections": 20,
+ "preset": "paper",
+ "cover": "assets/hero.svg"
+}

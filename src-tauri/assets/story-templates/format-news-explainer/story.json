@@ -1,0 +1,238 @@
+{
+ "version": 1,
+ "meta": {
+  "title": "News Explainer",
+  "subtitle": "What happened, how it unfolded, who is affected and what comes next",
+  "author": "",
+  "date": "",
+  "description": "Layout for explaining an event: summary, key numbers, scroll-through sequence, timeline, chart and reactions."
+ },
+ "theme": {
+  "preset": "paper",
+  "accent": "",
+  "font": "serif",
+  "animation": "fade-up",
+  "progressBar": true,
+  "navDots": true
+ },
+ "blocks": [
+  {
+   "type": "hero",
+   "kicker": "EXPLAINED",
+   "title": "[What happened, in one headline]",
+   "subtitle": "[Why it matters, in one sentence]",
+   "image": "assets/hero.svg",
+   "effect": "kenburns",
+   "overlay": 0.4,
+   "align": "center",
+   "id": "t01"
+  },
+  {
+   "type": "text",
+   "heading": "The short version",
+   "text": "[Three or four sentences giving the whole story for a reader who stops here.]\n\n**Key points**\n\n• [Point one]\n\n• [Point two]\n\n• [Point three]",
+   "dropcap": false,
+   "id": "t02"
+  },
+  {
+   "type": "stats",
+   "items": [
+    {
+     "value": 0,
+     "prefix": "",
+     "suffix": "",
+     "label": "[The single most important number]"
+    },
+    {
+     "value": 0,
+     "prefix": "",
+     "suffix": "",
+     "label": "[People affected]"
+    },
+    {
+     "value": 0,
+     "prefix": "",
+     "suffix": "",
+     "label": "[Money, area or duration]"
+    },
+    {
+     "value": 0,
+     "prefix": "",
+     "suffix": "%",
+     "label": "[Change compared with before]"
+    }
+   ],
+   "id": "t03"
+  },
+  {
+   "type": "text",
+   "heading": "How it unfolded",
+   "text": "[Set up the sequence that follows.]",
+   "dropcap": false,
+   "id": "t04"
+  },
+  {
+   "type": "scrolly",
+   "side": "right",
+   "steps": [
+    {
+     "image": "assets/step-1.svg",
+     "text": "**[Step 1 heading].** [What happened first.]"
+    },
+    {
+     "image": "assets/step-2.svg",
+     "text": "**[Step 2 heading].** [What happened next.]"
+    },
+    {
+     "image": "assets/step-3.svg",
+     "text": "**[Step 3 heading].** [The turning point.]"
+    },
+    {
+     "image": "assets/step-4.svg",
+     "text": "**[Step 4 heading].** [Where things stand now.]"
+    }
+   ],
+   "id": "t05"
+  },
+  {
+   "type": "text",
+   "heading": "The background",
+   "text": "[Explain the cause: the decisions, conditions or history that led here.]",
+   "dropcap": false,
+   "id": "t06"
+  },
+  {
+   "type": "timeline",
+   "items": [
+    {
+     "date": "[Date]",
+     "title": "[Earlier event]",
+     "text": "[Why it matters.]",
+     "image": ""
+    },
+    {
+     "date": "[Date]",
+     "title": "[Event]",
+     "text": "[Detail.]",
+     "image": ""
+    },
+    {
+     "date": "[Date]",
+     "title": "[Event]",
+     "text": "[Detail.]",
+     "image": ""
+    },
+    {
+     "date": "[Date]",
+     "title": "[Event]",
+     "text": "[Detail.]",
+     "image": ""
+    },
+    {
+     "date": "[Date]",
+     "title": "[Latest development]",
+     "text": "[Detail.]",
+     "image": ""
+    }
+   ],
+   "id": "t07"
+  },
+  {
+   "type": "chart",
+   "title": "[What the chart shows] (replace with your data)",
+   "labels": [
+    "[A]",
+    "[B]",
+    "[C]",
+    "[D]"
+   ],
+   "values": [
+    40,
+    65,
+    30,
+    80
+   ],
+   "unit": "",
+   "id": "t08"
+  },
+  {
+   "type": "quote",
+   "text": "[A quotation that states one side of the argument clearly.]",
+   "by": "[Name, position]",
+   "id": "t09"
+  },
+  {
+   "type": "text",
+   "heading": "Who is affected",
+   "text": "[Introduce the groups below.]",
+   "dropcap": false,
+   "id": "t10"
+  },
+  {
+   "type": "cards",
+   "flip": false,
+   "items": [
+    {
+     "icon": "👥",
+     "title": "[Group 1]",
+     "text": "[How they are affected.]",
+     "image": ""
+    },
+    {
+     "icon": "🏢",
+     "title": "[Group 2]",
+     "text": "[How they are affected.]",
+     "image": ""
+    },
+    {
+     "icon": "🌍",
+     "title": "[Group 3]",
+     "text": "[How they are affected.]",
+     "image": ""
+    },
+    {
+     "icon": "⚖️",
+     "title": "[Group 4]",
+     "text": "[How they are affected.]",
+     "image": ""
+    }
+   ],
+   "id": "t11"
+  },
+  {
+   "type": "image",
+   "src": "assets/photo-1.svg",
+   "caption": "[Caption describing the picture and where it was taken]",
+   "credit": "[Photographer / source]",
+   "width": "full",
+   "effect": "parallax",
+   "id": "t12"
+  },
+  {
+   "type": "text",
+   "heading": "What happens next",
+   "text": "[Give the dates and decisions to watch. Separate what is known from what is expected.]",
+   "dropcap": false,
+   "id": "t13"
+  },
+  {
+   "type": "quiz",
+   "question": "[A question on the central fact of the story]",
+   "options": [
+    "[Option A]",
+    "[Option B]",
+    "[Option C]"
+   ],
+   "answer": 1,
+   "explanation": "[One-sentence explanation.]",
+   "id": "t14"
+  },
+  {
+   "type": "text",
+   "heading": "Sources",
+   "text": "[List the documents, data and interviews this explainer relies on, with dates.]",
+   "dropcap": false,
+   "id": "t15"
+  }
+ ]
+}

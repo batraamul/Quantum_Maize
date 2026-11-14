@@ -1,0 +1,371 @@
+{
+ "version": 1,
+ "meta": {
+  "title": "Billions of Switches on a Fingernail",
+  "subtitle": "How integrated circuits are designed, verified and manufactured",
+  "author": "",
+  "date": "",
+  "description": "Long explainer on VLSI: CMOS, the design flow from RTL to layout, fabrication, scaling and its limits."
+ },
+ "theme": {
+  "preset": "quantum",
+  "accent": "",
+  "font": "sans",
+  "animation": "fade-up",
+  "progressBar": true,
+  "navDots": true
+ },
+ "blocks": [
+  {
+   "type": "hero",
+   "kicker": "VLSI DESIGN",
+   "title": "Billions of Switches on a Fingernail",
+   "subtitle": "How integrated circuits are designed, verified and manufactured",
+   "image": "assets/hero.svg",
+   "effect": "kenburns",
+   "overlay": 0.5,
+   "align": "center",
+   "id": "t01"
+  },
+  {
+   "type": "text",
+   "heading": "",
+   "text": "A modern processor holds billions of transistors, each a switch far smaller than a virus, wired together by kilometres of metal thinner than a wavelength of light. Very-large-scale integration (VLSI) is the engineering that makes such a thing possible, and makes it work the first time.\n\nNo person can place a billion transistors by hand. The story of VLSI is largely the story of automation and abstraction.",
+   "dropcap": true,
+   "id": "t02"
+  },
+  {
+   "type": "stats",
+   "items": [
+    {
+     "value": 1958,
+     "prefix": "",
+     "suffix": "",
+     "label": "Year Jack Kilby demonstrated the first integrated circuit",
+     "plain": true
+    },
+    {
+     "value": 2300,
+     "prefix": "",
+     "suffix": "",
+     "label": "Transistors in the Intel 4004 microprocessor of 1971",
+     "plain": false
+    },
+    {
+     "value": 2,
+     "prefix": "≈",
+     "suffix": " years",
+     "label": "Doubling period for transistor counts in Moore's observation",
+     "plain": false
+    },
+    {
+     "value": 300,
+     "prefix": "",
+     "suffix": " mm",
+     "label": "Diameter of the silicon wafers used in leading fabs",
+     "plain": false
+    }
+   ],
+   "id": "t03"
+  },
+  {
+   "type": "divider",
+   "style": "wave",
+   "id": "t04"
+  },
+  {
+   "type": "text",
+   "heading": "Abstraction makes it manageable",
+   "text": "Designers describe behaviour in a hardware description language at **register-transfer level**. Tools then translate that description into logic gates, place the gates on the chip, route the wires between them and check that timing, power and manufacturing rules are all met. Each level hides the detail of the one beneath.",
+   "dropcap": false,
+   "id": "t05"
+  },
+  {
+   "type": "scrolly",
+   "side": "right",
+   "steps": [
+    {
+     "image": "assets/step-1.svg",
+     "text": "**Describe.** Engineers write RTL in Verilog or VHDL and simulate it against tests until its behaviour is correct."
+    },
+    {
+     "image": "assets/step-2.svg",
+     "text": "**Synthesise.** A synthesis tool maps the RTL onto a library of standard cells such as gates and flip-flops."
+    },
+    {
+     "image": "assets/step-3.svg",
+     "text": "**Place and route.** Cells are positioned on the die and connected through many metal layers, with clocks and power distributed across the chip."
+    },
+    {
+     "image": "assets/step-4.svg",
+     "text": "**Sign off and fabricate.** Timing, power and design rules are verified. The layout goes to the foundry, where it is printed layer by layer."
+    }
+   ],
+   "id": "t06"
+  },
+  {
+   "type": "hotspots",
+   "image": "assets/diagram.svg",
+   "caption": "Tap the markers to explore each stage.",
+   "points": [
+    {
+     "x": 16.2,
+     "y": 32.6,
+     "title": "RTL design",
+     "text": "Behaviour written in a hardware description language and verified by simulation."
+    },
+    {
+     "x": 36.2,
+     "y": 58.6,
+     "title": "Logic synthesis",
+     "text": "Translation into a gate-level netlist optimised for speed, area and power."
+    },
+    {
+     "x": 56.2,
+     "y": 32.6,
+     "title": "Physical design",
+     "text": "Floor-planning, placement, clock-tree synthesis and routing."
+    },
+    {
+     "x": 76.2,
+     "y": 58.6,
+     "title": "Verification",
+     "text": "Static timing analysis, design-rule and layout-versus-schematic checks."
+    },
+    {
+     "x": 96.2,
+     "y": 32.6,
+     "title": "Fabrication and test",
+     "text": "Lithography, etching, deposition and doping, followed by wafer test and packaging."
+    }
+   ],
+   "id": "t07"
+  },
+  {
+   "type": "text",
+   "heading": "Why CMOS won",
+   "text": "Complementary MOS logic pairs an n-type and a p-type transistor so that, in a steady state, one of them is always off. Almost no current flows except while switching. That low static power is what allowed millions, then billions, of gates on one chip without melting it. As transistors shrank, leakage returned as a major concern and drove new structures such as FinFETs.",
+   "dropcap": false,
+   "id": "t08"
+  },
+  {
+   "type": "cards",
+   "flip": true,
+   "items": [
+    {
+     "icon": "🔀",
+     "title": "CMOS",
+     "text": "Logic built from complementary n- and p-type transistors; the basis of nearly all digital chips.",
+     "image": ""
+    },
+    {
+     "icon": "📈",
+     "title": "Moore's law",
+     "text": "Gordon Moore's 1965 observation that transistor counts on a chip double at a regular interval.",
+     "image": ""
+    },
+    {
+     "icon": "🦈",
+     "title": "FinFET",
+     "text": "A transistor whose channel is a raised fin wrapped by the gate, giving better control and less leakage.",
+     "image": ""
+    },
+    {
+     "icon": "💡",
+     "title": "Photolithography",
+     "text": "Projecting a pattern through a mask onto light-sensitive resist to define each layer.",
+     "image": ""
+    },
+    {
+     "icon": "🧱",
+     "title": "Standard cell",
+     "text": "A pre-designed, pre-characterised gate or flip-flop used as a building block.",
+     "image": ""
+    },
+    {
+     "icon": "⏱️",
+     "title": "Timing closure",
+     "text": "Making every signal path fast enough for the target clock, and not too fast for hold requirements.",
+     "image": ""
+    }
+   ],
+   "id": "t09"
+  },
+  {
+   "type": "image",
+   "src": "assets/section.svg",
+   "caption": "Replace with your own photograph or figure.",
+   "credit": "",
+   "width": "wide",
+   "effect": "zoom-in",
+   "id": "t10"
+  },
+  {
+   "type": "timeline",
+   "items": [
+    {
+     "date": "1947",
+     "title": "The transistor",
+     "text": "John Bardeen, Walter Brattain and William Shockley's group at Bell Labs demonstrate the transistor.",
+     "image": ""
+    },
+    {
+     "date": "1958",
+     "title": "The integrated circuit",
+     "text": "Jack Kilby builds a circuit on one piece of semiconductor; Robert Noyce's planar version follows.",
+     "image": ""
+    },
+    {
+     "date": "1965",
+     "title": "Moore's observation",
+     "text": "Gordon Moore predicts steady growth in the number of components per chip.",
+     "image": ""
+    },
+    {
+     "date": "1971",
+     "title": "The microprocessor",
+     "text": "Intel releases the 4004, a processor on a single chip.",
+     "image": ""
+    },
+    {
+     "date": "1980",
+     "title": "VLSI design methodology",
+     "text": "Carver Mead and Lynn Conway's textbook spreads structured chip design to universities.",
+     "image": ""
+    },
+    {
+     "date": "2011",
+     "title": "Three-dimensional transistors",
+     "text": "Intel announces tri-gate (FinFET) transistors for volume production.",
+     "image": ""
+    }
+   ],
+   "id": "t11"
+  },
+  {
+   "type": "chart",
+   "title": "Transistor count, shown as log₁₀",
+   "labels": [
+    "Intel 4004",
+    "Intel 8086",
+    "Intel 486",
+    "Pentium 4",
+    "Apple M1"
+   ],
+   "values": [
+    3.4,
+    4.5,
+    6.1,
+    7.6,
+    10.2
+   ],
+   "unit": "",
+   "id": "t12"
+  },
+  {
+   "type": "compare",
+   "before": "assets/before.svg",
+   "after": "assets/after.svg",
+   "beforeLabel": "Early integration",
+   "afterLabel": "Modern density",
+   "caption": "Drag the handle: the same area holds vastly more devices today. Replace with your own layout images.",
+   "id": "t13"
+  },
+  {
+   "type": "quote",
+   "text": "A chip is designed by people at the level of ideas and by software at the level of atoms.",
+   "by": "Key idea",
+   "id": "t14"
+  },
+  {
+   "type": "gallery",
+   "mode": "carousel",
+   "images": [
+    {
+     "src": "assets/gallery-1.svg",
+     "caption": "Routing on stacked metal layers"
+    },
+    {
+     "src": "assets/gallery-2.svg",
+     "caption": "A regular array of cells"
+    },
+    {
+     "src": "assets/gallery-3.svg",
+     "caption": "Floor-plan of blocks on a die"
+    }
+   ],
+   "id": "t15"
+  },
+  {
+   "type": "text",
+   "heading": "Life after easy scaling",
+   "text": "Shrinking transistors no longer makes them faster and cooler for free. Leakage, heat density, lithography cost and atomic-scale variation all push back. Progress now comes from new transistor structures, extreme-ultraviolet lithography, stacking chips in three dimensions and designing processors specialised for particular workloads.",
+   "dropcap": false,
+   "id": "t16"
+  },
+  {
+   "type": "cards",
+   "flip": false,
+   "items": [
+    {
+     "icon": "💻",
+     "title": "Processors",
+     "text": "CPUs and GPUs for computers, phones and data centres.",
+     "image": ""
+    },
+    {
+     "icon": "📡",
+     "title": "Communications",
+     "text": "Radio transceivers and baseband chips in every handset and base station.",
+     "image": ""
+    },
+    {
+     "icon": "🧠",
+     "title": "AI accelerators",
+     "text": "Chips specialised for neural-network arithmetic.",
+     "image": ""
+    },
+    {
+     "icon": "🚗",
+     "title": "Automotive and aerospace",
+     "text": "Controllers qualified for wide temperatures and long life.",
+     "image": ""
+    }
+   ],
+   "id": "t17"
+  },
+  {
+   "type": "quiz",
+   "question": "Why does static CMOS logic draw very little power when idle?",
+   "options": [
+    "It uses low voltages only",
+    "In a steady state one transistor of each complementary pair is off",
+    "It has no clock",
+    "It stores charge in capacitors"
+   ],
+   "answer": 1,
+   "explanation": "With either the pull-up or the pull-down network off, there is no direct path from supply to ground.",
+   "id": "t18"
+  },
+  {
+   "type": "quiz",
+   "question": "What does logic synthesis produce?",
+   "options": [
+    "A photomask",
+    "A gate-level netlist from an RTL description",
+    "A packaged chip",
+    "A test bench"
+   ],
+   "answer": 1,
+   "explanation": "Synthesis maps the behavioural description onto cells from a library.",
+   "id": "t19"
+  },
+  {
+   "type": "text",
+   "heading": "Key terms and next steps",
+   "text": "**RTL**: register-transfer level description. **Netlist**: a list of components and their connections. **Die**: one chip on a wafer. **Yield**: the fraction of dice that work. **EDA**: electronic design automation software.\n\n**Using this template.** Every block is editable: change the text in the panel on the right, replace the generated artwork with your own photographs, diagrams, GIFs or videos, and delete or reorder sections freely. Check figures against a current source before you publish.",
+   "dropcap": false,
+   "id": "t20"
+  }
+ ]
+}

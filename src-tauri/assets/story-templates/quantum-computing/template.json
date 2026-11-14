@@ -1,0 +1,9 @@
+{
+ "id": "quantum-computing",
+ "title": "Computing with Qubits",
+ "category": "Computing",
+ "description": "Long explainer on quantum computing: qubits, gates, algorithms, hardware, error correction and realistic prospects.",
+ "sections": 20,
+ "preset": "quantum",
+ "cover": "assets/hero.svg"
+}

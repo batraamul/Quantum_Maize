@@ -1,0 +1,371 @@
+{
+ "version": 1,
+ "meta": {
+  "title": "The Science of Measurement",
+  "subtitle": "How sensors turn the physical world into numbers we can trust",
+  "author": "",
+  "date": "",
+  "description": "Long explainer on instrumentation: sensors, signal chains, calibration, uncertainty and upper-air sounding."
+ },
+ "theme": {
+  "preset": "monsoon",
+  "accent": "",
+  "font": "sans",
+  "animation": "fade-up",
+  "progressBar": true,
+  "navDots": true
+ },
+ "blocks": [
+  {
+   "type": "hero",
+   "kicker": "INSTRUMENTS",
+   "title": "The Science of Measurement",
+   "subtitle": "How sensors turn the physical world into numbers we can trust",
+   "image": "assets/hero.svg",
+   "effect": "kenburns",
+   "overlay": 0.5,
+   "align": "center",
+   "id": "t01"
+  },
+  {
+   "type": "text",
+   "heading": "",
+   "text": "Science and engineering start with measurement. A thermometer, a pressure gauge or a radiosonde each performs the same task: it lets a physical quantity change something we can read, and then tells us how far to believe the reading.\n\nThis story follows a signal from the sensor to the screen and explains why calibration and uncertainty matter as much as the number itself.",
+   "dropcap": true,
+   "id": "t02"
+  },
+  {
+   "type": "stats",
+   "items": [
+    {
+     "value": 7,
+     "prefix": "",
+     "suffix": "",
+     "label": "Base units in the International System (SI)",
+     "plain": false
+    },
+    {
+     "value": 2019,
+     "prefix": "",
+     "suffix": "",
+     "label": "Year the SI was redefined using fixed constants of nature",
+     "plain": true
+    },
+    {
+     "value": 1013,
+     "prefix": "≈",
+     "suffix": " hPa",
+     "label": "Standard atmospheric pressure at sea level",
+     "plain": false
+    },
+    {
+     "value": 30,
+     "prefix": "≈",
+     "suffix": " km",
+     "label": "Height a weather balloon typically reaches before bursting",
+     "plain": false
+    }
+   ],
+   "id": "t03"
+  },
+  {
+   "type": "divider",
+   "style": "wave",
+   "id": "t04"
+  },
+  {
+   "type": "text",
+   "heading": "The measurement chain",
+   "text": "Almost every modern instrument has the same stages. A **sensor** responds to the quantity. **Signal conditioning** amplifies and filters the weak response. A **converter** turns it into digital numbers, and **processing** applies the calibration and reports a value with its units.",
+   "dropcap": false,
+   "id": "t05"
+  },
+  {
+   "type": "scrolly",
+   "side": "right",
+   "steps": [
+    {
+     "image": "assets/step-1.svg",
+     "text": "**Sense.** A sensing element changes with the measurand: a thermistor's resistance with temperature, a diaphragm's deflection with pressure, a capacitor's value with humidity."
+    },
+    {
+     "image": "assets/step-2.svg",
+     "text": "**Condition.** Bridges, amplifiers and filters turn that small change into a clean voltage and reject noise outside the band of interest."
+    },
+    {
+     "image": "assets/step-3.svg",
+     "text": "**Convert.** An analogue-to-digital converter samples the voltage. Its resolution and sampling rate set the finest detail that can be recorded."
+    },
+    {
+     "image": "assets/step-4.svg",
+     "text": "**Calibrate.** The raw number is corrected using a relation established against a reference standard, then reported with its uncertainty."
+    }
+   ],
+   "id": "t06"
+  },
+  {
+   "type": "hotspots",
+   "image": "assets/diagram.svg",
+   "caption": "Tap the markers to explore each stage.",
+   "points": [
+    {
+     "x": 16.2,
+     "y": 32.6,
+     "title": "Sensor",
+     "text": "Responds to temperature, pressure, humidity, strain, light or another quantity."
+    },
+    {
+     "x": 36.2,
+     "y": 58.6,
+     "title": "Signal conditioning",
+     "text": "Excitation, amplification, filtering and linearisation of the raw sensor output."
+    },
+    {
+     "x": 56.2,
+     "y": 32.6,
+     "title": "A/D converter",
+     "text": "Samples and quantises the signal; more bits give finer resolution."
+    },
+    {
+     "x": 76.2,
+     "y": 58.6,
+     "title": "Processing",
+     "text": "Applies calibration coefficients, compensates for temperature and checks data quality."
+    },
+    {
+     "x": 96.2,
+     "y": 32.6,
+     "title": "Display and telemetry",
+     "text": "Shows, stores or transmits the result, as a radiosonde does by radio during its ascent."
+    }
+   ],
+   "id": "t07"
+  },
+  {
+   "type": "text",
+   "heading": "Accuracy is not precision",
+   "text": "**Precision** describes how closely repeated readings agree with each other. **Accuracy** describes how close they are to the true value. An instrument can be precise and wrong. **Calibration** against a traceable reference removes known errors, and an **uncertainty** statement says honestly how much doubt remains.",
+   "dropcap": false,
+   "id": "t08"
+  },
+  {
+   "type": "cards",
+   "flip": true,
+   "items": [
+    {
+     "icon": "🎯",
+     "title": "Accuracy",
+     "text": "Closeness of a measurement to the true value of the quantity.",
+     "image": ""
+    },
+    {
+     "icon": "🔬",
+     "title": "Resolution",
+     "text": "The smallest change an instrument can detect or display.",
+     "image": ""
+    },
+    {
+     "icon": "⛓️",
+     "title": "Traceability",
+     "text": "An unbroken chain of calibrations linking a reading back to national and international standards.",
+     "image": ""
+    },
+    {
+     "icon": "±",
+     "title": "Uncertainty",
+     "text": "A quantified range within which the true value is believed to lie, with a stated confidence.",
+     "image": ""
+    },
+    {
+     "icon": "📉",
+     "title": "Drift",
+     "text": "Slow change of an instrument's response over time; the reason calibration is repeated.",
+     "image": ""
+    },
+    {
+     "icon": "⏱️",
+     "title": "Response time",
+     "text": "How quickly a sensor follows a change. A slow sensor smears rapid variations.",
+     "image": ""
+    }
+   ],
+   "id": "t09"
+  },
+  {
+   "type": "image",
+   "src": "assets/section.svg",
+   "caption": "Replace with your own photograph or figure.",
+   "credit": "",
+   "width": "wide",
+   "effect": "zoom-in",
+   "id": "t10"
+  },
+  {
+   "type": "timeline",
+   "items": [
+    {
+     "date": "1643",
+     "title": "The barometer",
+     "text": "Evangelista Torricelli shows that the atmosphere has weight using a column of mercury.",
+     "image": ""
+    },
+    {
+     "date": "1714",
+     "title": "Reliable thermometers",
+     "text": "Daniel Gabriel Fahrenheit builds the mercury-in-glass thermometer.",
+     "image": ""
+    },
+    {
+     "date": "1821",
+     "title": "Thermoelectricity",
+     "text": "Thomas Seebeck discovers the effect behind the thermocouple.",
+     "image": ""
+    },
+    {
+     "date": "1930",
+     "title": "The radiosonde",
+     "text": "Pavel Molchanov launches a balloon instrument that radios its readings to the ground.",
+     "image": ""
+    },
+    {
+     "date": "1983",
+     "title": "The metre from light",
+     "text": "The metre is defined by the distance light travels in a fixed fraction of a second.",
+     "image": ""
+    },
+    {
+     "date": "2019",
+     "title": "SI redefined",
+     "text": "The kilogram, ampere, kelvin and mole are defined by fixed values of fundamental constants.",
+     "image": ""
+    }
+   ],
+   "id": "t11"
+  },
+  {
+   "type": "chart",
+   "title": "Standard atmosphere: pressure falls with height",
+   "labels": [
+    "0 km",
+    "5 km",
+    "10 km",
+    "20 km",
+    "30 km"
+   ],
+   "values": [
+    1013,
+    540,
+    265,
+    55,
+    12
+   ],
+   "unit": " hPa",
+   "id": "t12"
+  },
+  {
+   "type": "compare",
+   "before": "assets/before.svg",
+   "after": "assets/after.svg",
+   "beforeLabel": "Raw signal",
+   "afterLabel": "Filtered signal",
+   "caption": "Drag the handle: conditioning and filtering recover a clean measurement from a noisy one. Replace with your own plots.",
+   "id": "t13"
+  },
+  {
+   "type": "quote",
+   "text": "A measurement without an uncertainty is only half a result.",
+   "by": "Key idea",
+   "id": "t14"
+  },
+  {
+   "type": "gallery",
+   "mode": "carousel",
+   "images": [
+    {
+     "src": "assets/gallery-1.svg",
+     "caption": "Signals from several sensors recorded together"
+    },
+    {
+     "src": "assets/gallery-2.svg",
+     "caption": "A sounding rises through layers of the atmosphere"
+    },
+    {
+     "src": "assets/gallery-3.svg",
+     "caption": "Conditioning electronics on a sensor board"
+    }
+   ],
+   "id": "t15"
+  },
+  {
+   "type": "text",
+   "heading": "Hard problems in measurement",
+   "text": "Field instruments face heat, cold, moisture, vibration and radiation that laboratory instruments never see. Designers must limit drift, compensate for cross-sensitivity, protect sensors from solar heating and icing, and keep power and weight low. Comparing instruments from different makers fairly is a discipline in itself.",
+   "dropcap": false,
+   "id": "t16"
+  },
+  {
+   "type": "cards",
+   "flip": false,
+   "items": [
+    {
+     "icon": "🌡️",
+     "title": "Weather and climate",
+     "text": "Surface stations, radiosondes, radars and satellites feed forecasts.",
+     "image": ""
+    },
+    {
+     "icon": "🏭",
+     "title": "Industry",
+     "text": "Process control depends on continuous pressure, flow and temperature data.",
+     "image": ""
+    },
+    {
+     "icon": "🏥",
+     "title": "Medicine",
+     "text": "Patient monitors and laboratory analysers are measuring instruments.",
+     "image": ""
+    },
+    {
+     "icon": "🚀",
+     "title": "Aerospace",
+     "text": "Flight testing records thousands of channels of data.",
+     "image": ""
+    }
+   ],
+   "id": "t17"
+  },
+  {
+   "type": "quiz",
+   "question": "A scale always reads 0.5 kg too high, but repeats to within 1 g. It is:",
+   "options": [
+    "Accurate but not precise",
+    "Precise but not accurate",
+    "Both accurate and precise",
+    "Neither"
+   ],
+   "answer": 1,
+   "explanation": "Readings agree closely (precise) but carry a constant offset from the true value (inaccurate). Calibration can remove the offset.",
+   "id": "t18"
+  },
+  {
+   "type": "quiz",
+   "question": "What does 'traceability' mean in measurement?",
+   "options": [
+    "The data are stored in a database",
+    "The reading is linked to recognised standards through an unbroken chain of calibrations",
+    "The sensor has a serial number",
+    "The signal is transmitted by radio"
+   ],
+   "answer": 1,
+   "explanation": "Traceability lets results from different instruments and laboratories be compared on a common basis.",
+   "id": "t19"
+  },
+  {
+   "type": "text",
+   "heading": "Key terms and next steps",
+   "text": "**Measurand**: the quantity being measured. **Transducer**: a device that converts one form of energy or signal into another. **Hysteresis**: a reading that depends on whether the quantity is rising or falling. **Radiosonde**: a balloon-borne instrument measuring pressure, temperature, humidity and wind.\n\n**Using this template.** Every block is editable: change the text in the panel on the right, replace the generated artwork with your own photographs, diagrams, GIFs or videos, and delete or reorder sections freely. Check figures against a current source before you publish.",
+   "dropcap": false,
+   "id": "t20"
+  }
+ ]
+}

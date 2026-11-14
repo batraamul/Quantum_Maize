@@ -1,0 +1,369 @@
+{
+ "version": 1,
+ "meta": {
+  "title": "Messages on Invisible Waves",
+  "subtitle": "Modulation, antennas, propagation and the limits set by noise",
+  "author": "",
+  "date": "",
+  "description": "Long explainer on radio communication: spectrum, modulation, antennas, propagation, noise and channel capacity."
+ },
+ "theme": {
+  "preset": "saffron",
+  "accent": "",
+  "font": "sans",
+  "animation": "fade-up",
+  "progressBar": true,
+  "navDots": true
+ },
+ "blocks": [
+  {
+   "type": "hero",
+   "kicker": "RADIO COMMUNICATION",
+   "title": "Messages on Invisible Waves",
+   "subtitle": "Modulation, antennas, propagation and the limits set by noise",
+   "image": "assets/hero.svg",
+   "effect": "kenburns",
+   "overlay": 0.5,
+   "align": "center",
+   "id": "t01"
+  },
+  {
+   "type": "text",
+   "heading": "",
+   "text": "Radio carries voices, pictures and data through empty space at the speed of light. A transmitter impresses information on an electromagnetic wave, an antenna launches it, and somewhere a receiver picks a few billionths of a watt out of the noise and recovers the message.\n\nThe principles have not changed since the first wireless telegraphs. What has changed is how close engineers now work to the theoretical limits.",
+   "dropcap": true,
+   "id": "t02"
+  },
+  {
+   "type": "stats",
+   "items": [
+    {
+     "value": 300000,
+     "prefix": "≈",
+     "suffix": " km/s",
+     "label": "Speed of radio waves in free space",
+     "plain": false
+    },
+    {
+     "value": 1901,
+     "prefix": "",
+     "suffix": "",
+     "label": "Year a radio signal first crossed the Atlantic",
+     "plain": true
+    },
+    {
+     "value": 300,
+     "prefix": "",
+     "suffix": " GHz",
+     "label": "Conventional upper edge of the radio spectrum",
+     "plain": false
+    },
+    {
+     "value": 1948,
+     "prefix": "",
+     "suffix": "",
+     "label": "Year Shannon defined the capacity of a noisy channel",
+     "plain": true
+    }
+   ],
+   "id": "t03"
+  },
+  {
+   "type": "divider",
+   "style": "wave",
+   "id": "t04"
+  },
+  {
+   "type": "text",
+   "heading": "Carrier and modulation",
+   "text": "A steady radio wave, the **carrier**, carries no information. Information is added by varying one of its properties in step with the message: its amplitude (AM), its frequency (FM) or its phase. Digital systems switch between a set of amplitude and phase states, each representing a group of bits.",
+   "dropcap": false,
+   "id": "t05"
+  },
+  {
+   "type": "scrolly",
+   "side": "right",
+   "steps": [
+    {
+     "image": "assets/step-1.svg",
+     "text": "**Modulate.** The message, analogue or digital, alters the carrier's amplitude, frequency or phase."
+    },
+    {
+     "image": "assets/step-2.svg",
+     "text": "**Radiate.** A power amplifier drives the antenna, which converts the electrical signal into a travelling electromagnetic wave."
+    },
+    {
+     "image": "assets/step-3.svg",
+     "text": "**Propagate.** The wave spreads, weakens with distance, and is reflected, bent and absorbed by terrain, buildings and the atmosphere."
+    },
+    {
+     "image": "assets/step-4.svg",
+     "text": "**Demodulate.** The receiver selects the wanted frequency, amplifies it and recovers the message from the carrier."
+    }
+   ],
+   "id": "t06"
+  },
+  {
+   "type": "hotspots",
+   "image": "assets/diagram.svg",
+   "caption": "Tap the markers to explore each stage.",
+   "points": [
+    {
+     "x": 16.2,
+     "y": 32.6,
+     "title": "Source and coding",
+     "text": "The message is digitised, compressed and protected with error-correcting codes."
+    },
+    {
+     "x": 36.2,
+     "y": 58.6,
+     "title": "Modulator",
+     "text": "Maps the data onto the carrier wave."
+    },
+    {
+     "x": 56.2,
+     "y": 32.6,
+     "title": "Transmitter and antenna",
+     "text": "Amplifies the signal and radiates it in the desired direction."
+    },
+    {
+     "x": 76.2,
+     "y": 58.6,
+     "title": "Channel",
+     "text": "The path between the antennas, adding loss, fading, interference and noise."
+    },
+    {
+     "x": 96.2,
+     "y": 32.6,
+     "title": "Receiver",
+     "text": "Filters, amplifies, demodulates and decodes to recover the data."
+    }
+   ],
+   "id": "t07"
+  },
+  {
+   "type": "text",
+   "heading": "The limit set by noise",
+   "text": "Every receiver adds random noise, and no design can remove it entirely. Claude Shannon showed that a channel of a given bandwidth and signal-to-noise ratio has a maximum rate at which data can be sent with arbitrarily few errors. Modern coding schemes come within a fraction of a decibel of that limit. To send more, a system needs more bandwidth, more signal power, or more antennas.",
+   "dropcap": false,
+   "id": "t08"
+  },
+  {
+   "type": "cards",
+   "flip": true,
+   "items": [
+    {
+     "icon": "〰️",
+     "title": "Frequency and wavelength",
+     "text": "Related by the speed of light: higher frequency means shorter wavelength.",
+     "image": ""
+    },
+    {
+     "icon": "🎚️",
+     "title": "Modulation",
+     "text": "Varying a carrier to carry information: AM, FM, PSK, QAM and others.",
+     "image": ""
+    },
+    {
+     "icon": "↔️",
+     "title": "Bandwidth",
+     "text": "The range of frequencies a signal occupies; wider bandwidth can carry more data.",
+     "image": ""
+    },
+    {
+     "icon": "📡",
+     "title": "Antenna gain",
+     "text": "How strongly an antenna concentrates power in one direction.",
+     "image": ""
+    },
+    {
+     "icon": "📶",
+     "title": "Signal-to-noise ratio",
+     "text": "Wanted signal power divided by noise power, usually given in decibels.",
+     "image": ""
+    },
+    {
+     "icon": "🏙️",
+     "title": "Multipath fading",
+     "text": "Copies of a signal arriving by different paths and partly cancelling.",
+     "image": ""
+    }
+   ],
+   "id": "t09"
+  },
+  {
+   "type": "image",
+   "src": "assets/section.svg",
+   "caption": "Replace with your own photograph or figure.",
+   "credit": "",
+   "width": "wide",
+   "effect": "zoom-in",
+   "id": "t10"
+  },
+  {
+   "type": "timeline",
+   "items": [
+    {
+     "date": "1865",
+     "title": "Maxwell's theory",
+     "text": "James Clerk Maxwell predicts electromagnetic waves travelling at the speed of light.",
+     "image": ""
+    },
+    {
+     "date": "1887",
+     "title": "Hertz's experiments",
+     "text": "Heinrich Hertz generates and detects radio waves in the laboratory.",
+     "image": ""
+    },
+    {
+     "date": "1895",
+     "title": "Wireless signalling",
+     "text": "Guglielmo Marconi sends signals over open country; in Calcutta, Jagadish Chandra Bose demonstrates millimetre waves.",
+     "image": ""
+    },
+    {
+     "date": "1901",
+     "title": "Across the Atlantic",
+     "text": "Marconi reports receiving a signal sent from Cornwall in Newfoundland.",
+     "image": ""
+    },
+    {
+     "date": "1933",
+     "title": "Frequency modulation",
+     "text": "Edwin Armstrong patents wideband FM, greatly reducing static.",
+     "image": ""
+    },
+    {
+     "date": "1948",
+     "title": "Information theory",
+     "text": "Claude Shannon publishes the mathematical theory of communication.",
+     "image": ""
+    }
+   ],
+   "id": "t11"
+  },
+  {
+   "type": "chart",
+   "title": "Free-space path loss over 1 km",
+   "labels": [
+    "100 MHz",
+    "433 MHz",
+    "2.4 GHz",
+    "5.8 GHz"
+   ],
+   "values": [
+    72.4,
+    85.2,
+    100.1,
+    107.7
+   ],
+   "unit": " dB",
+   "id": "t12"
+  },
+  {
+   "type": "compare",
+   "before": "assets/before.svg",
+   "after": "assets/after.svg",
+   "beforeLabel": "A crowded band",
+   "afterLabel": "Efficiently shared band",
+   "caption": "Drag the handle: careful allocation and modern modulation fit more users into the same spectrum. Replace with your own captures.",
+   "id": "t13"
+  },
+  {
+   "type": "quote",
+   "text": "Radio engineering is the art of recovering a whisper sent from far away in a room full of noise.",
+   "by": "Key idea",
+   "id": "t14"
+  },
+  {
+   "type": "gallery",
+   "mode": "carousel",
+   "images": [
+    {
+     "src": "assets/gallery-1.svg",
+     "caption": "Waves of different frequency"
+    },
+    {
+     "src": "assets/gallery-2.svg",
+     "caption": "A beam sweeping the horizon"
+    },
+    {
+     "src": "assets/gallery-3.svg",
+     "caption": "Signals relayed by satellites"
+    }
+   ],
+   "id": "t15"
+  },
+  {
+   "type": "text",
+   "heading": "A finite resource",
+   "text": "Radio spectrum cannot be manufactured. Every new service competes with existing ones for frequencies, and interference crosses borders, so allocation is coordinated internationally. Engineers respond with denser frequency reuse, directional and multiple antennas, higher frequencies and smarter sharing between users.",
+   "dropcap": false,
+   "id": "t16"
+  },
+  {
+   "type": "cards",
+   "flip": false,
+   "items": [
+    {
+     "icon": "📱",
+     "title": "Mobile networks",
+     "text": "Cellular voice and data.",
+     "image": ""
+    },
+    {
+     "icon": "🛰️",
+     "title": "Satellites",
+     "text": "Broadcast, navigation and Earth observation.",
+     "image": ""
+    },
+    {
+     "icon": "✈️",
+     "title": "Aviation and marine",
+     "text": "Voice, navigation aids and radar.",
+     "image": ""
+    },
+    {
+     "icon": "🎈",
+     "title": "Telemetry",
+     "text": "Data from balloons, rockets and remote instruments.",
+     "image": ""
+    }
+   ],
+   "id": "t17"
+  },
+  {
+   "type": "quiz",
+   "question": "A radio wave has a frequency of 100 MHz. Its wavelength is about:",
+   "options": [
+    "3 mm",
+    "3 m",
+    "30 m",
+    "300 m"
+   ],
+   "answer": 1,
+   "explanation": "Wavelength is the speed of light divided by frequency: 300,000,000 m/s ÷ 100,000,000 Hz = 3 m.",
+   "id": "t18"
+  },
+  {
+   "type": "quiz",
+   "question": "According to Shannon, channel capacity increases with:",
+   "options": [
+    "Bandwidth and signal-to-noise ratio",
+    "Antenna height only",
+    "Carrier frequency only",
+    "The number of receivers"
+   ],
+   "answer": 0,
+   "explanation": "Capacity is bandwidth multiplied by the base-2 logarithm of one plus the signal-to-noise ratio.",
+   "id": "t19"
+  },
+  {
+   "type": "text",
+   "heading": "Key terms and next steps",
+   "text": "**Decibel (dB)**: a logarithmic ratio of powers. **Carrier**: the wave that is modulated. **Line of sight**: a direct path between antennas. **Ionosphere**: charged upper atmosphere that reflects some frequencies. **Bit error rate**: the fraction of bits received wrongly.\n\n**Using this template.** Every block is editable: change the text in the panel on the right, replace the generated artwork with your own photographs, diagrams, GIFs or videos, and delete or reorder sections freely. Check figures against a current source before you publish.",
+   "dropcap": false,
+   "id": "t20"
+  }
+ ]
+}

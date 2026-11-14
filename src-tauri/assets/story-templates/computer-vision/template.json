@@ -1,0 +1,9 @@
+{
+ "id": "computer-vision",
+ "title": "How Computers Learn to See",
+ "category": "Artificial intelligence",
+ "description": "Long explainer on computer vision: features, CNNs, detection, segmentation, tracking and vision transformers.",
+ "sections": 20,
+ "preset": "midnight",
+ "cover": "assets/hero.svg"
+}

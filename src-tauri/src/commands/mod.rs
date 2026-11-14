@@ -637,6 +637,63 @@ pub fn import_story_asset(state: S, root: String, source: String) -> AppResult<S
     story::import_asset(&state.root(&root)?, Path::new(&source))
 }
 
+// ---- story templates -----------------------------------------------------------
+
+fn story_tpl_dir(state: &AppState) -> PathBuf {
+    state.data_dir.join("story-templates")
+}
+
+#[tauri::command]
+pub fn list_story_templates(state: S) -> Vec<story::library::StoryTemplate> {
+    story::library::list(&story_tpl_dir(&state))
+}
+
+#[tauri::command]
+pub fn story_template_cover(state: S, id: String) -> AppResult<String> {
+    story::library::cover(&id, &story_tpl_dir(&state))
+}
+
+#[tauri::command]
+pub fn create_story_from_template(state: S, parent_dir: String, name: String, template_id: String) -> AppResult<ProjectInfo> {
+    let settings = Settings::load(&state.db)?;
+    let o = options_from(&settings, None);
+    let mut files = story::library::files(&template_id, &story_tpl_dir(&state))?;
+    // Stamp the author and date; titles and text are the template's and stay editable.
+    let mut doc: serde_json::Value = serde_json::from_slice(&files[0].1).map_err(|e| AppError::Invalid(format!("template story.json: {e}")))?;
+    let byline = [o.author.trim(), o.rank.trim(), o.organization.trim()].iter().filter(|x| !x.is_empty()).cloned().collect::<Vec<_>>().join(", ");
+    if let Some(meta) = doc.get_mut("meta").and_then(|m| m.as_object_mut()) {
+        meta.insert("author".into(), serde_json::Value::String(byline));
+        meta.insert("date".into(), serde_json::Value::String(chrono::Local::now().format("%-d %B %Y").to_string()));
+    }
+    files[0].1 = serde_json::to_vec_pretty(&doc).unwrap();
+    let info = filesystem::create_project_with(Path::new(&parent_dir), name.trim(), files, "story.json", "pdflatex", "story", None)?;
+    state.register(&info)?;
+    let mut s = Settings::load(&state.db)?;
+    s.last_project_dir = Some(parent_dir);
+    s.save(&state.db)?;
+    Ok(info)
+}
+
+#[tauri::command]
+pub fn save_story_template(state: S, root: String, title: String, description: String, category: String) -> AppResult<story::library::StoryTemplate> {
+    story::library::save_from_project(&state.root(&root)?, &story_tpl_dir(&state), &title, &description, &category)
+}
+
+#[tauri::command]
+pub fn delete_story_template(state: S, id: String) -> AppResult<()> {
+    story::library::delete(&id, &story_tpl_dir(&state))
+}
+
+#[tauri::command]
+pub fn export_story_template(state: S, id: String, dest: String) -> AppResult<()> {
+    story::library::export_zip(&id, &story_tpl_dir(&state), Path::new(&dest))
+}
+
+#[tauri::command]
+pub fn import_story_template(state: S, source: String) -> AppResult<story::library::StoryTemplate> {
+    story::library::import_zip(Path::new(&source), &story_tpl_dir(&state), &state.data_dir.join("staging"))
+}
+
 /// Copies an image chosen by the user into the project's `figures/` folder.
 #[tauri::command]
 pub fn import_figure(state: S, root: String, source: String) -> AppResult<String> {

@@ -1,0 +1,253 @@
+{
+ "version": 1,
+ "meta": {
+  "title": "Project or Mission Report",
+  "subtitle": "Objectives, phases, system, milestones and results",
+  "author": "",
+  "date": "",
+  "description": "Layout for reporting a project: headline results, phases, system diagram with markers, milestones, results chart and lessons."
+ },
+ "theme": {
+  "preset": "quantum",
+  "accent": "",
+  "font": "sans",
+  "animation": "fade-up",
+  "progressBar": true,
+  "navDots": true
+ },
+ "blocks": [
+  {
+   "type": "hero",
+   "kicker": "PROJECT REPORT",
+   "title": "[Project or mission name]",
+   "subtitle": "[Organisation, period]",
+   "image": "assets/hero.svg",
+   "effect": "kenburns",
+   "overlay": 0.4,
+   "align": "center",
+   "id": "t01"
+  },
+  {
+   "type": "stats",
+   "items": [
+    {
+     "value": 0,
+     "prefix": "",
+     "suffix": "",
+     "label": "[Headline result]"
+    },
+    {
+     "value": 0,
+     "prefix": "",
+     "suffix": " months",
+     "label": "[Duration]"
+    },
+    {
+     "value": 0,
+     "prefix": "",
+     "suffix": "",
+     "label": "[Team size]"
+    },
+    {
+     "value": 0,
+     "prefix": "",
+     "suffix": "%",
+     "label": "[Target achieved]"
+    }
+   ],
+   "id": "t02"
+  },
+  {
+   "type": "text",
+   "heading": "Objectives",
+   "text": "[State the problem the project set out to solve.]\n\n[List the objectives and how success was to be judged.]",
+   "dropcap": false,
+   "id": "t03"
+  },
+  {
+   "type": "text",
+   "heading": "How the work was done",
+   "text": "[Introduce the phases.]",
+   "dropcap": false,
+   "id": "t04"
+  },
+  {
+   "type": "scrolly",
+   "side": "left",
+   "steps": [
+    {
+     "image": "assets/step-1.svg",
+     "text": "**Phase 1: [name].** [What was done and delivered.]"
+    },
+    {
+     "image": "assets/step-2.svg",
+     "text": "**Phase 2: [name].** [What was done and delivered.]"
+    },
+    {
+     "image": "assets/step-3.svg",
+     "text": "**Phase 3: [name].** [What was done and delivered.]"
+    },
+    {
+     "image": "assets/step-4.svg",
+     "text": "**Phase 4: [name].** [What was done and delivered.]"
+    }
+   ],
+   "id": "t05"
+  },
+  {
+   "type": "hotspots",
+   "image": "assets/diagram.svg",
+   "caption": "[System diagram: replace with your own and move the markers]",
+   "points": [
+    {
+     "x": 16.2,
+     "y": 32.6,
+     "title": "[Subsystem 1]",
+     "text": "[Its function.]"
+    },
+    {
+     "x": 36.2,
+     "y": 58.6,
+     "title": "[Subsystem 2]",
+     "text": "[Its function.]"
+    },
+    {
+     "x": 56.2,
+     "y": 32.6,
+     "title": "[Subsystem 3]",
+     "text": "[Its function.]"
+    },
+    {
+     "x": 76.2,
+     "y": 58.6,
+     "title": "[Subsystem 4]",
+     "text": "[Its function.]"
+    },
+    {
+     "x": 96.2,
+     "y": 32.6,
+     "title": "[Subsystem 5]",
+     "text": "[Its function.]"
+    }
+   ],
+   "id": "t06"
+  },
+  {
+   "type": "text",
+   "heading": "Milestones",
+   "text": "[Introduce the timeline.]",
+   "dropcap": false,
+   "id": "t07"
+  },
+  {
+   "type": "timeline",
+   "items": [
+    {
+     "date": "[Month Year]",
+     "title": "[Approval]",
+     "text": "[Detail.]",
+     "image": ""
+    },
+    {
+     "date": "[Month Year]",
+     "title": "[Design review]",
+     "text": "[Detail.]",
+     "image": ""
+    },
+    {
+     "date": "[Month Year]",
+     "title": "[Prototype]",
+     "text": "[Detail.]",
+     "image": ""
+    },
+    {
+     "date": "[Month Year]",
+     "title": "[Trials]",
+     "text": "[Detail.]",
+     "image": ""
+    },
+    {
+     "date": "[Month Year]",
+     "title": "[Delivery]",
+     "text": "[Detail.]",
+     "image": ""
+    }
+   ],
+   "id": "t08"
+  },
+  {
+   "type": "chart",
+   "title": "[Result against target] (replace with your data)",
+   "labels": [
+    "[Metric 1]",
+    "[Metric 2]",
+    "[Metric 3]",
+    "[Metric 4]"
+   ],
+   "values": [
+    92,
+    78,
+    105,
+    64
+   ],
+   "unit": " %",
+   "id": "t09"
+  },
+  {
+   "type": "compare",
+   "before": "assets/before.svg",
+   "after": "assets/after.svg",
+   "beforeLabel": "[Before the project]",
+   "afterLabel": "[After the project]",
+   "caption": "[What the comparison shows]",
+   "id": "t10"
+  },
+  {
+   "type": "image",
+   "src": "assets/photo-1.svg",
+   "caption": "[Trial, site or equipment photograph]",
+   "credit": "[Photographer / source]",
+   "width": "wide",
+   "effect": "zoom-in",
+   "id": "t11"
+  },
+  {
+   "type": "cards",
+   "flip": false,
+   "items": [
+    {
+     "icon": "👩‍🔬",
+     "title": "[Team or person]",
+     "text": "[Contribution.]",
+     "image": ""
+    },
+    {
+     "icon": "🤝",
+     "title": "[Partner]",
+     "text": "[Contribution.]",
+     "image": ""
+    },
+    {
+     "icon": "🏭",
+     "title": "[Vendor or lab]",
+     "text": "[Contribution.]",
+     "image": ""
+    },
+    {
+     "icon": "🎓",
+     "title": "[Advisor]",
+     "text": "[Contribution.]",
+     "image": ""
+    }
+   ],
+   "id": "t12"
+  },
+  {
+   "type": "text",
+   "heading": "Lessons and next steps",
+   "text": "[What worked, what did not, and what is proposed next, with dates and owners.]",
+   "dropcap": false,
+   "id": "t13"
+  }
+ ]
+}

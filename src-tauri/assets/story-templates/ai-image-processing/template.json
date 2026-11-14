@@ -1,0 +1,9 @@
+{
+ "id": "ai-image-processing",
+ "title": "Teaching Machines to Improve Images",
+ "category": "Artificial intelligence",
+ "description": "Long explainer on learned image restoration: degradation, networks, losses, metrics and deployment on edge devices.",
+ "sections": 20,
+ "preset": "quantum",
+ "cover": "assets/hero.svg"
+}

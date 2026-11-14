@@ -1,0 +1,369 @@
+{
+ "version": 1,
+ "meta": {
+  "title": "How Computers Learn to See",
+  "subtitle": "From pixels to objects, scenes and decisions",
+  "author": "",
+  "date": "",
+  "description": "Long explainer on computer vision: features, CNNs, detection, segmentation, tracking and vision transformers."
+ },
+ "theme": {
+  "preset": "midnight",
+  "accent": "",
+  "font": "sans",
+  "animation": "fade-up",
+  "progressBar": true,
+  "navDots": true
+ },
+ "blocks": [
+  {
+   "type": "hero",
+   "kicker": "COMPUTER VISION",
+   "title": "How Computers Learn to See",
+   "subtitle": "From pixels to objects, scenes and decisions",
+   "image": "assets/hero.svg",
+   "effect": "kenburns",
+   "overlay": 0.5,
+   "align": "center",
+   "id": "t01"
+  },
+  {
+   "type": "text",
+   "heading": "",
+   "text": "To a computer an image is only a grid of numbers. Computer vision is the work of turning those numbers into statements about the world: there is a car here, a person there, this surface is cracked, that tumour has grown.\n\nThe field moved from hand-written rules to systems that learn their own features from millions of labelled images.",
+   "dropcap": true,
+   "id": "t02"
+  },
+  {
+   "type": "stats",
+   "items": [
+    {
+     "value": 1000,
+     "prefix": "",
+     "suffix": "",
+     "label": "Object classes in the ImageNet challenge",
+     "plain": false
+    },
+    {
+     "value": 1.2,
+     "prefix": "≈",
+     "suffix": " M",
+     "label": "Training images in that challenge",
+     "plain": false
+    },
+    {
+     "value": 80,
+     "prefix": "",
+     "suffix": "",
+     "label": "Object categories in the COCO detection dataset",
+     "plain": false
+    },
+    {
+     "value": 2012,
+     "prefix": "",
+     "suffix": "",
+     "label": "Year deep learning overtook classical methods on ImageNet",
+     "plain": true
+    }
+   ],
+   "id": "t03"
+  },
+  {
+   "type": "divider",
+   "style": "wave",
+   "id": "t04"
+  },
+  {
+   "type": "text",
+   "heading": "What a vision model does",
+   "text": "A convolutional network slides small learned filters across the image. Early layers respond to edges and colours, middle layers to textures and parts, and deep layers to whole objects. A task-specific **head** then turns those features into a class label, a set of boxes or a mask.",
+   "dropcap": false,
+   "id": "t05"
+  },
+  {
+   "type": "scrolly",
+   "side": "right",
+   "steps": [
+    {
+     "image": "assets/step-1.svg",
+     "text": "**Classify.** Decide what the image shows as a whole: one label for the entire picture."
+    },
+    {
+     "image": "assets/step-2.svg",
+     "text": "**Detect.** Find every object of interest and draw a box around each, with a class and a confidence."
+    },
+    {
+     "image": "assets/step-3.svg",
+     "text": "**Segment.** Label every pixel, so the exact outline of each object or region is known."
+    },
+    {
+     "image": "assets/step-4.svg",
+     "text": "**Track.** Follow the same objects from frame to frame in video and estimate their motion."
+    }
+   ],
+   "id": "t06"
+  },
+  {
+   "type": "hotspots",
+   "image": "assets/diagram.svg",
+   "caption": "Tap the markers to explore each stage.",
+   "points": [
+    {
+     "x": 16.2,
+     "y": 32.6,
+     "title": "Camera",
+     "text": "Optics and sensor fix the resolution, field of view and noise that every later stage inherits."
+    },
+    {
+     "x": 36.2,
+     "y": 58.6,
+     "title": "Pre-processing",
+     "text": "Resizing, normalisation and augmentation prepare frames for the network."
+    },
+    {
+     "x": 56.2,
+     "y": 32.6,
+     "title": "Backbone",
+     "text": "The feature extractor: a convolutional network or a vision transformer."
+    },
+    {
+     "x": 76.2,
+     "y": 58.6,
+     "title": "Task head",
+     "text": "Layers that output classes, boxes, masks, key-points or depth."
+    },
+    {
+     "x": 96.2,
+     "y": 32.6,
+     "title": "Decision and tracking",
+     "text": "Filtering detections, linking them over time and acting on the result."
+    }
+   ],
+   "id": "t07"
+  },
+  {
+   "type": "text",
+   "heading": "Data decides",
+   "text": "A vision model is only as good as its training data. If the data lack night scenes, unusual viewpoints or certain groups of people, the model will fail on them. Careful dataset design, augmentation and evaluation on held-out, realistic data matter more than small changes in architecture.",
+   "dropcap": false,
+   "id": "t08"
+  },
+  {
+   "type": "cards",
+   "flip": true,
+   "items": [
+    {
+     "icon": "🔲",
+     "title": "Convolution",
+     "text": "A small filter swept across the image, reusing the same weights everywhere.",
+     "image": ""
+    },
+    {
+     "icon": "📦",
+     "title": "Bounding box",
+     "text": "A rectangle around an object, the basic output of a detector.",
+     "image": ""
+    },
+    {
+     "icon": "🎭",
+     "title": "Segmentation mask",
+     "text": "A per-pixel label marking exactly where an object is.",
+     "image": ""
+    },
+    {
+     "icon": "📏",
+     "title": "IoU",
+     "text": "Intersection over union: overlap between a predicted and a true box, from 0 to 1.",
+     "image": ""
+    },
+    {
+     "icon": "🎯",
+     "title": "mAP",
+     "text": "Mean average precision: the standard summary score for object detectors.",
+     "image": ""
+    },
+    {
+     "icon": "🧱",
+     "title": "Transfer learning",
+     "text": "Starting from a model trained on a large dataset and fine-tuning it on a small one.",
+     "image": ""
+    }
+   ],
+   "id": "t09"
+  },
+  {
+   "type": "image",
+   "src": "assets/section.svg",
+   "caption": "Replace with your own photograph or figure.",
+   "credit": "",
+   "width": "wide",
+   "effect": "zoom-in",
+   "id": "t10"
+  },
+  {
+   "type": "timeline",
+   "items": [
+    {
+     "date": "1966",
+     "title": "The Summer Vision Project",
+     "text": "MIT researchers propose to solve much of vision in one summer; it proves far harder.",
+     "image": ""
+    },
+    {
+     "date": "1998",
+     "title": "LeNet-5",
+     "text": "A convolutional network reads handwritten digits for cheque processing.",
+     "image": ""
+    },
+    {
+     "date": "2001",
+     "title": "Viola–Jones",
+     "text": "A fast cascade detector makes real-time face detection practical.",
+     "image": ""
+    },
+    {
+     "date": "2012",
+     "title": "AlexNet",
+     "text": "A deep convolutional network trained on GPUs wins ImageNet by a wide margin.",
+     "image": ""
+    },
+    {
+     "date": "2015",
+     "title": "ResNet and YOLO",
+     "text": "Residual connections allow very deep networks; YOLO detects objects in a single pass.",
+     "image": ""
+    },
+    {
+     "date": "2020",
+     "title": "Vision Transformer",
+     "text": "Attention-based models, borrowed from language, match convolutional networks on images.",
+     "image": ""
+    }
+   ],
+   "id": "t11"
+  },
+  {
+   "type": "chart",
+   "title": "ImageNet top-5 error fell rapidly",
+   "labels": [
+    "AlexNet 2012",
+    "VGG 2014",
+    "GoogLeNet 2014",
+    "ResNet 2015"
+   ],
+   "values": [
+    15.3,
+    7.3,
+    6.7,
+    3.6
+   ],
+   "unit": " %",
+   "id": "t12"
+  },
+  {
+   "type": "compare",
+   "before": "assets/before.svg",
+   "after": "assets/after.svg",
+   "beforeLabel": "Input frame",
+   "afterLabel": "Enhanced for detection",
+   "caption": "Drag the handle: pre-processing such as super-resolution can help a detector find small objects. Replace with your own images.",
+   "id": "t13"
+  },
+  {
+   "type": "quote",
+   "text": "A network never sees a cat. It sees statistics of pixels that, in its training data, went with the label 'cat'.",
+   "by": "Key idea",
+   "id": "t14"
+  },
+  {
+   "type": "gallery",
+   "mode": "carousel",
+   "images": [
+    {
+     "src": "assets/gallery-1.svg",
+     "caption": "A scene divided into regions of interest"
+    },
+    {
+     "src": "assets/gallery-2.svg",
+     "caption": "Detections linked across cameras"
+    },
+    {
+     "src": "assets/gallery-3.svg",
+     "caption": "Feature cells respond to patterns"
+    }
+   ],
+   "id": "t15"
+  },
+  {
+   "type": "text",
+   "heading": "Limits to keep in mind",
+   "text": "Vision models can be fooled by small, deliberate changes to an image, and they fail in conditions absent from their training data. Small objects, occlusion, glare and motion blur remain hard. Systems that affect people, such as face recognition, raise questions of bias, consent and oversight that engineering alone cannot settle.",
+   "dropcap": false,
+   "id": "t16"
+  },
+  {
+   "type": "cards",
+   "flip": false,
+   "items": [
+    {
+     "icon": "🚗",
+     "title": "Driver assistance",
+     "text": "Lane keeping, pedestrian detection and automatic braking.",
+     "image": ""
+    },
+    {
+     "icon": "🏭",
+     "title": "Inspection",
+     "text": "Finding defects on production lines faster than human inspectors.",
+     "image": ""
+    },
+    {
+     "icon": "🩺",
+     "title": "Medical imaging",
+     "text": "Flagging suspicious regions in scans for a specialist to review.",
+     "image": ""
+    },
+    {
+     "icon": "🚁",
+     "title": "Aerial analysis",
+     "text": "Counting, mapping and detecting objects in drone imagery.",
+     "image": ""
+    }
+   ],
+   "id": "t17"
+  },
+  {
+   "type": "quiz",
+   "question": "Which task labels every pixel of an image?",
+   "options": [
+    "Classification",
+    "Detection",
+    "Segmentation",
+    "Tracking"
+   ],
+   "answer": 2,
+   "explanation": "Segmentation assigns a class to each pixel; detection only draws boxes.",
+   "id": "t18"
+  },
+  {
+   "type": "quiz",
+   "question": "An IoU of 1.0 between a predicted and a true box means:",
+   "options": [
+    "They do not overlap",
+    "They overlap by half",
+    "They coincide exactly",
+    "The prediction is twice as large"
+   ],
+   "answer": 2,
+   "explanation": "IoU is the area of overlap divided by the area of union, so identical boxes score 1.",
+   "id": "t19"
+  },
+  {
+   "type": "text",
+   "heading": "Key terms and next steps",
+   "text": "**Feature map**: the output of a layer of filters. **Anchor**: a reference box a detector adjusts. **Non-maximum suppression**: removing duplicate detections of one object. **Augmentation**: random changes to training images that improve robustness.\n\n**Using this template.** Every block is editable: change the text in the panel on the right, replace the generated artwork with your own photographs, diagrams, GIFs or videos, and delete or reorder sections freely. Check figures against a current source before you publish.",
+   "dropcap": false,
+   "id": "t20"
+  }
+ ]
+}

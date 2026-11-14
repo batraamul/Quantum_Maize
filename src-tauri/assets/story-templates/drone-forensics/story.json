@@ -1,0 +1,369 @@
+{
+ "version": 1,
+ "meta": {
+  "title": "What a Drone Remembers",
+  "subtitle": "Recovering evidence from unmanned aircraft and detecting those that watch",
+  "author": "",
+  "date": "",
+  "description": "Long explainer on drone forensics and small surveillance ('bug') drones: evidence sources, analysis, detection and law."
+ },
+ "theme": {
+  "preset": "quantum",
+  "accent": "",
+  "font": "sans",
+  "animation": "fade-up",
+  "progressBar": true,
+  "navDots": true
+ },
+ "blocks": [
+  {
+   "type": "hero",
+   "kicker": "DRONE FORENSICS AND COVERT DRONES",
+   "title": "What a Drone Remembers",
+   "subtitle": "Recovering evidence from unmanned aircraft and detecting those that watch",
+   "image": "assets/hero.svg",
+   "effect": "kenburns",
+   "overlay": 0.5,
+   "align": "center",
+   "id": "t01"
+  },
+  {
+   "type": "text",
+   "heading": "",
+   "text": "A drone found near a prison wall, an airport or a border is a witness. Its memory can say where it took off, the route it flew, what it photographed and which phone controlled it. Drone forensics is the discipline of recovering that story in a way a court will accept.\n\nThe same knowledge helps with the opposite problem: finding small, quiet drones used to watch or listen without consent.",
+   "dropcap": true,
+   "id": "t02"
+  },
+  {
+   "type": "stats",
+   "items": [
+    {
+     "value": 4,
+     "prefix": "",
+     "suffix": "",
+     "label": "Main evidence sources: aircraft, controller, mobile device, cloud account",
+     "plain": false
+    },
+    {
+     "value": 2.4,
+     "prefix": "",
+     "suffix": " GHz",
+     "label": "Most common control-link band",
+     "plain": false
+    },
+    {
+     "value": 5.8,
+     "prefix": "",
+     "suffix": " GHz",
+     "label": "Band widely used for video downlinks",
+     "plain": false
+    },
+    {
+     "value": 250,
+     "prefix": "<",
+     "suffix": " g",
+     "label": "Weight of many camera drones small enough to be overlooked",
+     "plain": false
+    }
+   ],
+   "id": "t03"
+  },
+  {
+   "type": "divider",
+   "style": "wave",
+   "id": "t04"
+  },
+  {
+   "type": "text",
+   "heading": "Evidence in four places",
+   "text": "A drone system spreads its data across the **aircraft** (flight logs, media on a memory card), the **remote controller**, the **phone or tablet** running the flight app (cached maps, logs, thumbnails, account details) and the maker's **cloud service**. An examiner correlates all four to rebuild the flight and link it to a person.",
+   "dropcap": false,
+   "id": "t05"
+  },
+  {
+   "type": "scrolly",
+   "side": "right",
+   "steps": [
+    {
+     "image": "assets/step-1.svg",
+     "text": "**Preserve.** The device is photographed, isolated from radio signals and documented, so that nothing is altered and the chain of custody is intact."
+    },
+    {
+     "image": "assets/step-2.svg",
+     "text": "**Acquire.** Storage media and device memory are copied bit for bit, and the copies are verified with hash values."
+    },
+    {
+     "image": "assets/step-3.svg",
+     "text": "**Decode.** Flight logs, often in maker-specific formats, are parsed into positions, heights, speeds, battery states and control inputs."
+    },
+    {
+     "image": "assets/step-4.svg",
+     "text": "**Reconstruct.** Logs, image metadata and app records are combined into a timeline and map, and the conclusions are reported with their limits."
+    }
+   ],
+   "id": "t06"
+  },
+  {
+   "type": "hotspots",
+   "image": "assets/diagram.svg",
+   "caption": "Tap the markers to explore each stage.",
+   "points": [
+    {
+     "x": 16.2,
+     "y": 32.6,
+     "title": "Seizure and preservation",
+     "text": "Secure the aircraft, controller and paired devices; prevent remote wiping."
+    },
+    {
+     "x": 36.2,
+     "y": 58.6,
+     "title": "Acquisition",
+     "text": "Forensic imaging of memory cards and internal storage, verified by hashing."
+    },
+    {
+     "x": 56.2,
+     "y": 32.6,
+     "title": "Extraction",
+     "text": "Recover logs, media, deleted files and configuration data."
+    },
+    {
+     "x": 76.2,
+     "y": 58.6,
+     "title": "Analysis",
+     "text": "Rebuild flight paths, home point, timings and the link to an operator."
+    },
+    {
+     "x": 96.2,
+     "y": 32.6,
+     "title": "Reporting",
+     "text": "Document methods, findings and uncertainty for investigators and courts."
+    }
+   ],
+   "id": "t07"
+  },
+  {
+   "type": "text",
+   "heading": "Small drones that watch",
+   "text": "Miniature drones carry cameras and microphones and can be flown from a distance, which makes them a privacy and security concern. Detection relies on several sensors together: **radio-frequency** receivers that recognise control and video links, **radar** tuned for small slow targets, **acoustic** sensors that hear propellers, and **cameras** that confirm what the others report. Broadcast **Remote ID**, now required in several countries, lets authorities identify compliant drones directly.",
+   "dropcap": false,
+   "id": "t08"
+  },
+  {
+   "type": "cards",
+   "flip": true,
+   "items": [
+    {
+     "icon": "🧾",
+     "title": "Flight log",
+     "text": "A time-stamped record of position, attitude, battery and commands.",
+     "image": ""
+    },
+    {
+     "icon": "📍",
+     "title": "Geotag",
+     "text": "Location and time stored in the metadata of a photo or video.",
+     "image": ""
+    },
+    {
+     "icon": "📢",
+     "title": "Remote ID",
+     "text": "A broadcast of a drone's identity and position, like a digital number plate.",
+     "image": ""
+    },
+    {
+     "icon": "🔗",
+     "title": "Chain of custody",
+     "text": "The documented history of who held the evidence and when.",
+     "image": ""
+    },
+    {
+     "icon": "📶",
+     "title": "RF detection",
+     "text": "Recognising a drone by the radio signals it and its controller emit.",
+     "image": ""
+    },
+    {
+     "icon": "🐝",
+     "title": "Micro surveillance drone",
+     "text": "A very small aircraft carrying a camera for close observation.",
+     "image": ""
+    }
+   ],
+   "id": "t09"
+  },
+  {
+   "type": "image",
+   "src": "assets/section.svg",
+   "caption": "Replace with your own photograph or figure.",
+   "credit": "",
+   "width": "wide",
+   "effect": "zoom-in",
+   "id": "t10"
+  },
+  {
+   "type": "timeline",
+   "items": [
+    {
+     "date": "2010",
+     "title": "Consumer quadcopters",
+     "text": "Camera drones controlled from phones become widely available.",
+     "image": ""
+    },
+    {
+     "date": "2013",
+     "title": "Pocket-sized military drones",
+     "text": "Palm-sized reconnaissance helicopters enter service with ground troops.",
+     "image": ""
+    },
+    {
+     "date": "2015",
+     "title": "A drone on the White House lawn",
+     "text": "A small quadcopter crashes in the grounds, prompting new attention to detection.",
+     "image": ""
+    },
+    {
+     "date": "2018",
+     "title": "Gatwick Airport",
+     "text": "Reported drone sightings halt flights for many hours and affect a very large number of passengers.",
+     "image": ""
+    },
+    {
+     "date": "2021",
+     "title": "Rules tighten",
+     "text": "Remote identification rules take effect in the United States; India issues its Drone Rules.",
+     "image": ""
+    },
+    {
+     "date": "2023",
+     "title": "Remote ID compliance",
+     "text": "US operators are required to comply with remote identification.",
+     "image": ""
+    }
+   ],
+   "id": "t11"
+  },
+  {
+   "type": "chart",
+   "title": "Radio bands commonly used by small drones",
+   "labels": [
+    "433 MHz telemetry",
+    "915 MHz telemetry",
+    "2.4 GHz control",
+    "5.8 GHz video"
+   ],
+   "values": [
+    433,
+    915,
+    2400,
+    5800
+   ],
+   "unit": " MHz",
+   "id": "t12"
+  },
+  {
+   "type": "compare",
+   "before": "assets/before.svg",
+   "after": "assets/after.svg",
+   "beforeLabel": "Background spectrum",
+   "afterLabel": "With a drone link present",
+   "caption": "Drag the handle: new signals appear when a drone and its controller are active. Replace with your own spectrum captures.",
+   "id": "t13"
+  },
+  {
+   "type": "quote",
+   "text": "A drone flight leaves traces in at least four places. An investigator needs only one of them to begin.",
+   "by": "Key idea",
+   "id": "t14"
+  },
+  {
+   "type": "gallery",
+   "mode": "carousel",
+   "images": [
+    {
+     "src": "assets/gallery-1.svg",
+     "caption": "Sensors watching a protected area"
+    },
+    {
+     "src": "assets/gallery-2.svg",
+     "caption": "Linking an aircraft to its controller and phone"
+    },
+    {
+     "src": "assets/gallery-3.svg",
+     "caption": "Signal activity across a band"
+    }
+   ],
+   "id": "t15"
+  },
+  {
+   "type": "text",
+   "heading": "Limits and cautions",
+   "text": "Makers use differing and changing log formats, some data are encrypted, and a crashed aircraft may be badly damaged. Do-it-yourself drones may keep no logs at all. On the detection side, small drones are hard to tell from birds, and cities are full of radio noise. Jamming or disabling a drone is restricted by law in most countries and is reserved for authorised agencies.",
+   "dropcap": false,
+   "id": "t16"
+  },
+  {
+   "type": "cards",
+   "flip": false,
+   "items": [
+    {
+     "icon": "⚖️",
+     "title": "Criminal investigation",
+     "text": "Smuggling, trespass and harassment cases.",
+     "image": ""
+    },
+    {
+     "icon": "🛫",
+     "title": "Aviation safety",
+     "text": "Investigating incursions near airports and collisions.",
+     "image": ""
+    },
+    {
+     "icon": "🛡️",
+     "title": "Site protection",
+     "text": "Detecting drones around sensitive facilities and events.",
+     "image": ""
+    },
+    {
+     "icon": "🔧",
+     "title": "Accident analysis",
+     "text": "Finding out why an aircraft failed.",
+     "image": ""
+    }
+   ],
+   "id": "t17"
+  },
+  {
+   "type": "quiz",
+   "question": "Why are forensic copies verified with hash values?",
+   "options": [
+    "To compress them",
+    "To show the copy is identical to the original and unchanged since",
+    "To decrypt them",
+    "To speed up analysis"
+   ],
+   "answer": 1,
+   "explanation": "A matching hash demonstrates integrity, which is essential for evidence.",
+   "id": "t18"
+  },
+  {
+   "type": "quiz",
+   "question": "Which combination gives the most reliable drone detection?",
+   "options": [
+    "A single camera",
+    "Several sensor types, such as RF, radar, acoustic and optical, used together",
+    "A louder alarm",
+    "A taller fence"
+   ],
+   "answer": 1,
+   "explanation": "Each sensor has blind spots. Combining them reduces missed detections and false alarms.",
+   "id": "t19"
+  },
+  {
+   "type": "text",
+   "heading": "Key terms and next steps",
+   "text": "**Home point**: the recorded take-off location. **Telemetry**: data sent from aircraft to ground. **Write blocker**: a device that prevents changes to evidence during copying. **Counter-UAS**: systems for detecting and responding to drones. **Metadata**: data describing a file, such as time and place.\n\n**Using this template.** Every block is editable: change the text in the panel on the right, replace the generated artwork with your own photographs, diagrams, GIFs or videos, and delete or reorder sections freely. Check figures against a current source before you publish.",
+   "dropcap": false,
+   "id": "t20"
+  }
+ ]
+}

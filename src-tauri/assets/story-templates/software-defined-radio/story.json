@@ -1,0 +1,367 @@
+{
+ "version": 1,
+ "meta": {
+  "title": "When Radio Becomes Software",
+  "subtitle": "Digitise first, then let code do the rest",
+  "author": "",
+  "date": "",
+  "description": "Long explainer on software-defined radio: I/Q sampling, front ends, DSP chains, GNU Radio, hardware and uses."
+ },
+ "theme": {
+  "preset": "midnight",
+  "accent": "",
+  "font": "sans",
+  "animation": "fade-up",
+  "progressBar": true,
+  "navDots": true
+ },
+ "blocks": [
+  {
+   "type": "hero",
+   "kicker": "SOFTWARE-DEFINED RADIO",
+   "title": "When Radio Becomes Software",
+   "subtitle": "Digitise first, then let code do the rest",
+   "image": "assets/hero.svg",
+   "effect": "kenburns",
+   "overlay": 0.5,
+   "align": "center",
+   "id": "t01"
+  },
+  {
+   "type": "text",
+   "heading": "",
+   "text": "A traditional radio is built for one job. Its filters, mixers and demodulator are fixed in hardware, so an FM receiver can never become a GPS receiver.\n\nA software-defined radio moves those functions into code. The hardware only tunes and digitises a slice of spectrum. What the radio does with it is decided by a program, and can be changed in seconds.",
+   "dropcap": true,
+   "id": "t02"
+  },
+  {
+   "type": "stats",
+   "items": [
+    {
+     "value": 1991,
+     "prefix": "",
+     "suffix": "",
+     "label": "Year Joseph Mitola introduced the term 'software radio'",
+     "plain": true
+    },
+    {
+     "value": 2001,
+     "prefix": "",
+     "suffix": "",
+     "label": "Year the GNU Radio project began",
+     "plain": true
+    },
+    {
+     "value": 2,
+     "prefix": "",
+     "suffix": "",
+     "label": "Components of every complex sample: I and Q",
+     "plain": false
+    },
+    {
+     "value": 6,
+     "prefix": "",
+     "suffix": " GHz",
+     "label": "Upper tuning limit of the popular HackRF One",
+     "plain": false
+    }
+   ],
+   "id": "t03"
+  },
+  {
+   "type": "divider",
+   "style": "wave",
+   "id": "t04"
+  },
+  {
+   "type": "text",
+   "heading": "Sampling the spectrum",
+   "text": "The front end shifts a chosen band of radio frequencies down to baseband and an analogue-to-digital converter samples it. Each sample has two parts, **in-phase (I)** and **quadrature (Q)**, which together record both amplitude and phase. From that stream, software can filter, demodulate and decode any signal that fits inside the sampled bandwidth.",
+   "dropcap": false,
+   "id": "t05"
+  },
+  {
+   "type": "scrolly",
+   "side": "right",
+   "steps": [
+    {
+     "image": "assets/step-1.svg",
+     "text": "**Tune.** A mixer and local oscillator shift the band of interest to a low frequency."
+    },
+    {
+     "image": "assets/step-2.svg",
+     "text": "**Digitise.** A converter samples the signal as I/Q pairs at a rate at least equal to the bandwidth wanted."
+    },
+    {
+     "image": "assets/step-3.svg",
+     "text": "**Process.** Software or an FPGA filters, shifts and demodulates the samples to recover audio, images or data."
+    },
+    {
+     "image": "assets/step-4.svg",
+     "text": "**Reconfigure.** Loading a different program turns the same hardware into a different radio."
+    }
+   ],
+   "id": "t06"
+  },
+  {
+   "type": "hotspots",
+   "image": "assets/diagram.svg",
+   "caption": "Tap the markers to explore each stage.",
+   "points": [
+    {
+     "x": 16.2,
+     "y": 32.6,
+     "title": "Antenna and front end",
+     "text": "Antenna, filters and low-noise amplifier suited to the band."
+    },
+    {
+     "x": 36.2,
+     "y": 58.6,
+     "title": "Tuner",
+     "text": "Mixer and oscillator that select the centre frequency."
+    },
+    {
+     "x": 56.2,
+     "y": 32.6,
+     "title": "A/D converter",
+     "text": "Digitises the signal; its sample rate and bit depth bound performance."
+    },
+    {
+     "x": 76.2,
+     "y": 58.6,
+     "title": "Digital down-conversion",
+     "text": "FPGA or processor stage that filters and reduces the sample rate."
+    },
+    {
+     "x": 96.2,
+     "y": 32.6,
+     "title": "Host software",
+     "text": "Demodulators, decoders and displays running on a computer."
+    }
+   ],
+   "id": "t07"
+  },
+  {
+   "type": "text",
+   "heading": "Seeing the spectrum",
+   "text": "Because an SDR captures a whole band at once, it can display it. A fast Fourier transform turns the samples into a spectrum, and stacking successive spectra forms a **waterfall** in which every transmitter appears as a trace. Engineers use this to find interference, study unknown signals and check that their own transmitters behave.",
+   "dropcap": false,
+   "id": "t08"
+  },
+  {
+   "type": "cards",
+   "flip": true,
+   "items": [
+    {
+     "icon": "🔢",
+     "title": "I/Q samples",
+     "text": "Pairs of numbers that capture a signal's amplitude and phase.",
+     "image": ""
+    },
+    {
+     "icon": "⏱️",
+     "title": "Sample rate",
+     "text": "Samples per second; it sets the widest bandwidth that can be captured.",
+     "image": ""
+    },
+    {
+     "icon": "🌈",
+     "title": "Waterfall display",
+     "text": "Spectrum against time, with signal strength shown as colour.",
+     "image": ""
+    },
+    {
+     "icon": "⬇️",
+     "title": "Down-conversion",
+     "text": "Shifting a signal to baseband and reducing its sample rate.",
+     "image": ""
+    },
+    {
+     "icon": "🧮",
+     "title": "FPGA",
+     "text": "Reconfigurable logic that performs high-rate processing next to the converter.",
+     "image": ""
+    },
+    {
+     "icon": "🧩",
+     "title": "Flowgraph",
+     "text": "A chain of processing blocks, as assembled in GNU Radio.",
+     "image": ""
+    }
+   ],
+   "id": "t09"
+  },
+  {
+   "type": "image",
+   "src": "assets/section.svg",
+   "caption": "Replace with your own photograph or figure.",
+   "credit": "",
+   "width": "wide",
+   "effect": "zoom-in",
+   "id": "t10"
+  },
+  {
+   "type": "timeline",
+   "items": [
+    {
+     "date": "1991",
+     "title": "The software radio",
+     "text": "Joseph Mitola describes radios whose functions are defined in software.",
+     "image": ""
+    },
+    {
+     "date": "1992",
+     "title": "SPEAKeasy",
+     "text": "A US military programme begins building a reprogrammable multi-band radio.",
+     "image": ""
+    },
+    {
+     "date": "2001",
+     "title": "GNU Radio",
+     "text": "A free toolkit of signal-processing blocks is started.",
+     "image": ""
+    },
+    {
+     "date": "2004",
+     "title": "USRP",
+     "text": "Ettus Research is founded and offers affordable SDR hardware to laboratories.",
+     "image": ""
+    },
+    {
+     "date": "2012",
+     "title": "RTL-SDR",
+     "text": "Experimenters find that inexpensive TV tuner sticks can serve as wideband receivers.",
+     "image": ""
+    },
+    {
+     "date": "2014",
+     "title": "HackRF One",
+     "text": "An open-source transceiver covering 1 MHz to 6 GHz is released.",
+     "image": ""
+    }
+   ],
+   "id": "t11"
+  },
+  {
+   "type": "chart",
+   "title": "Maximum sample rate of three SDR devices",
+   "labels": [
+    "RTL-SDR",
+    "HackRF One",
+    "USRP B210"
+   ],
+   "values": [
+    2.4,
+    20,
+    61.44
+   ],
+   "unit": " MS/s",
+   "id": "t12"
+  },
+  {
+   "type": "compare",
+   "before": "assets/before.svg",
+   "after": "assets/after.svg",
+   "beforeLabel": "One fixed channel",
+   "afterLabel": "A whole band at once",
+   "caption": "Drag the handle: an SDR captures every signal in its bandwidth together. Replace with your own spectrum captures.",
+   "id": "t13"
+  },
+  {
+   "type": "quote",
+   "text": "In a software-defined radio, the antenna and converter are the hardware. Everything else is an idea you can edit.",
+   "by": "Key idea",
+   "id": "t14"
+  },
+  {
+   "type": "gallery",
+   "mode": "carousel",
+   "images": [
+    {
+     "src": "assets/gallery-1.svg",
+     "caption": "Signals across a captured band"
+    },
+    {
+     "src": "assets/gallery-2.svg",
+     "caption": "Processing blocks wired into a flowgraph"
+    },
+    {
+     "src": "assets/gallery-3.svg",
+     "caption": "Samples on the I/Q plane"
+    }
+   ],
+   "id": "t15"
+  },
+  {
+   "type": "text",
+   "heading": "Limits and responsibilities",
+   "text": "Converters and front ends bound what software can do: dynamic range, noise and spurious signals all matter, and wide bandwidths produce data faster than a computer may be able to process. Receiving is generally permitted, but transmitting requires a licence or a licence-exempt band and equipment that stays within the rules. Check national regulations before transmitting.",
+   "dropcap": false,
+   "id": "t16"
+  },
+  {
+   "type": "cards",
+   "flip": false,
+   "items": [
+    {
+     "icon": "🔬",
+     "title": "Research and teaching",
+     "text": "Prototyping new waveforms and teaching communications.",
+     "image": ""
+    },
+    {
+     "icon": "🛰️",
+     "title": "Satellite reception",
+     "text": "Weather images and amateur satellites.",
+     "image": ""
+    },
+    {
+     "icon": "📊",
+     "title": "Spectrum monitoring",
+     "text": "Finding interference and measuring occupancy.",
+     "image": ""
+    },
+    {
+     "icon": "📱",
+     "title": "Network equipment",
+     "text": "Base stations whose standards are updated in software.",
+     "image": ""
+    }
+   ],
+   "id": "t17"
+  },
+  {
+   "type": "quiz",
+   "question": "Why does an SDR record I and Q instead of a single value per sample?",
+   "options": [
+    "To double the volume",
+    "To capture both amplitude and phase of the signal",
+    "To reduce file size",
+    "To avoid using an antenna"
+   ],
+   "answer": 1,
+   "explanation": "With both components, software can tell positive from negative frequencies and demodulate any scheme.",
+   "id": "t18"
+  },
+  {
+   "type": "quiz",
+   "question": "What mainly determines the widest signal an SDR can capture at once?",
+   "options": [
+    "Its colour",
+    "Its sample rate",
+    "Its USB cable length",
+    "Its antenna height"
+   ],
+   "answer": 1,
+   "explanation": "For complex sampling, the captured bandwidth is about equal to the sample rate.",
+   "id": "t19"
+  },
+  {
+   "type": "text",
+   "heading": "Key terms and next steps",
+   "text": "**Baseband**: a signal centred on zero frequency. **FFT**: fast Fourier transform. **Decimation**: lowering the sample rate after filtering. **Dynamic range**: the span between the weakest and strongest signals handled together. **Transceiver**: a device that both transmits and receives.\n\n**Using this template.** Every block is editable: change the text in the panel on the right, replace the generated artwork with your own photographs, diagrams, GIFs or videos, and delete or reorder sections freely. Check figures against a current source before you publish.",
+   "dropcap": false,
+   "id": "t20"
+  }
+ ]
+}

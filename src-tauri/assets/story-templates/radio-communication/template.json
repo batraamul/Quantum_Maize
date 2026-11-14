@@ -1,0 +1,9 @@
+{
+ "id": "radio-communication",
+ "title": "Messages on Invisible Waves",
+ "category": "Radio",
+ "description": "Long explainer on radio communication: spectrum, modulation, antennas, propagation, noise and channel capacity.",
+ "sections": 20,
+ "preset": "saffron",
+ "cover": "assets/hero.svg"
+}

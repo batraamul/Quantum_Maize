@@ -1,0 +1,367 @@
+{
+ "version": 1,
+ "meta": {
+  "title": "Many Small Listeners",
+  "subtitle": "How battery-powered nodes cooperate to observe the world",
+  "author": "",
+  "date": "",
+  "description": "Long explainer on wireless sensor networks: nodes, duty cycling, multi-hop routing, standards and deployments."
+ },
+ "theme": {
+  "preset": "emerald",
+  "accent": "",
+  "font": "sans",
+  "animation": "fade-up",
+  "progressBar": true,
+  "navDots": true
+ },
+ "blocks": [
+  {
+   "type": "hero",
+   "kicker": "WIRELESS SENSOR NETWORKS",
+   "title": "Many Small Listeners",
+   "subtitle": "How battery-powered nodes cooperate to observe the world",
+   "image": "assets/hero.svg",
+   "effect": "kenburns",
+   "overlay": 0.5,
+   "align": "center",
+   "id": "t01"
+  },
+  {
+   "type": "text",
+   "heading": "",
+   "text": "A wireless sensor network is a group of small, inexpensive devices scattered over an area, each measuring something and passing its readings by radio from neighbour to neighbour until they reach a collection point.\n\nNo single node is powerful or reliable. The network as a whole is both, provided it is designed to spend its scarce energy carefully.",
+   "dropcap": true,
+   "id": "t02"
+  },
+  {
+   "type": "stats",
+   "items": [
+    {
+     "value": 250,
+     "prefix": "",
+     "suffix": " kbit/s",
+     "label": "Data rate of IEEE 802.15.4 in the 2.4 GHz band",
+     "plain": false
+    },
+    {
+     "value": 16,
+     "prefix": "",
+     "suffix": "",
+     "label": "Channels that standard defines at 2.4 GHz",
+     "plain": false
+    },
+    {
+     "value": 127,
+     "prefix": "",
+     "suffix": " bytes",
+     "label": "Largest frame an 802.15.4 radio carries",
+     "plain": false
+    },
+    {
+     "value": 2003,
+     "prefix": "",
+     "suffix": "",
+     "label": "Year IEEE 802.15.4 was first published",
+     "plain": true
+    }
+   ],
+   "id": "t03"
+  },
+  {
+   "type": "divider",
+   "style": "wave",
+   "id": "t04"
+  },
+  {
+   "type": "text",
+   "heading": "Energy is the budget",
+   "text": "A node's radio uses far more energy than its sensor or processor, and listening costs about as much as transmitting. Nodes therefore keep the radio off almost all the time, a practice called **duty cycling**, and wake briefly to exchange data. Protocols are judged by how many years they let a battery last.",
+   "dropcap": false,
+   "id": "t05"
+  },
+  {
+   "type": "scrolly",
+   "side": "right",
+   "steps": [
+    {
+     "image": "assets/step-1.svg",
+     "text": "**Sense.** Each node wakes on a timer, samples its sensors and decides whether the reading is worth sending."
+    },
+    {
+     "image": "assets/step-2.svg",
+     "text": "**Sleep.** Between samples, the processor and radio are switched off. A node may be active for well under 1% of the time."
+    },
+    {
+     "image": "assets/step-3.svg",
+     "text": "**Relay.** Data hop from node to node towards the sink, so no node needs enough power to reach it directly."
+    },
+    {
+     "image": "assets/step-4.svg",
+     "text": "**Aggregate.** Readings are combined or compressed along the way, and the sink forwards the result to a server."
+    }
+   ],
+   "id": "t06"
+  },
+  {
+   "type": "hotspots",
+   "image": "assets/diagram.svg",
+   "caption": "Tap the markers to explore each stage.",
+   "points": [
+    {
+     "x": 16.2,
+     "y": 32.6,
+     "title": "Sensor node",
+     "text": "Microcontroller, sensors, radio and a battery or energy harvester."
+    },
+    {
+     "x": 36.2,
+     "y": 58.6,
+     "title": "Radio and MAC",
+     "text": "Low-power radio and a medium-access protocol that schedules when nodes listen."
+    },
+    {
+     "x": 56.2,
+     "y": 32.6,
+     "title": "Multi-hop routing",
+     "text": "Protocols that build and repair paths as links and nodes come and go."
+    },
+    {
+     "x": 76.2,
+     "y": 58.6,
+     "title": "Sink or gateway",
+     "text": "A mains-powered node that collects data and connects to the internet."
+    },
+    {
+     "x": 96.2,
+     "y": 32.6,
+     "title": "Data service",
+     "text": "Storage, visualisation and alerts for the people using the measurements."
+    }
+   ],
+   "id": "t07"
+  },
+  {
+   "type": "text",
+   "heading": "Designing for failure",
+   "text": "Nodes die when batteries run out, links fade with weather and foliage, and hardware left outdoors corrodes. A sound design assumes all of this. Routes are rebuilt automatically, neighbouring nodes cover for failed ones, and the data pipeline flags gaps and suspect values so they are not mistaken for real measurements.",
+   "dropcap": false,
+   "id": "t08"
+  },
+  {
+   "type": "cards",
+   "flip": true,
+   "items": [
+    {
+     "icon": "📟",
+     "title": "Mote",
+     "text": "A complete sensor node, often no bigger than a matchbox.",
+     "image": ""
+    },
+    {
+     "icon": "😴",
+     "title": "Duty cycling",
+     "text": "Keeping the radio off most of the time to save energy.",
+     "image": ""
+    },
+    {
+     "icon": "🔀",
+     "title": "Multi-hop routing",
+     "text": "Passing data through intermediate nodes to extend range.",
+     "image": ""
+    },
+    {
+     "icon": "🧮",
+     "title": "Data aggregation",
+     "text": "Combining readings inside the network to cut transmissions.",
+     "image": ""
+    },
+    {
+     "icon": "📍",
+     "title": "Localisation",
+     "text": "Estimating where each node is, from signal strength, timing or GNSS.",
+     "image": ""
+    },
+    {
+     "icon": "☀️",
+     "title": "Energy harvesting",
+     "text": "Topping up from solar, vibration or thermal sources.",
+     "image": ""
+    }
+   ],
+   "id": "t09"
+  },
+  {
+   "type": "image",
+   "src": "assets/section.svg",
+   "caption": "Replace with your own photograph or figure.",
+   "credit": "",
+   "width": "wide",
+   "effect": "zoom-in",
+   "id": "t10"
+  },
+  {
+   "type": "timeline",
+   "items": [
+    {
+     "date": "1998",
+     "title": "Smart Dust",
+     "text": "A Berkeley project sets out to build sensor nodes of millimetre scale.",
+     "image": ""
+    },
+    {
+     "date": "2000",
+     "title": "TinyOS",
+     "text": "An operating system written for sensor nodes with a few kilobytes of memory.",
+     "image": ""
+    },
+    {
+     "date": "2003",
+     "title": "IEEE 802.15.4",
+     "text": "A standard radio for low-rate, low-power personal area networks.",
+     "image": ""
+    },
+    {
+     "date": "2004",
+     "title": "Zigbee",
+     "text": "The Zigbee specification adds networking and application layers above 802.15.4.",
+     "image": ""
+    },
+    {
+     "date": "2007",
+     "title": "6LoWPAN",
+     "text": "A way to carry IPv6 packets over 802.15.4 links is standardised.",
+     "image": ""
+    },
+    {
+     "date": "2012",
+     "title": "RPL",
+     "text": "The IETF publishes a routing protocol for low-power, lossy networks.",
+     "image": ""
+    }
+   ],
+   "id": "t11"
+  },
+  {
+   "type": "chart",
+   "title": "IEEE 802.15.4 data rate by band",
+   "labels": [
+    "868 MHz",
+    "915 MHz",
+    "2.4 GHz"
+   ],
+   "values": [
+    20,
+    40,
+    250
+   ],
+   "unit": " kbit/s",
+   "id": "t12"
+  },
+  {
+   "type": "compare",
+   "before": "assets/before.svg",
+   "after": "assets/after.svg",
+   "beforeLabel": "Sparse deployment",
+   "afterLabel": "Dense deployment",
+   "caption": "Drag the handle: more nodes give redundancy and finer detail. Replace with your own deployment maps.",
+   "id": "t13"
+  },
+  {
+   "type": "quote",
+   "text": "In a sensor network, the most important component is the one that is switched off.",
+   "by": "Key idea",
+   "id": "t14"
+  },
+  {
+   "type": "gallery",
+   "mode": "carousel",
+   "images": [
+    {
+     "src": "assets/gallery-1.svg",
+     "caption": "Paths converge on a sink"
+    },
+    {
+     "src": "assets/gallery-2.svg",
+     "caption": "Readings ripple across the field"
+    },
+    {
+     "src": "assets/gallery-3.svg",
+     "caption": "Coverage around each node"
+    }
+   ],
+   "id": "t15"
+  },
+  {
+   "type": "text",
+   "heading": "Practical obstacles",
+   "text": "Radio links outdoors vary from hour to hour. Sensors drift and need recalibration that is costly to do in the field. Clocks on different nodes disagree unless synchronised. Security is hard on devices with little memory, yet a network that controls irrigation or monitors a pipeline must not accept forged data.",
+   "dropcap": false,
+   "id": "t16"
+  },
+  {
+   "type": "cards",
+   "flip": false,
+   "items": [
+    {
+     "icon": "🌋",
+     "title": "Environmental monitoring",
+     "text": "Volcanoes, glaciers, forests and rivers.",
+     "image": ""
+    },
+    {
+     "icon": "🌉",
+     "title": "Structural health",
+     "text": "Vibration and strain in bridges and buildings.",
+     "image": ""
+    },
+    {
+     "icon": "🌾",
+     "title": "Precision agriculture",
+     "text": "Soil moisture and microclimate across fields.",
+     "image": ""
+    },
+    {
+     "icon": "🏭",
+     "title": "Industrial plants",
+     "text": "Wireless instrumentation where cabling is costly.",
+     "image": ""
+    }
+   ],
+   "id": "t17"
+  },
+  {
+   "type": "quiz",
+   "question": "Why do sensor nodes keep their radios switched off most of the time?",
+   "options": [
+    "To avoid interference",
+    "Because the radio is the largest energy consumer",
+    "Because sensors work only in silence",
+    "To cool down"
+   ],
+   "answer": 1,
+   "explanation": "Listening and transmitting dominate a node's energy use, so duty cycling extends battery life.",
+   "id": "t18"
+  },
+  {
+   "type": "quiz",
+   "question": "What is the benefit of multi-hop routing?",
+   "options": [
+    "Higher transmit power",
+    "Nodes can reach a distant sink through neighbours using low power",
+    "It removes the need for a sink",
+    "It increases frame size"
+   ],
+   "answer": 1,
+   "explanation": "Short hops need much less energy than one long link.",
+   "id": "t19"
+  },
+  {
+   "type": "text",
+   "heading": "Key terms and next steps",
+   "text": "**Sink**: the node where data leave the network. **MAC**: medium access control, the rules for sharing the channel. **RSSI**: received signal strength indicator. **Topology**: the pattern of links, such as star, tree or mesh. **Latency**: delay from measurement to delivery.\n\n**Using this template.** Every block is editable: change the text in the panel on the right, replace the generated artwork with your own photographs, diagrams, GIFs or videos, and delete or reorder sections freely. Check figures against a current source before you publish.",
+   "dropcap": false,
+   "id": "t20"
+  }
+ ]
+}

@@ -1,0 +1,367 @@
+{
+ "version": 1,
+ "meta": {
+  "title": "Secrets, Keys and Proof",
+  "subtitle": "How mathematics protects messages and proves who sent them",
+  "author": "",
+  "date": "",
+  "description": "Long explainer on cryptography: symmetric and public-key ciphers, hashes, signatures, TLS and post-quantum methods."
+ },
+ "theme": {
+  "preset": "quantum",
+  "accent": "",
+  "font": "sans",
+  "animation": "fade-up",
+  "progressBar": true,
+  "navDots": true
+ },
+ "blocks": [
+  {
+   "type": "hero",
+   "kicker": "CRYPTOGRAPHY",
+   "title": "Secrets, Keys and Proof",
+   "subtitle": "How mathematics protects messages and proves who sent them",
+   "image": "assets/hero.svg",
+   "effect": "kenburns",
+   "overlay": 0.5,
+   "align": "center",
+   "id": "t01"
+  },
+  {
+   "type": "text",
+   "heading": "",
+   "text": "Every time a padlock appears in a browser, mathematics is doing something remarkable: two computers that have never met agree on a secret while the whole internet listens, and nobody else can learn it.\n\nCryptography provides secrecy, and also integrity and authenticity: proof that a message is unchanged and that it came from who it claims.",
+   "dropcap": true,
+   "id": "t02"
+  },
+  {
+   "type": "stats",
+   "items": [
+    {
+     "value": 1976,
+     "prefix": "",
+     "suffix": "",
+     "label": "Year Diffie and Hellman published public-key exchange",
+     "plain": true
+    },
+    {
+     "value": 256,
+     "prefix": "",
+     "suffix": " bit",
+     "label": "Output length of the SHA-256 hash function",
+     "plain": false
+    },
+    {
+     "value": 2001,
+     "prefix": "",
+     "suffix": "",
+     "label": "Year AES became the standard symmetric cipher",
+     "plain": true
+    },
+    {
+     "value": 2024,
+     "prefix": "",
+     "suffix": "",
+     "label": "Year NIST finalised its first post-quantum standards",
+     "plain": true
+    }
+   ],
+   "id": "t03"
+  },
+  {
+   "type": "divider",
+   "style": "wave",
+   "id": "t04"
+  },
+  {
+   "type": "text",
+   "heading": "Two families of cipher",
+   "text": "A **symmetric** cipher uses one shared key to encrypt and decrypt. It is fast, but the two sides must already share the key. A **public-key** system gives each party a pair of keys: a public one that anyone may know and a private one kept secret. Real protocols use public-key methods to agree a key, then a symmetric cipher for the data.",
+   "dropcap": false,
+   "id": "t05"
+  },
+  {
+   "type": "scrolly",
+   "side": "right",
+   "steps": [
+    {
+     "image": "assets/step-1.svg",
+     "text": "**Exchange.** The two sides use a key-exchange method to derive a shared secret that an eavesdropper cannot compute."
+    },
+    {
+     "image": "assets/step-2.svg",
+     "text": "**Encrypt.** A symmetric cipher such as AES scrambles the message with that secret key."
+    },
+    {
+     "image": "assets/step-3.svg",
+     "text": "**Authenticate.** A message authentication code or digital signature is attached so tampering can be detected."
+    },
+    {
+     "image": "assets/step-4.svg",
+     "text": "**Verify and decrypt.** The receiver checks the tag or signature, then decrypts with the shared key."
+    }
+   ],
+   "id": "t06"
+  },
+  {
+   "type": "hotspots",
+   "image": "assets/diagram.svg",
+   "caption": "Tap the markers to explore each stage.",
+   "points": [
+    {
+     "x": 16.2,
+     "y": 32.6,
+     "title": "Plaintext",
+     "text": "The message in readable form."
+    },
+    {
+     "x": 36.2,
+     "y": 58.6,
+     "title": "Key",
+     "text": "The secret value that controls the transformation. Security rests on the key, not on hiding the algorithm."
+    },
+    {
+     "x": 56.2,
+     "y": 32.6,
+     "title": "Cipher",
+     "text": "A public, well-studied algorithm such as AES or ChaCha20."
+    },
+    {
+     "x": 76.2,
+     "y": 58.6,
+     "title": "Ciphertext",
+     "text": "The scrambled output, safe to send over an open channel."
+    },
+    {
+     "x": 96.2,
+     "y": 32.6,
+     "title": "Decryption",
+     "text": "Applying the cipher with the right key to recover the plaintext."
+    }
+   ],
+   "id": "t07"
+  },
+  {
+   "type": "text",
+   "heading": "Hard problems as locks",
+   "text": "Public-key cryptography depends on mathematical tasks that are easy one way and impractical to reverse, such as multiplying large primes versus factoring the result. A large quantum computer could solve some of these efficiently. **Post-quantum** algorithms based on different problems have therefore been standardised, and systems are beginning to migrate to them.",
+   "dropcap": false,
+   "id": "t08"
+  },
+  {
+   "type": "cards",
+   "flip": true,
+   "items": [
+    {
+     "icon": "🗝️",
+     "title": "Symmetric encryption",
+     "text": "One shared key for both directions; fast and used for bulk data.",
+     "image": ""
+    },
+    {
+     "icon": "👥",
+     "title": "Public-key cryptography",
+     "text": "A public key to encrypt or verify, a private key to decrypt or sign.",
+     "image": ""
+    },
+    {
+     "icon": "#️⃣",
+     "title": "Hash function",
+     "text": "Maps any input to a fixed-length fingerprint that is impractical to reverse or collide.",
+     "image": ""
+    },
+    {
+     "icon": "✍️",
+     "title": "Digital signature",
+     "text": "Proof, made with a private key, that a message came from its owner unchanged.",
+     "image": ""
+    },
+    {
+     "icon": "🤝",
+     "title": "Key exchange",
+     "text": "A method for two parties to agree a secret over a public channel.",
+     "image": ""
+    },
+    {
+     "icon": "📜",
+     "title": "Certificate",
+     "text": "A signed statement binding a public key to an identity.",
+     "image": ""
+    }
+   ],
+   "id": "t09"
+  },
+  {
+   "type": "image",
+   "src": "assets/section.svg",
+   "caption": "Replace with your own photograph or figure.",
+   "credit": "",
+   "width": "wide",
+   "effect": "zoom-in",
+   "id": "t10"
+  },
+  {
+   "type": "timeline",
+   "items": [
+    {
+     "date": "c. 50 BC",
+     "title": "Caesar's cipher",
+     "text": "Letters are shifted by a fixed amount; simple, and simple to break.",
+     "image": ""
+    },
+    {
+     "date": "1940",
+     "title": "Enigma",
+     "text": "Codebreakers at Bletchley Park, building on Polish work, read German machine ciphers.",
+     "image": ""
+    },
+    {
+     "date": "1976",
+     "title": "Public-key exchange",
+     "text": "Whitfield Diffie and Martin Hellman show how to agree a key in public.",
+     "image": ""
+    },
+    {
+     "date": "1977",
+     "title": "RSA",
+     "text": "Rivest, Shamir and Adleman describe a practical public-key cryptosystem.",
+     "image": ""
+    },
+    {
+     "date": "2001",
+     "title": "AES",
+     "text": "The Rijndael cipher is adopted as the Advanced Encryption Standard.",
+     "image": ""
+    },
+    {
+     "date": "2024",
+     "title": "Post-quantum standards",
+     "text": "NIST publishes its first standards designed to resist quantum attack.",
+     "image": ""
+    }
+   ],
+   "id": "t11"
+  },
+  {
+   "type": "chart",
+   "title": "Key size for roughly 128-bit security",
+   "labels": [
+    "AES",
+    "Elliptic curve",
+    "RSA"
+   ],
+   "values": [
+    128,
+    256,
+    3072
+   ],
+   "unit": " bits",
+   "id": "t12"
+  },
+  {
+   "type": "compare",
+   "before": "assets/before.svg",
+   "after": "assets/after.svg",
+   "beforeLabel": "Plaintext",
+   "afterLabel": "Ciphertext",
+   "caption": "Drag the handle: the same message before and after encryption. Replace with your own illustration.",
+   "id": "t13"
+  },
+  {
+   "type": "quote",
+   "text": "A good cipher stays secure even when everything about it is public except the key.",
+   "by": "Key idea",
+   "id": "t14"
+  },
+  {
+   "type": "gallery",
+   "mode": "carousel",
+   "images": [
+    {
+     "src": "assets/gallery-1.svg",
+     "caption": "Bits mixed through rounds of a cipher"
+    },
+    {
+     "src": "assets/gallery-2.svg",
+     "caption": "A lattice, the basis of new post-quantum methods"
+    },
+    {
+     "src": "assets/gallery-3.svg",
+     "caption": "Keys in orbit around an identity"
+    }
+   ],
+   "id": "t15"
+  },
+  {
+   "type": "text",
+   "heading": "Where systems actually fail",
+   "text": "Modern algorithms are rarely broken directly. Failures come from poor key management, weak random numbers, outdated protocol versions, implementation bugs and side channels such as timing. The practical rules are simple: use well-reviewed libraries, never invent your own cipher, protect and rotate keys, and plan the move to post-quantum algorithms.",
+   "dropcap": false,
+   "id": "t16"
+  },
+  {
+   "type": "cards",
+   "flip": false,
+   "items": [
+    {
+     "icon": "🌐",
+     "title": "Secure web",
+     "text": "TLS protects browsing, banking and email in transit.",
+     "image": ""
+    },
+    {
+     "icon": "💬",
+     "title": "Messaging",
+     "text": "End-to-end encryption keeps conversations private.",
+     "image": ""
+    },
+    {
+     "icon": "💳",
+     "title": "Payments",
+     "text": "Cards and digital wallets authenticate transactions.",
+     "image": ""
+    },
+    {
+     "icon": "🪪",
+     "title": "Digital identity",
+     "text": "Signatures on documents, software and passports.",
+     "image": ""
+    }
+   ],
+   "id": "t17"
+  },
+  {
+   "type": "quiz",
+   "question": "In public-key cryptography, which key must stay secret?",
+   "options": [
+    "The public key",
+    "The private key",
+    "Both",
+    "Neither"
+   ],
+   "answer": 1,
+   "explanation": "The public key can be shared freely. Only the private key can decrypt or sign.",
+   "id": "t18"
+  },
+  {
+   "type": "quiz",
+   "question": "What property makes a hash function useful for checking integrity?",
+   "options": [
+    "It can be reversed with a key",
+    "Any change to the input changes the output unpredictably",
+    "It compresses files",
+    "It encrypts the data"
+   ],
+   "answer": 1,
+   "explanation": "A matching hash is strong evidence that the data are unchanged.",
+   "id": "t19"
+  },
+  {
+   "type": "text",
+   "heading": "Key terms and next steps",
+   "text": "**Plaintext / ciphertext**: a message before and after encryption. **Nonce**: a number used once. **MAC**: message authentication code. **TLS**: the protocol securing most internet connections. **Kerckhoffs's principle**: security should rest on the key alone.\n\n**Using this template.** Every block is editable: change the text in the panel on the right, replace the generated artwork with your own photographs, diagrams, GIFs or videos, and delete or reorder sections freely. Check figures against a current source before you publish.",
+   "dropcap": false,
+   "id": "t20"
+  }
+ ]
+}

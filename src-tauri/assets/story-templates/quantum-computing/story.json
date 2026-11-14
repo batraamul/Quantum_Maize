@@ -1,0 +1,369 @@
+{
+ "version": 1,
+ "meta": {
+  "title": "Computing with Qubits",
+  "subtitle": "Superposition, entanglement and the machines that use them",
+  "author": "",
+  "date": "",
+  "description": "Long explainer on quantum computing: qubits, gates, algorithms, hardware, error correction and realistic prospects."
+ },
+ "theme": {
+  "preset": "quantum",
+  "accent": "",
+  "font": "sans",
+  "animation": "fade-up",
+  "progressBar": true,
+  "navDots": true
+ },
+ "blocks": [
+  {
+   "type": "hero",
+   "kicker": "QUANTUM COMPUTERS",
+   "title": "Computing with Qubits",
+   "subtitle": "Superposition, entanglement and the machines that use them",
+   "image": "assets/hero.svg",
+   "effect": "kenburns",
+   "overlay": 0.5,
+   "align": "center",
+   "id": "t01"
+  },
+  {
+   "type": "text",
+   "heading": "",
+   "text": "An ordinary computer stores information in bits that are each 0 or 1. A quantum computer uses **qubits**, which can exist in a combination of both until they are measured. Operating on many qubits at once lets certain problems be attacked in ways no ordinary computer can imitate efficiently.\n\nQuantum computers are not faster at everything. They are different machines, suited to particular tasks, and still at an early stage.",
+   "dropcap": true,
+   "id": "t02"
+  },
+  {
+   "type": "stats",
+   "items": [
+    {
+     "value": 2,
+     "prefix": "",
+     "suffix": "",
+     "label": "Basis states of a qubit, written |0⟩ and |1⟩",
+     "plain": false
+    },
+    {
+     "value": 1024,
+     "prefix": "",
+     "suffix": "",
+     "label": "Amplitudes needed to describe just 10 qubits",
+     "plain": false
+    },
+    {
+     "value": 1994,
+     "prefix": "",
+     "suffix": "",
+     "label": "Year Peter Shor found a fast quantum algorithm for factoring",
+     "plain": true
+    },
+    {
+     "value": 15,
+     "prefix": "≈",
+     "suffix": " mK",
+     "label": "Operating temperature of superconducting qubits",
+     "plain": false
+    }
+   ],
+   "id": "t03"
+  },
+  {
+   "type": "divider",
+   "style": "wave",
+   "id": "t04"
+  },
+  {
+   "type": "text",
+   "heading": "What makes a qubit different",
+   "text": "A qubit's state is described by two complex numbers called amplitudes. Their squared magnitudes give the probabilities of measuring 0 or 1. Gates rotate these amplitudes, and **entangling** gates link qubits so that their outcomes are correlated. An algorithm arranges for wrong answers to cancel by **interference**, leaving the right one likely when the qubits are finally measured.",
+   "dropcap": false,
+   "id": "t05"
+  },
+  {
+   "type": "scrolly",
+   "side": "right",
+   "steps": [
+    {
+     "image": "assets/step-1.svg",
+     "text": "**Initialise.** All qubits are prepared in a known state, usually |0⟩."
+    },
+    {
+     "image": "assets/step-2.svg",
+     "text": "**Superpose.** Gates such as the Hadamard place qubits in combinations of 0 and 1."
+    },
+    {
+     "image": "assets/step-3.svg",
+     "text": "**Entangle and interfere.** Multi-qubit gates build correlations, and the circuit is arranged so that unwanted outcomes cancel."
+    },
+    {
+     "image": "assets/step-4.svg",
+     "text": "**Measure.** Each qubit is read as 0 or 1. The run is repeated many times to build up statistics."
+    }
+   ],
+   "id": "t06"
+  },
+  {
+   "type": "hotspots",
+   "image": "assets/diagram.svg",
+   "caption": "Tap the markers to explore each stage.",
+   "points": [
+    {
+     "x": 16.2,
+     "y": 32.6,
+     "title": "Qubits",
+     "text": "Superconducting circuits, trapped ions, neutral atoms, photons or spins."
+    },
+    {
+     "x": 36.2,
+     "y": 58.6,
+     "title": "Control electronics",
+     "text": "Precisely shaped microwave or laser pulses that implement gates."
+    },
+    {
+     "x": 56.2,
+     "y": 32.6,
+     "title": "Quantum circuit",
+     "text": "The sequence of gates that carries out an algorithm."
+    },
+    {
+     "x": 76.2,
+     "y": 58.6,
+     "title": "Readout",
+     "text": "Measurement that turns each qubit's state into a classical bit."
+    },
+    {
+     "x": 96.2,
+     "y": 32.6,
+     "title": "Error correction",
+     "text": "Classical processing that detects and corrects errors across many physical qubits."
+    }
+   ],
+   "id": "t07"
+  },
+  {
+   "type": "text",
+   "heading": "The fight against noise",
+   "text": "Qubits are extremely fragile. Stray heat, radiation or imperfect control disturbs them, a process called **decoherence**, and every gate adds a small error. **Quantum error correction** spreads one reliable 'logical' qubit across many physical ones and repeatedly checks for errors without reading the data. Useful large-scale computation is expected to need very many physical qubits for each logical one.",
+   "dropcap": false,
+   "id": "t08"
+  },
+  {
+   "type": "cards",
+   "flip": true,
+   "items": [
+    {
+     "icon": "⚛️",
+     "title": "Qubit",
+     "text": "The basic unit of quantum information, with two basis states.",
+     "image": ""
+    },
+    {
+     "icon": "🌗",
+     "title": "Superposition",
+     "text": "A state that is a weighted combination of 0 and 1.",
+     "image": ""
+    },
+    {
+     "icon": "🔗",
+     "title": "Entanglement",
+     "text": "Correlation between qubits that has no classical counterpart.",
+     "image": ""
+    },
+    {
+     "icon": "🚪",
+     "title": "Quantum gate",
+     "text": "A reversible operation on one or more qubits.",
+     "image": ""
+    },
+    {
+     "icon": "💨",
+     "title": "Decoherence",
+     "text": "Loss of quantum behaviour through interaction with the environment.",
+     "image": ""
+    },
+    {
+     "icon": "🛡️",
+     "title": "Error correction",
+     "text": "Encoding logical qubits redundantly so errors can be found and fixed.",
+     "image": ""
+    }
+   ],
+   "id": "t09"
+  },
+  {
+   "type": "image",
+   "src": "assets/section.svg",
+   "caption": "Replace with your own photograph or figure.",
+   "credit": "",
+   "width": "wide",
+   "effect": "zoom-in",
+   "id": "t10"
+  },
+  {
+   "type": "timeline",
+   "items": [
+    {
+     "date": "1981",
+     "title": "Feynman's proposal",
+     "text": "Richard Feynman suggests simulating quantum physics with quantum machines.",
+     "image": ""
+    },
+    {
+     "date": "1985",
+     "title": "A universal quantum computer",
+     "text": "David Deutsch describes a general-purpose quantum computer in theory.",
+     "image": ""
+    },
+    {
+     "date": "1994",
+     "title": "Shor's algorithm",
+     "text": "Peter Shor shows a quantum computer could factor large numbers efficiently.",
+     "image": ""
+    },
+    {
+     "date": "1996",
+     "title": "Grover's algorithm",
+     "text": "Lov Grover finds a quadratic speed-up for unstructured search.",
+     "image": ""
+    },
+    {
+     "date": "2019",
+     "title": "A sampling milestone",
+     "text": "Google reports a 53-qubit processor performing a task claimed to be beyond classical machines.",
+     "image": ""
+    },
+    {
+     "date": "2024",
+     "title": "Errors fall as codes grow",
+     "text": "Google reports error correction that improves as more qubits are added.",
+     "image": ""
+    }
+   ],
+   "id": "t11"
+  },
+  {
+   "type": "chart",
+   "title": "Amplitudes needed to describe n qubits, as log₁₀",
+   "labels": [
+    "10 qubits",
+    "20 qubits",
+    "30 qubits",
+    "50 qubits"
+   ],
+   "values": [
+    3.0,
+    6.0,
+    9.0,
+    15.1
+   ],
+   "unit": "",
+   "id": "t12"
+  },
+  {
+   "type": "compare",
+   "before": "assets/before.svg",
+   "after": "assets/after.svg",
+   "beforeLabel": "A few noisy qubits",
+   "afterLabel": "Many error-corrected qubits",
+   "caption": "Drag the handle: scale and reliability are the path from today's devices to useful machines. Replace with your own illustration.",
+   "id": "t13"
+  },
+  {
+   "type": "quote",
+   "text": "A quantum computer does not try every answer at once. It arranges for the wrong answers to cancel.",
+   "by": "Key idea",
+   "id": "t14"
+  },
+  {
+   "type": "gallery",
+   "mode": "carousel",
+   "images": [
+    {
+     "src": "assets/gallery-1.svg",
+     "caption": "Qubit states on the Bloch sphere"
+    },
+    {
+     "src": "assets/gallery-2.svg",
+     "caption": "Energy levels and transitions"
+    },
+    {
+     "src": "assets/gallery-3.svg",
+     "caption": "A lattice of coupled qubits"
+    }
+   ],
+   "id": "t15"
+  },
+  {
+   "type": "text",
+   "heading": "Realistic expectations",
+   "text": "Today's processors are small and noisy, and practical advantage has been shown only for specialised tasks. Building machines large enough to break current public-key cryptography remains a major engineering challenge, but because data can be recorded now and decrypted later, the move to post-quantum cryptography has already begun. The nearer-term promise lies in simulating molecules and materials.",
+   "dropcap": false,
+   "id": "t16"
+  },
+  {
+   "type": "cards",
+   "flip": false,
+   "items": [
+    {
+     "icon": "🧪",
+     "title": "Chemistry and materials",
+     "text": "Simulating molecules, catalysts and new materials.",
+     "image": ""
+    },
+    {
+     "icon": "🔐",
+     "title": "Cryptography",
+     "text": "A threat to some current ciphers and a spur to new ones.",
+     "image": ""
+    },
+    {
+     "icon": "📦",
+     "title": "Optimisation",
+     "text": "Exploring approaches to scheduling and logistics problems.",
+     "image": ""
+    },
+    {
+     "icon": "📏",
+     "title": "Sensing and metrology",
+     "text": "Quantum effects used for very precise measurement.",
+     "image": ""
+    }
+   ],
+   "id": "t17"
+  },
+  {
+   "type": "quiz",
+   "question": "What happens when a qubit in superposition is measured?",
+   "options": [
+    "It stays in superposition",
+    "It gives 0 or 1, with probabilities set by its amplitudes",
+    "It gives both values",
+    "It is destroyed"
+   ],
+   "answer": 1,
+   "explanation": "Measurement yields a single classical outcome, and the superposition is lost.",
+   "id": "t18"
+  },
+  {
+   "type": "quiz",
+   "question": "Why is quantum error correction necessary?",
+   "options": [
+    "Qubits are too cheap",
+    "Qubits lose their state easily and gates are imperfect",
+    "Classical computers are slow",
+    "To cool the processor"
+   ],
+   "answer": 1,
+   "explanation": "Redundant encoding lets errors be detected and corrected faster than they accumulate.",
+   "id": "t19"
+  },
+  {
+   "type": "text",
+   "heading": "Key terms and next steps",
+   "text": "**Amplitude**: a complex number whose squared magnitude is a probability. **Gate fidelity**: how closely a real gate matches the ideal. **Logical qubit**: an error-protected qubit built from many physical ones. **Coherence time**: how long a qubit keeps its state. **Post-quantum cryptography**: classical ciphers designed to resist quantum attack.\n\n**Using this template.** Every block is editable: change the text in the panel on the right, replace the generated artwork with your own photographs, diagrams, GIFs or videos, and delete or reorder sections freely. Check figures against a current source before you publish.",
+   "dropcap": false,
+   "id": "t20"
+  }
+ ]
+}

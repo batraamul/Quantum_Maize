@@ -104,7 +104,7 @@ function useMenus(): { name: string; items: Item[] }[] {
       name: "Compile",
       items: [c("compile"), c("stopCompile"), sep, c("toggleAutoCompile", !!s.settings?.autoCompile), sep, c("present"), sep, c("showErrors"), c("showLog")],
     },
-    { name: "Export", items: [c("exportPdf"), c("exportZip"), sep, c("exportDocx"), c("exportPptx"), c("exportStory")] },
+    { name: "Export", items: [c("exportPdf"), c("exportZip"), sep, c("exportDocx"), c("exportPptx"), c("exportStory"), c("saveStoryTemplate")] },
     { name: "Help", items: [c("shortcuts"), c("latexHelp"), sep, c("setupWizard"), c("about")] },
   ];
 }

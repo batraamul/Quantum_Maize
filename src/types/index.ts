@@ -281,3 +281,14 @@ export interface ManifestEntry {
   sha256: string;
   role: string;
 }
+
+export interface StoryTemplate {
+  id: string;
+  title: string;
+  category: string;
+  description: string;
+  sections: number;
+  preset: string;
+  cover: string;
+  origin: "bundled" | "user";
+}

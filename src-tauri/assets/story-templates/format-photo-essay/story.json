@@ -1,0 +1,133 @@
+{
+ "version": 1,
+ "meta": {
+  "title": "Photo Essay",
+  "subtitle": "Large pictures with short text between them",
+  "author": "",
+  "date": "",
+  "description": "Layout for a picture-led story: full-width images, brief captions and linking text, grid gallery and comparison."
+ },
+ "theme": {
+  "preset": "midnight",
+  "accent": "",
+  "font": "display",
+  "animation": "fade-up",
+  "progressBar": true,
+  "navDots": true
+ },
+ "blocks": [
+  {
+   "type": "hero",
+   "kicker": "PHOTO ESSAY",
+   "title": "[Title of the essay]",
+   "subtitle": "[Place and date]",
+   "image": "assets/hero.svg",
+   "effect": "kenburns",
+   "overlay": 0.4,
+   "align": "center",
+   "id": "t01"
+  },
+  {
+   "type": "text",
+   "heading": "",
+   "text": "[A short introduction, three or four sentences, setting the place, the time and why you went.]",
+   "dropcap": false,
+   "id": "t02"
+  },
+  {
+   "type": "image",
+   "src": "assets/photo-1.svg",
+   "caption": "[What is happening in this picture]",
+   "credit": "[Photographer / source]",
+   "width": "full",
+   "effect": "parallax",
+   "id": "t03"
+  },
+  {
+   "type": "text",
+   "heading": "",
+   "text": "[Two or three sentences linking the first picture to the next.]",
+   "dropcap": false,
+   "id": "t04"
+  },
+  {
+   "type": "image",
+   "src": "assets/photo-2.svg",
+   "caption": "[Caption]",
+   "credit": "[Photographer / source]",
+   "width": "wide",
+   "effect": "zoom-in",
+   "id": "t05"
+  },
+  {
+   "type": "quote",
+   "text": "[Something a person in the pictures said.]",
+   "by": "[Name, who they are]",
+   "id": "t06"
+  },
+  {
+   "type": "image",
+   "src": "assets/photo-3.svg",
+   "caption": "[Caption]",
+   "credit": "[Photographer / source]",
+   "width": "full",
+   "effect": "kenburns",
+   "id": "t07"
+  },
+  {
+   "type": "text",
+   "heading": "",
+   "text": "[A paragraph of context the pictures cannot show: numbers, history, cause.]",
+   "dropcap": false,
+   "id": "t08"
+  },
+  {
+   "type": "gallery",
+   "mode": "grid",
+   "images": [
+    {
+     "src": "assets/photo-1.svg",
+     "caption": "[Caption 1]"
+    },
+    {
+     "src": "assets/photo-2.svg",
+     "caption": "[Caption 2]"
+    },
+    {
+     "src": "assets/photo-3.svg",
+     "caption": "[Caption 3]"
+    },
+    {
+     "src": "assets/photo-4.svg",
+     "caption": "[Caption 4]"
+    }
+   ],
+   "id": "t09"
+  },
+  {
+   "type": "compare",
+   "before": "assets/before.svg",
+   "after": "assets/after.svg",
+   "beforeLabel": "[Morning]",
+   "afterLabel": "[Evening]",
+   "caption": "[The same view at two times]",
+   "id": "t10"
+  },
+  {
+   "type": "image",
+   "src": "assets/photo-4.svg",
+   "caption": "[The closing picture]",
+   "credit": "[Photographer / source]",
+   "width": "full",
+   "effect": "parallax",
+   "id": "t11"
+  },
+  {
+   "type": "text",
+   "heading": "About this essay",
+   "text": "[Photographer, dates, equipment if relevant, and any permissions or acknowledgements.]",
+   "dropcap": false,
+   "id": "t12"
+  }
+ ]
+}

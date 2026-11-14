@@ -1,0 +1,369 @@
+{
+ "version": 1,
+ "meta": {
+  "title": "Drones: Small Aircraft, Big Ideas",
+  "subtitle": "How multirotors fly, sense, navigate and carry out a mission",
+  "author": "",
+  "date": "",
+  "description": "Long explainer on unmanned aircraft: airframes, flight controllers, sensors, links, regulations and uses."
+ },
+ "theme": {
+  "preset": "quantum",
+  "accent": "",
+  "font": "sans",
+  "animation": "fade-up",
+  "progressBar": true,
+  "navDots": true
+ },
+ "blocks": [
+  {
+   "type": "hero",
+   "kicker": "UNMANNED AIRCRAFT",
+   "title": "Drones: Small Aircraft, Big Ideas",
+   "subtitle": "How multirotors fly, sense, navigate and carry out a mission",
+   "image": "assets/hero.svg",
+   "effect": "kenburns",
+   "overlay": 0.5,
+   "align": "center",
+   "id": "t01"
+  },
+  {
+   "type": "text",
+   "heading": "",
+   "text": "A drone is an aircraft without a pilot on board. It may be flown by a person on the ground, follow a pre-planned route, or make its own decisions from what its sensors report.\n\nCheap inertial sensors, satellite navigation, lithium batteries and brushless motors turned drones from military systems into everyday tools for farmers, surveyors, film-makers and scientists.",
+   "dropcap": true,
+   "id": "t02"
+  },
+  {
+   "type": "stats",
+   "items": [
+    {
+     "value": 4,
+     "prefix": "",
+     "suffix": "",
+     "label": "Rotors on a quadcopter, each paired with one motor",
+     "plain": false
+    },
+    {
+     "value": 250,
+     "prefix": "≤",
+     "suffix": " g",
+     "label": "Nano category limit under India's Drone Rules, 2021",
+     "plain": false
+    },
+    {
+     "value": 5,
+     "prefix": "",
+     "suffix": "",
+     "label": "Weight categories in those rules, nano to large",
+     "plain": false
+    },
+    {
+     "value": 400,
+     "prefix": "",
+     "suffix": " ft",
+     "label": "Typical height limit for open-category flying in many countries",
+     "plain": false
+    }
+   ],
+   "id": "t03"
+  },
+  {
+   "type": "divider",
+   "style": "wave",
+   "id": "t04"
+  },
+  {
+   "type": "text",
+   "heading": "How a quadcopter stays level",
+   "text": "A quadcopter has no wings or tail. It controls itself entirely by changing the speed of its four propellers. Two spin clockwise and two anticlockwise so their torques cancel. Speeding up one pair tilts or turns the aircraft, and a flight controller makes these corrections hundreds of times a second.",
+   "dropcap": false,
+   "id": "t05"
+  },
+  {
+   "type": "scrolly",
+   "side": "right",
+   "steps": [
+    {
+     "image": "assets/step-1.svg",
+     "text": "**Sense.** An inertial measurement unit reports rotation rates and accelerations. A barometer, magnetometer and GNSS receiver add height, heading and position."
+    },
+    {
+     "image": "assets/step-2.svg",
+     "text": "**Estimate.** A filter fuses the noisy sensors into one best estimate of attitude, velocity and position."
+    },
+    {
+     "image": "assets/step-3.svg",
+     "text": "**Control.** Control loops compare that estimate with what the pilot or mission asks for and compute the thrust each motor must produce."
+    },
+    {
+     "image": "assets/step-4.svg",
+     "text": "**Act.** Electronic speed controllers switch battery power into the brushless motors to deliver exactly that thrust."
+    }
+   ],
+   "id": "t06"
+  },
+  {
+   "type": "hotspots",
+   "image": "assets/diagram.svg",
+   "caption": "Tap the markers to explore each stage.",
+   "points": [
+    {
+     "x": 16.2,
+     "y": 32.6,
+     "title": "Airframe and motors",
+     "text": "Frame, propellers and brushless motors sized for the payload and endurance required."
+    },
+    {
+     "x": 36.2,
+     "y": 58.6,
+     "title": "Speed controllers",
+     "text": "Electronic speed controllers convert battery power into three-phase drive for each motor."
+    },
+    {
+     "x": 56.2,
+     "y": 32.6,
+     "title": "Flight controller",
+     "text": "The autopilot: sensors, state estimation and control loops on a microcontroller."
+    },
+    {
+     "x": 76.2,
+     "y": 58.6,
+     "title": "Payload and sensors",
+     "text": "Cameras, lidar, multispectral or thermal sensors, or a delivery mechanism."
+    },
+    {
+     "x": 96.2,
+     "y": 32.6,
+     "title": "Link and ground station",
+     "text": "Command, telemetry and video links to the remote pilot and mission-planning software."
+    }
+   ],
+   "id": "t07"
+  },
+  {
+   "type": "text",
+   "heading": "Rules of the air",
+   "text": "Because drones share airspace with crewed aircraft and fly over people, most countries regulate them by weight and by risk. Typical rules cover registration, pilot competency, maximum height, visual line of sight, and zones where flying is prohibited or needs permission. Always check the current rules of the country you fly in before a flight.",
+   "dropcap": false,
+   "id": "t08"
+  },
+  {
+   "type": "cards",
+   "flip": true,
+   "items": [
+    {
+     "icon": "🧠",
+     "title": "IMU",
+     "text": "Gyroscopes and accelerometers on a chip: the sense of balance of every drone.",
+     "image": ""
+    },
+    {
+     "icon": "🔁",
+     "title": "PID control",
+     "text": "A simple, widely used control law that corrects error using its present value, its history and its rate of change.",
+     "image": ""
+    },
+    {
+     "icon": "🛰️",
+     "title": "RTK positioning",
+     "text": "Corrections from a base station improve GNSS accuracy from metres to centimetres.",
+     "image": ""
+    },
+    {
+     "icon": "🏠",
+     "title": "Return-to-home",
+     "text": "A failsafe that flies the drone back to its launch point if the link or battery becomes critical.",
+     "image": ""
+    },
+    {
+     "icon": "📶",
+     "title": "BVLOS",
+     "text": "Beyond visual line of sight: operations where the pilot cannot see the aircraft and must rely on systems.",
+     "image": ""
+    },
+    {
+     "icon": "🗺️",
+     "title": "Geofencing",
+     "text": "Software limits that keep a drone out of restricted areas or inside a permitted volume.",
+     "image": ""
+    }
+   ],
+   "id": "t09"
+  },
+  {
+   "type": "image",
+   "src": "assets/section.svg",
+   "caption": "Replace with your own photograph or figure.",
+   "credit": "",
+   "width": "wide",
+   "effect": "zoom-in",
+   "id": "t10"
+  },
+  {
+   "type": "timeline",
+   "items": [
+    {
+     "date": "1918",
+     "title": "Kettering Bug",
+     "text": "An early pilotless 'aerial torpedo' is tested in the United States.",
+     "image": ""
+    },
+    {
+     "date": "1935",
+     "title": "Queen Bee",
+     "text": "Britain's radio-controlled DH.82 target aircraft enters service; the name 'drone' follows.",
+     "image": ""
+    },
+    {
+     "date": "1995",
+     "title": "Predator in service",
+     "text": "The MQ-1 brings long-endurance remotely piloted surveillance into regular use.",
+     "image": ""
+    },
+    {
+     "date": "2010",
+     "title": "Consumer quadcopters",
+     "text": "The Parrot AR.Drone, flown from a smartphone, is shown to the public.",
+     "image": ""
+    },
+    {
+     "date": "2013",
+     "title": "Ready-to-fly camera drones",
+     "text": "The DJI Phantom makes stabilised aerial photography widely accessible.",
+     "image": ""
+    },
+    {
+     "date": "2021",
+     "title": "Flight on another planet",
+     "text": "NASA's Ingenuity helicopter makes the first powered, controlled flight on Mars.",
+     "image": ""
+    }
+   ],
+   "id": "t11"
+  },
+  {
+   "type": "chart",
+   "title": "Upper weight limit by category, India Drone Rules 2021",
+   "labels": [
+    "Nano",
+    "Micro",
+    "Small",
+    "Medium"
+   ],
+   "values": [
+    0.25,
+    2,
+    25,
+    150
+   ],
+   "unit": " kg",
+   "id": "t12"
+  },
+  {
+   "type": "compare",
+   "before": "assets/before.svg",
+   "after": "assets/after.svg",
+   "beforeLabel": "Raw aerial frame",
+   "afterLabel": "Processed frame",
+   "caption": "Drag the handle: on-board or post-flight processing sharpens what the camera recorded. Replace with your own images.",
+   "id": "t13"
+  },
+  {
+   "type": "quote",
+   "text": "A multirotor is unstable by nature. It flies only because a computer corrects it hundreds of times every second.",
+   "by": "Key idea",
+   "id": "t14"
+  },
+  {
+   "type": "gallery",
+   "mode": "carousel",
+   "images": [
+    {
+     "src": "assets/gallery-1.svg",
+     "caption": "A swarm shares position over a mesh network"
+    },
+    {
+     "src": "assets/gallery-2.svg",
+     "caption": "Detect-and-avoid sensing around the aircraft"
+    },
+    {
+     "src": "assets/gallery-3.svg",
+     "caption": "Survey lines over a mapped area"
+    }
+   ],
+   "id": "t15"
+  },
+  {
+   "type": "text",
+   "heading": "Open problems",
+   "text": "Battery energy limits most small drones to well under an hour of flight. Safe operation beyond line of sight needs reliable detect-and-avoid and traffic management. Security matters too: command links can be jammed or spoofed, and misuse near airports and sensitive sites has driven work on counter-drone systems.",
+   "dropcap": false,
+   "id": "t16"
+  },
+  {
+   "type": "cards",
+   "flip": false,
+   "items": [
+    {
+     "icon": "🌾",
+     "title": "Agriculture",
+     "text": "Crop health mapping and precise spraying.",
+     "image": ""
+    },
+    {
+     "icon": "🏗️",
+     "title": "Survey and inspection",
+     "text": "Maps, 3D models and close inspection of towers, bridges and lines.",
+     "image": ""
+    },
+    {
+     "icon": "🚑",
+     "title": "Delivery and response",
+     "text": "Medical supplies, search and rescue, disaster assessment.",
+     "image": ""
+    },
+    {
+     "icon": "🎬",
+     "title": "Media",
+     "text": "Aerial filming for news, sport and cinema.",
+     "image": ""
+    }
+   ],
+   "id": "t17"
+  },
+  {
+   "type": "quiz",
+   "question": "How does a quadcopter turn (yaw) without a tail rotor?",
+   "options": [
+    "It tilts its propellers",
+    "It speeds up the pair spinning one way and slows the other pair",
+    "It uses a rudder",
+    "It shifts its battery"
+   ],
+   "answer": 1,
+   "explanation": "Changing the balance between clockwise and anticlockwise rotors leaves a net torque that turns the aircraft.",
+   "id": "t18"
+  },
+  {
+   "type": "quiz",
+   "question": "What is the job of an electronic speed controller (ESC)?",
+   "options": [
+    "Measure altitude",
+    "Drive a brushless motor at the speed the flight controller commands",
+    "Receive GNSS signals",
+    "Record video"
+   ],
+   "answer": 1,
+   "explanation": "The ESC switches battery power through the motor windings to produce the commanded speed.",
+   "id": "t19"
+  },
+  {
+   "type": "text",
+   "heading": "Key terms and next steps",
+   "text": "**UAS**: unmanned aircraft system, the aircraft plus its ground equipment and links. **VLOS/BVLOS**: within or beyond visual line of sight. **Payload**: what the drone carries to do its job. **Failsafe**: automatic behaviour when something goes wrong.\n\n**Using this template.** Every block is editable: change the text in the panel on the right, replace the generated artwork with your own photographs, diagrams, GIFs or videos, and delete or reorder sections freely. Check figures against a current source before you publish.",
+   "dropcap": false,
+   "id": "t20"
+  }
+ ]
+}

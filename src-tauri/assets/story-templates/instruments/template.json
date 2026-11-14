@@ -1,0 +1,9 @@
+{
+ "id": "instruments",
+ "title": "The Science of Measurement",
+ "category": "Measurement",
+ "description": "Long explainer on instrumentation: sensors, signal chains, calibration, uncertainty and upper-air sounding.",
+ "sections": 20,
+ "preset": "monsoon",
+ "cover": "assets/hero.svg"
+}

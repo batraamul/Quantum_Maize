@@ -1,0 +1,281 @@
+{
+ "version": 1,
+ "meta": {
+  "title": "Place and Travel Guide",
+  "subtitle": "Map with stops, hour-by-hour plan, gallery and visitor tips",
+  "author": "",
+  "date": "",
+  "description": "Layout for an immersive guide to a place: clickable route map, day plan, photo gallery, then-and-now slider and practical tips."
+ },
+ "theme": {
+  "preset": "saffron",
+  "accent": "",
+  "font": "serif",
+  "animation": "fade-up",
+  "progressBar": true,
+  "navDots": true
+ },
+ "blocks": [
+  {
+   "type": "hero",
+   "kicker": "VISITOR'S GUIDE",
+   "title": "[Name of the place]",
+   "subtitle": "[One line that makes the reader want to go]",
+   "image": "assets/hero.svg",
+   "effect": "kenburns",
+   "overlay": 0.4,
+   "align": "bottom-left",
+   "id": "t01"
+  },
+  {
+   "type": "text",
+   "heading": "",
+   "text": "[Open with a scene: what a visitor sees, hears and feels on arriving. Two or three sentences.]\n\n[Say why the place matters: its history, its meaning to people, and what is new.]",
+   "dropcap": false,
+   "id": "t02"
+  },
+  {
+   "type": "stats",
+   "items": [
+    {
+     "value": 0,
+     "prefix": "",
+     "suffix": " km",
+     "label": "[Distance from the nearest city]"
+    },
+    {
+     "value": 0,
+     "prefix": "",
+     "suffix": " hrs",
+     "label": "[Time needed for a visit]"
+    },
+    {
+     "value": 0,
+     "prefix": "",
+     "suffix": "",
+     "label": "[Visitors per day / year]"
+    },
+    {
+     "value": 0,
+     "prefix": "₹",
+     "suffix": "",
+     "label": "[Entry fee, or 0 if free]"
+    }
+   ],
+   "id": "t03"
+  },
+  {
+   "type": "text",
+   "heading": "Finding your way",
+   "text": "[Introduce the map below. Explain the usual route a visitor follows and how long each part takes.]",
+   "dropcap": false,
+   "id": "t04"
+  },
+  {
+   "type": "hotspots",
+   "image": "assets/diagram.svg",
+   "caption": "[Map caption. Replace this drawing with your own map and move the markers.]",
+   "points": [
+    {
+     "x": 11.9,
+     "y": 26.2,
+     "title": "[Stop 1: arrival]",
+     "text": "[What happens here: parking, tickets, security, lockers.]"
+    },
+    {
+     "x": 31.9,
+     "y": 44.2,
+     "title": "[Stop 2]",
+     "text": "[What to see and how long to allow.]"
+    },
+    {
+     "x": 51.9,
+     "y": 62.2,
+     "title": "[Stop 3: the main site]",
+     "text": "[The highlight. Timings, queue, rules.]"
+    },
+    {
+     "x": 71.9,
+     "y": 35.2,
+     "title": "[Stop 4]",
+     "text": "[A quieter spot most visitors miss.]"
+    },
+    {
+     "x": 91.9,
+     "y": 53.2,
+     "title": "[Stop 5: exit]",
+     "text": "[Food, shops, transport back.]"
+    }
+   ],
+   "id": "t05"
+  },
+  {
+   "type": "divider",
+   "style": "wave",
+   "id": "t06"
+  },
+  {
+   "type": "text",
+   "heading": "A day, hour by hour",
+   "text": "[Introduce the suggested itinerary.]",
+   "dropcap": false,
+   "id": "t07"
+  },
+  {
+   "type": "timeline",
+   "items": [
+    {
+     "date": "6:00 am",
+     "title": "[Start early]",
+     "text": "[Why this time is best.]",
+     "image": ""
+    },
+    {
+     "date": "8:00 am",
+     "title": "[First stop]",
+     "text": "[What to do.]",
+     "image": ""
+    },
+    {
+     "date": "11:00 am",
+     "title": "[Main visit]",
+     "text": "[What to expect.]",
+     "image": ""
+    },
+    {
+     "date": "1:00 pm",
+     "title": "[Lunch]",
+     "text": "[Where and what to eat.]",
+     "image": ""
+    },
+    {
+     "date": "4:00 pm",
+     "title": "[Afternoon]",
+     "text": "[A second site or a walk.]",
+     "image": ""
+    },
+    {
+     "date": "7:00 pm",
+     "title": "[Evening]",
+     "text": "[Lights, ceremony or sunset view.]",
+     "image": ""
+    }
+   ],
+   "id": "t08"
+  },
+  {
+   "type": "gallery",
+   "mode": "carousel",
+   "images": [
+    {
+     "src": "assets/photo-1.svg",
+     "caption": "[Photo 1 caption]"
+    },
+    {
+     "src": "assets/photo-2.svg",
+     "caption": "[Photo 2 caption]"
+    },
+    {
+     "src": "assets/photo-3.svg",
+     "caption": "[Photo 3 caption]"
+    },
+    {
+     "src": "assets/photo-4.svg",
+     "caption": "[Photo 4 caption]"
+    }
+   ],
+   "id": "t09"
+  },
+  {
+   "type": "text",
+   "heading": "Then and now",
+   "text": "[Describe how the place has changed, then let the reader compare two pictures.]",
+   "dropcap": false,
+   "id": "t10"
+  },
+  {
+   "type": "compare",
+   "before": "assets/before.svg",
+   "after": "assets/after.svg",
+   "beforeLabel": "[Earlier year]",
+   "afterLabel": "[Today]",
+   "caption": "[Caption: where and when each picture was taken.]",
+   "id": "t11"
+  },
+  {
+   "type": "text",
+   "heading": "Know before you go",
+   "text": "[One sentence introducing the practical tips.]",
+   "dropcap": false,
+   "id": "t12"
+  },
+  {
+   "type": "cards",
+   "flip": true,
+   "items": [
+    {
+     "icon": "🕒",
+     "title": "Timings",
+     "text": "[Opening hours and closed days.]",
+     "image": ""
+    },
+    {
+     "icon": "👗",
+     "title": "Dress and conduct",
+     "text": "[Any dress code or customs.]",
+     "image": ""
+    },
+    {
+     "icon": "📵",
+     "title": "What is not allowed",
+     "text": "[Phones, cameras, bags, food.]",
+     "image": ""
+    },
+    {
+     "icon": "♿",
+     "title": "Accessibility",
+     "text": "[Wheelchairs, ramps, help desks.]",
+     "image": ""
+    },
+    {
+     "icon": "🚆",
+     "title": "Getting there",
+     "text": "[Rail, road and air connections.]",
+     "image": ""
+    },
+    {
+     "icon": "🏨",
+     "title": "Where to stay",
+     "text": "[Types of accommodation and booking advice.]",
+     "image": ""
+    }
+   ],
+   "id": "t13"
+  },
+  {
+   "type": "quote",
+   "text": "[A short, memorable line from a visitor, guide or historian.]",
+   "by": "[Name, role]",
+   "id": "t14"
+  },
+  {
+   "type": "quiz",
+   "question": "[A question that checks the reader noticed a key fact]",
+   "options": [
+    "[Option A]",
+    "[Option B]",
+    "[Option C]"
+   ],
+   "answer": 0,
+   "explanation": "[Explain the right answer in one sentence.]",
+   "id": "t15"
+  },
+  {
+   "type": "text",
+   "heading": "Plan your trip",
+   "text": "[Close with booking links, official website, helpline numbers and the date this guide was last checked.]",
+   "dropcap": false,
+   "id": "t16"
+  }
+ ]
+}

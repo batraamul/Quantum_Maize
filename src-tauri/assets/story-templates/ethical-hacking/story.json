@@ -1,0 +1,369 @@
+{
+ "version": 1,
+ "meta": {
+  "title": "Thinking Like an Attacker",
+  "subtitle": "How authorised security testing finds weaknesses before criminals do",
+  "author": "",
+  "date": "",
+  "description": "Long explainer on ethical hacking: authorisation, testing phases, vulnerability classes, disclosure and defence."
+ },
+ "theme": {
+  "preset": "midnight",
+  "accent": "",
+  "font": "sans",
+  "animation": "fade-up",
+  "progressBar": true,
+  "navDots": true
+ },
+ "blocks": [
+  {
+   "type": "hero",
+   "kicker": "ETHICAL HACKING",
+   "title": "Thinking Like an Attacker",
+   "subtitle": "How authorised security testing finds weaknesses before criminals do",
+   "image": "assets/hero.svg",
+   "effect": "kenburns",
+   "overlay": 0.5,
+   "align": "center",
+   "id": "t01"
+  },
+  {
+   "type": "text",
+   "heading": "",
+   "text": "Hacking, in its original sense, means understanding a system well enough to make it do something its designers did not intend. Ethical hackers apply that skill with permission, to find weaknesses so that they can be fixed.\n\nThe techniques resemble a criminal's. What differs is authorisation, scope and what happens to the findings. Testing a system without its owner's written permission is illegal in most countries.",
+   "dropcap": true,
+   "id": "t02"
+  },
+  {
+   "type": "stats",
+   "items": [
+    {
+     "value": 10,
+     "prefix": "",
+     "suffix": "",
+     "label": "Categories in the OWASP Top 10 list of web application risks",
+     "plain": false
+    },
+    {
+     "value": 10,
+     "prefix": "",
+     "suffix": ".0",
+     "label": "Highest severity score in the CVSS scale",
+     "plain": false
+    },
+    {
+     "value": 5,
+     "prefix": "",
+     "suffix": "",
+     "label": "Phases in a typical penetration test",
+     "plain": false
+    },
+    {
+     "value": 1999,
+     "prefix": "",
+     "suffix": "",
+     "label": "Year the CVE list of publicly known vulnerabilities began",
+     "plain": true
+    }
+   ],
+   "id": "t03"
+  },
+  {
+   "type": "divider",
+   "style": "wave",
+   "id": "t04"
+  },
+  {
+   "type": "text",
+   "heading": "A structured engagement",
+   "text": "A penetration test is a planned exercise, not a free-for-all. The owner and the tester agree in writing what may be tested, when and how. The tester then gathers information, looks for weaknesses, demonstrates their impact in a controlled way and reports each finding with evidence and a recommended fix.",
+   "dropcap": false,
+   "id": "t05"
+  },
+  {
+   "type": "scrolly",
+   "side": "right",
+   "steps": [
+    {
+     "image": "assets/step-1.svg",
+     "text": "**Authorise and scope.** A signed agreement defines the targets, methods, timing and contacts. Nothing outside it is touched."
+    },
+    {
+     "image": "assets/step-2.svg",
+     "text": "**Understand the target.** The tester maps what is exposed: systems, services, applications and the people who use them."
+    },
+    {
+     "image": "assets/step-3.svg",
+     "text": "**Find and confirm.** Possible weaknesses are identified and carefully confirmed, avoiding damage or disruption."
+    },
+    {
+     "image": "assets/step-4.svg",
+     "text": "**Report and fix.** Findings are ranked by risk, explained clearly and retested after the owner has fixed them."
+    }
+   ],
+   "id": "t06"
+  },
+  {
+   "type": "hotspots",
+   "image": "assets/diagram.svg",
+   "caption": "Tap the markers to explore each stage.",
+   "points": [
+    {
+     "x": 16.2,
+     "y": 32.6,
+     "title": "Scoping",
+     "text": "Rules of engagement, legal authorisation and objectives."
+    },
+    {
+     "x": 36.2,
+     "y": 58.6,
+     "title": "Reconnaissance",
+     "text": "Collecting information about the target's exposed surface."
+    },
+    {
+     "x": 56.2,
+     "y": 32.6,
+     "title": "Vulnerability analysis",
+     "text": "Identifying misconfigurations, missing patches and design flaws."
+    },
+    {
+     "x": 76.2,
+     "y": 58.6,
+     "title": "Controlled exploitation",
+     "text": "Demonstrating impact safely, within the agreed limits."
+    },
+    {
+     "x": 96.2,
+     "y": 32.6,
+     "title": "Reporting",
+     "text": "Evidence, risk rating and practical remediation advice."
+    }
+   ],
+   "id": "t07"
+  },
+  {
+   "type": "text",
+   "heading": "The same few mistakes",
+   "text": "Most successful attacks use well-known weaknesses: software that was never updated, passwords that are weak or reused, input that an application trusts without checking, services exposed by mistake and people persuaded to give access away. Defenders who patch promptly, enforce multi-factor authentication and validate input remove most of an attacker's options.",
+   "dropcap": false,
+   "id": "t08"
+  },
+  {
+   "type": "cards",
+   "flip": true,
+   "items": [
+    {
+     "icon": "🕳️",
+     "title": "Vulnerability",
+     "text": "A weakness in design, code or configuration that could be misused.",
+     "image": ""
+    },
+    {
+     "icon": "🧨",
+     "title": "Exploit",
+     "text": "A technique that takes advantage of a specific vulnerability.",
+     "image": ""
+    },
+    {
+     "icon": "🎭",
+     "title": "Social engineering",
+     "text": "Manipulating people, rather than machines, into granting access.",
+     "image": ""
+    },
+    {
+     "icon": "🩹",
+     "title": "Patch",
+     "text": "An update that corrects a vulnerability. Applying patches quickly is the single most effective defence.",
+     "image": ""
+    },
+    {
+     "icon": "🔴",
+     "title": "Red team and blue team",
+     "text": "Attack simulators and defenders, exercising against each other to improve.",
+     "image": ""
+    },
+    {
+     "icon": "📣",
+     "title": "Responsible disclosure",
+     "text": "Reporting a flaw privately to the owner and allowing time to fix it before publication.",
+     "image": ""
+    }
+   ],
+   "id": "t09"
+  },
+  {
+   "type": "image",
+   "src": "assets/section.svg",
+   "caption": "Replace with your own photograph or figure.",
+   "credit": "",
+   "width": "wide",
+   "effect": "zoom-in",
+   "id": "t10"
+  },
+  {
+   "type": "timeline",
+   "items": [
+    {
+     "date": "1988",
+     "title": "The Morris worm",
+     "text": "A self-spreading program disables a large part of the early internet and leads to the first emergency response team.",
+     "image": ""
+    },
+    {
+     "date": "1999",
+     "title": "CVE",
+     "text": "A common naming scheme for publicly known vulnerabilities is launched.",
+     "image": ""
+    },
+    {
+     "date": "2003",
+     "title": "OWASP Top 10",
+     "text": "The first list of the most critical web application risks is published.",
+     "image": ""
+    },
+    {
+     "date": "2010",
+     "title": "Stuxnet",
+     "text": "Malware designed to damage industrial equipment is discovered.",
+     "image": ""
+    },
+    {
+     "date": "2014",
+     "title": "Heartbleed",
+     "text": "A flaw in a widely used encryption library exposes memory on many servers.",
+     "image": ""
+    },
+    {
+     "date": "2021",
+     "title": "Log4Shell",
+     "text": "A flaw in a common logging component affects a very large number of systems.",
+     "image": ""
+    }
+   ],
+   "id": "t11"
+  },
+  {
+   "type": "chart",
+   "title": "CVSS severity bands (upper score of each)",
+   "labels": [
+    "Low",
+    "Medium",
+    "High",
+    "Critical"
+   ],
+   "values": [
+    3.9,
+    6.9,
+    8.9,
+    10
+   ],
+   "unit": "",
+   "id": "t12"
+  },
+  {
+   "type": "compare",
+   "before": "assets/before.svg",
+   "after": "assets/after.svg",
+   "beforeLabel": "What users see",
+   "afterLabel": "What a tester examines",
+   "caption": "Drag the handle: behind every interface is data and logic that must be checked. Replace with your own illustration.",
+   "id": "t13"
+  },
+  {
+   "type": "quote",
+   "text": "The difference between an attacker and a security tester is one document: written permission.",
+   "by": "Key idea",
+   "id": "t14"
+  },
+  {
+   "type": "gallery",
+   "mode": "carousel",
+   "images": [
+    {
+     "src": "assets/gallery-1.svg",
+     "caption": "Mapping an exposed network"
+    },
+    {
+     "src": "assets/gallery-2.svg",
+     "caption": "Scanning for anomalies"
+    },
+    {
+     "src": "assets/gallery-3.svg",
+     "caption": "Data flowing through an application"
+    }
+   ],
+   "id": "t15"
+  },
+  {
+   "type": "text",
+   "heading": "Ethics and law",
+   "text": "Skills that protect can also harm. Ethical practice means working only with authorisation, staying inside the agreed scope, protecting any data encountered, and reporting honestly. Many organisations run bug-bounty or disclosure programmes that welcome reports from independent researchers. Learn in legal practice environments built for training, never on systems you do not own.",
+   "dropcap": false,
+   "id": "t16"
+  },
+  {
+   "type": "cards",
+   "flip": false,
+   "items": [
+    {
+     "icon": "🏢",
+     "title": "Enterprise testing",
+     "text": "Regular assessment of networks and applications.",
+     "image": ""
+    },
+    {
+     "icon": "🏗️",
+     "title": "Secure development",
+     "text": "Finding flaws before software is released.",
+     "image": ""
+    },
+    {
+     "icon": "⚡",
+     "title": "Critical infrastructure",
+     "text": "Testing the systems that run power, water and transport.",
+     "image": ""
+    },
+    {
+     "icon": "🎓",
+     "title": "Training",
+     "text": "Capture-the-flag exercises and practice ranges.",
+     "image": ""
+    }
+   ],
+   "id": "t17"
+  },
+  {
+   "type": "quiz",
+   "question": "What must exist before any penetration test begins?",
+   "options": [
+    "A list of exploits",
+    "Written authorisation and an agreed scope",
+    "Administrator passwords",
+    "A firewall"
+   ],
+   "answer": 1,
+   "explanation": "Without the owner's permission, testing is unauthorised access, whatever the intent.",
+   "id": "t18"
+  },
+  {
+   "type": "quiz",
+   "question": "Which defence removes the largest number of known attack routes?",
+   "options": [
+    "Changing desktop wallpaper",
+    "Applying security updates promptly",
+    "Hiding the server room",
+    "Using longer usernames"
+   ],
+   "answer": 1,
+   "explanation": "Most attacks use vulnerabilities for which a patch already exists.",
+   "id": "t19"
+  },
+  {
+   "type": "text",
+   "heading": "Key terms and next steps",
+   "text": "**Penetration test**: an authorised simulated attack. **CVE**: an identifier for a publicly known vulnerability. **CVSS**: a 0–10 severity score. **Attack surface**: everything an attacker could reach. **Bug bounty**: a reward programme for reported flaws.\n\n**Using this template.** Every block is editable: change the text in the panel on the right, replace the generated artwork with your own photographs, diagrams, GIFs or videos, and delete or reorder sections freely. Check figures against a current source before you publish.",
+   "dropcap": false,
+   "id": "t20"
+  }
+ ]
+}
