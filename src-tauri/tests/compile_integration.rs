@@ -83,7 +83,7 @@ fn test2_test7_multifile_with_bibtex_latexmk_and_direct() {
 }
 
 #[test]
-fn test11_error_is_located_and_last_pdf_kept() {
+fn test11_error_is_located_and_pdf_still_produced() {
     if !have("pdflatex") { return; }
     let (_d, root) = project(StarterTemplate::ResearchPaper);
     let m = CompileManager::default();
@@ -96,16 +96,28 @@ fn test11_error_is_located_and_last_pdf_kept() {
     src = src.replace("where $\\alpha$", "where $\\alpah$");
     fs::write(&intro, src).unwrap();
 
-    let bad = m.compile(&req(&root, "pdflatex", true), |_| {}).unwrap();
-    assert!(!bad.success);
-    assert!(!bad.pdf_updated);
-    let err = bad.diagnostics.iter().find(|d| d.severity == Severity::Error).expect("an error");
-    assert_eq!(err.file.as_deref(), Some("sections/methodology.tex"), "{err:#?}");
-    assert_eq!(err.line, Some(7), "{err:#?}"); // line 7: "where $\\alpah$ is ..."
-    assert!(err.message.contains("Undefined control sequence"));
-    assert!(err.context.as_deref().unwrap_or("").contains("alpah"));
-    // The previous good PDF is still the one offered for preview.
-    assert_eq!(fs::read(bad.pdf_path.unwrap()).unwrap(), good_pdf);
+    // Recoverable errors behave as on Overleaf: reported, but the PDF is still built
+    // (with latexmk and with direct passes alike).
+    for latexmk in [true, false] {
+        let bad = m.compile(&req(&root, "pdflatex", latexmk), |_| {}).unwrap();
+        assert!(!bad.success, "latexmk={latexmk}");
+        assert!(bad.pdf_updated, "latexmk={latexmk}\n{}", bad.raw_output);
+        assert!(bad.message.starts_with("Compiled with 1 error"), "{}", bad.message);
+        let err = bad.diagnostics.iter().find(|d| d.severity == Severity::Error).expect("an error");
+        assert_eq!(err.file.as_deref(), Some("sections/methodology.tex"), "{err:#?}");
+        assert_eq!(err.line, Some(7), "{err:#?}"); // line 7: "where $\\alpah$ is ..."
+        assert!(err.message.contains("Undefined control sequence"));
+        assert!(err.context.as_deref().unwrap_or("").contains("alpah"));
+        let new_pdf = fs::read(bad.pdf_path.unwrap()).unwrap();
+        assert!(new_pdf.starts_with(b"%PDF") && new_pdf != good_pdf);
+    }
+
+    // A build that writes no PDF at all keeps the previous preview.
+    let before = fs::read(root.join(".qmaze/build/main.pdf")).unwrap();
+    fs::write(root.join("main.tex"), "\\documentclass{article}\n\\begin{document}\\undefinedqm\\end{document}\n").unwrap();
+    let fatal = m.compile(&req(&root, "pdflatex", true), |_| {}).unwrap();
+    assert!(!fatal.success && !fatal.pdf_updated, "{}", fatal.raw_output);
+    assert_eq!(fs::read(fatal.pdf_path.unwrap()).unwrap(), before);
 }
 
 #[test]

@@ -4,7 +4,7 @@ A local desktop studio for research writing. Write and compile LaTeX papers, sta
 
 The title bar and welcome screen show "Quantum Maze by *name, rank, organization*" from the profile you enter on first run (Settings → Profile).
 
-Status: version 0.3.0. Built and tested on Linux. Windows and macOS builds are configured but have not been run. See [DEVELOPMENT_STATUS.md](DEVELOPMENT_STATUS.md) for exactly what is verified and what is not, and [ARCHITECTURE.md](ARCHITECTURE.md) for the design.
+Status: version 0.3.1. Built and tested on Linux. Windows and macOS builds are configured but have not been run. See [DEVELOPMENT_STATUS.md](DEVELOPMENT_STATUS.md) for exactly what is verified and what is not, and [ARCHITECTURE.md](ARCHITECTURE.md) for the design.
 
 ![Journal project compiled beside the editor](docs/screenshots/ieee-project.png)
 
@@ -12,7 +12,7 @@ Status: version 0.3.0. Built and tested on Linux. Windows and macOS builds are c
 
 | Area | Features |
 | --- | --- |
-| Papers | Monaco editor with LaTeX completion, outline, split view · pdfLaTeX, XeLaTeX, LuaLaTeX via latexmk or direct passes · BibTeX and Biber · PDF preview with SyncTeX both ways · errors with file, line and a suggested fix |
+| Papers | Monaco editor with LaTeX completion, outline, split view · pdfLaTeX, XeLaTeX, LuaLaTeX via latexmk or direct passes · BibTeX and Biber · PDF preview with SyncTeX both ways · errors with file, line and a suggested fix · like Overleaf, a compile that hits recoverable errors still shows the PDF, with the error count beside the Compile button |
 | Journal formats | Library of 26 formats (IEEE, Elsevier, Springer Nature, ACM, APS, MDPI, DRDO journals and others) · projects from the official class in your TeX distribution · import a publisher's template ZIP · import any Overleaf/ZIP project |
 | Authoring | Table designer (merge cells, booktabs, longtable) · equation editor with live preview · figure and sub-figure insertion · reference list with cited/uncited checks · add a reference by DOI (opt-in) |
 | Presentations | Beamer starter with 10 themes and 10 colour schemes · slide list · full-screen presenter with timer · export to `.pptx` (exact picture slides or editable text slides) |

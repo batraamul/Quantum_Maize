@@ -479,3 +479,7 @@ button.status-item:hover { background: var(--bg-4); color: var(--text-1); }
 .tpl-cover.sample { background: linear-gradient(135deg, #e8730c, #b8325a); }
 .tpl-t { font-weight: 600; color: var(--text-1); font-size: .9rem; padding: 8px 10px 0; line-height: 1.25; }
 .tpl-m { font-size: .78rem; color: var(--text-3); padding: 3px 10px 0; }
+
+/* Error count beside the Compile button (as in Overleaf) */
+.err-badge { margin-left: 6px; min-width: 26px; height: 22px; padding: 0 7px; border-radius: 11px; border: 0; background: #d9363e; color: #fff; font-weight: 700; font-size: .78rem; cursor: pointer; align-self: center; }
+.err-badge:hover { filter: brightness(1.15); }

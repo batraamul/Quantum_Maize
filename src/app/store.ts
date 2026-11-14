@@ -814,7 +814,7 @@ export async function compile(opts: { auto?: boolean } = {}) {
     }
     if (!opts.auto || !res.success) {
       if (res.cancelled) toast("info", "Compilation cancelled");
-      else if (!res.success) toast("error", res.message, res.errorCount ? firstErrorSummary(diagnostics) : undefined);
+      else if (!res.success) toast(res.pdfUpdated ? "warning" : "error", res.message, res.errorCount ? firstErrorSummary(diagnostics) : undefined);
     }
     void loadHistory();
     void refreshTree();

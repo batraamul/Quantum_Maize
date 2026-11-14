@@ -6,9 +6,10 @@
 //! * Shell escape is explicitly disabled unless the project owner approved it.
 //! * latexmk runs with `-norc`, so a `latexmkrc` (Perl code!) shipped inside an
 //!   imported project can never execute.
-//! * Output goes to `<project>/output/`; the last *successful* PDF (+ SyncTeX
-//!   data) is copied to `.qmaze/build/` so a failed build never replaces
-//!   the preview with a broken document.
+//! * Output goes to `<project>/output/`; the last PDF a build produced (+ SyncTeX
+//!   data) is copied to `.qmaze/build/` so a build that produces no PDF
+//!   never blanks the preview. A build that ends with errors but still writes a
+//!   PDF shows that PDF together with the errors, as Overleaf does.
 
 pub mod detect;
 pub mod log_parser;
@@ -123,6 +124,8 @@ pub fn engine_flag(engine: &str) -> AppResult<&'static str> {
 pub fn latexmk_args(engine: &str, main_rel: &str, shell_escape: bool) -> AppResult<Vec<String>> {
     Ok(vec![
         "-norc".into(),
+        // Keep going after LaTeX errors (as Overleaf does) so a PDF is still produced.
+        "-f".into(),
         engine_flag(engine)?.into(),
         "-interaction=nonstopmode".into(),
         "-file-line-error".into(),
@@ -231,6 +234,9 @@ fn run_compile(req: &CompileRequest, cancel: &Arc<AtomicBool>, mut emit: impl Fn
     let pdf_out = out_dir.join(format!("{stem}.pdf"));
     let log_path = out_dir.join(format!("{stem}.log"));
 
+    // To tell "this run wrote a PDF" from "an old PDF is still lying there".
+    let pdf_before = mtime(&pdf_out);
+
     let mut latexmk_ok = false;
     if let Some(lm) = latexmk {
         tool = "latexmk".into();
@@ -279,17 +285,37 @@ fn run_compile(req: &CompileRequest, cancel: &Arc<AtomicBool>, mut emit: impl Fn
         diagnostics.insert(0, system_diag(format!("Compilation exceeded the {} s time limit and was stopped. Increase it in Settings → Compiler if your document is very large.", req.timeout_secs)));
     }
     if exit_code.is_some_and(|c| c != 0) && !diagnostics.iter().any(|d| d.severity == Severity::Error) && !cancelled {
-        diagnostics.push(system_diag(format!("{} exited with code {}. See the Compilation Output tab for details.", tool, exit_code.unwrap())));
+        // Nothing in the LaTeX log explains the failure: quote what the tools themselves said.
+        let why: Vec<&str> = raw
+            .lines()
+            .map(str::trim)
+            .filter(|l| {
+                let low = l.to_lowercase();
+                (l.starts_with("Latexmk:") && (low.contains("error") || low.contains("fail") || low.contains("missing") || low.contains("not found") || low.contains("gave")))
+                    || low.starts_with("error")
+                    || low.contains("i couldn't open")
+                    || low.contains("emergency stop")
+                    || low.contains("fatal error")
+                    || low.contains("no pages of output")
+                    || (low.contains("biber") && low.contains("error"))
+            })
+            .collect();
+        let mut seen = std::collections::HashSet::new();
+        let why: Vec<&str> = why.into_iter().filter(|l| seen.insert(*l)).take(6).collect();
+        let detail = if why.is_empty() { "See the Compilation Output tab for details.".to_string() } else { format!("The tools reported: {}", why.join(" · ")) };
+        diagnostics.push(system_diag(format!("{} exited with code {}. {}", tool, exit_code.unwrap(), detail)));
     }
 
     let errors = diagnostics.iter().filter(|d| d.severity == Severity::Error).count();
     let warnings = diagnostics.iter().filter(|d| d.severity == Severity::Warning).count();
     let infos = diagnostics.len() - errors - warnings;
     let success = !cancelled && !timed_out && errors == 0 && current(&pdf_out) && exit_code == Some(0);
+    // Like Overleaf: if this run wrote a PDF despite errors, show it (with the errors).
+    let pdf_made = success || (!cancelled && !timed_out && fresh(&pdf_out) && mtime(&pdf_out) != pdf_before && fs::metadata(&pdf_out).map(|m| m.len() > 0).unwrap_or(false));
 
     let build_dir = root.join(BUILD_DIR);
     let last_pdf = build_dir.join(format!("{stem}.pdf"));
-    if success {
+    if pdf_made {
         fs::create_dir_all(&build_dir)?;
         // Copy to temp then rename so a reader never sees a partial file.
         let tmp = build_dir.join(format!("{stem}.pdf.tmp"));
@@ -310,6 +336,8 @@ fn run_compile(req: &CompileRequest, cancel: &Arc<AtomicBool>, mut emit: impl Fn
         "Compilation timed out".to_string()
     } else if success {
         format!("Compiled successfully in {:.1} s", started.elapsed().as_secs_f64())
+    } else if pdf_made {
+        format!("Compiled with {errors} error{} — PDF produced, but check the Errors tab", if errors == 1 { "" } else { "s" })
     } else if errors > 0 {
         format!("Compilation failed with {errors} error{}", if errors == 1 { "" } else { "s" })
     } else {
@@ -325,7 +353,7 @@ fn run_compile(req: &CompileRequest, cancel: &Arc<AtomicBool>, mut emit: impl Fn
         tool,
         engine: req.engine.clone(),
         pdf_path: last_pdf.exists().then(|| last_pdf.to_string_lossy().into_owned()),
-        pdf_updated: success,
+        pdf_updated: pdf_made,
         diagnostics,
         error_count: errors,
         warning_count: warnings,
@@ -456,6 +484,7 @@ mod tests {
     fn args_are_arrays_and_shell_escape_off_by_default() {
         let a = latexmk_args("xelatex", "main.tex", false).unwrap();
         assert!(a.contains(&"-norc".to_string()));
+        assert!(a.contains(&"-f".to_string()));
         assert!(a.contains(&"-pdfxe".to_string()));
         assert!(a.contains(&"-latexoption=-no-shell-escape".to_string()));
         assert_eq!(a.last().unwrap(), "main.tex");

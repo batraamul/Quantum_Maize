@@ -1,6 +1,6 @@
 # Development status
 
-Last updated: 2026-11-14 · version 0.3.0
+Last updated: 2026-11-14 · version 0.3.1
 
 All seven phases of the product brief have working implementations on Linux, plus the two additions requested later (presentations with PowerPoint export, interactive stories) and the rename to Quantum Maze with a user-defined owner line. Everything in the "Verified" column below was exercised in the running application or by an automated test on Linux x86-64. Windows and macOS builds are configured but have **never been built or run**.
 

@@ -36,6 +36,7 @@ export function Toolbar() {
   const compiling = useApp((s) => s.compiling);
   const previewVisible = useApp((s) => s.previewVisible);
   const bottomVisible = useApp((s) => s.bottomVisible);
+  const errorCount = useApp((s) => s.lastResult?.errorCount ?? 0);
   const autoCompile = useApp((s) => s.settings?.autoCompile ?? false);
   const hasPdf = useApp((s) => !!s.pdfData);
   const activeIsText = useApp((s) => s.openFiles.find((f) => f.path === s.activePath)?.kind === "text");
@@ -93,6 +94,11 @@ export function Toolbar() {
         <button className="compile-split" disabled={!project} aria-label="Choose engine" onClick={() => setEngineOpen((v) => !v)}>
           <ChevronDown size={15} />
         </button>
+        {!compiling && errorCount > 0 && (
+          <button className="err-badge" title={`${errorCount} error${errorCount === 1 ? "" : "s"} in the last compile — click to see them`} onClick={() => ui.showBottom("errors")}>
+            {errorCount > 999 ? "999+" : errorCount}
+          </button>
+        )}
         {engineOpen && (
           <div className="menu-dropdown" style={{ left: 0, minWidth: 260 }}>
             <div className="menu-label">LaTeX engine for this project</div>
