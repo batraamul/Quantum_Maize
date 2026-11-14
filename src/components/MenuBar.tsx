@@ -79,7 +79,7 @@ function useMenus(): { name: string; items: Item[] }[] {
     },
     {
       name: "Tools",
-      items: [c("convert"), c("importProject"), sep, c("setupWizard"), sep, c("syncForward"), c("cleanBuild")],
+      items: [c("notebooks"), c("convert"), c("importProject"), sep, c("setupWizard"), sep, c("syncForward"), c("cleanBuild")],
     },
     {
       name: "Journal",

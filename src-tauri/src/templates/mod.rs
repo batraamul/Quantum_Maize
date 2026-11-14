@@ -6,6 +6,7 @@
 //! never copied or modified. Publisher templates that are only distributed as
 //! downloads are imported by the user (see `importer`).
 
+pub mod decks;
 pub mod importer;
 pub mod registry;
 
@@ -43,6 +44,8 @@ pub struct StarterOptions {
     pub beamer_color: String,
     /// "169" or "43"
     pub aspect: String,
+    /// Presentation format (see `decks::DECKS`); empty = research talk.
+    pub deck: String,
 }
 
 const SAMPLE_FIGURE: &[u8] = include_bytes!("../../assets/starter/sample-figure.png");
@@ -55,8 +58,20 @@ const STORY_ASSETS: &[(&str, &[u8])] = &[
     ("assets/radar.gif", include_bytes!("../../assets/story/radar.gif")),
 ];
 
-pub const BEAMER_THEMES: &[&str] = &["metropolis", "Madrid", "CambridgeUS", "Copenhagen", "Warsaw", "Berlin", "Singapore", "Boadilla", "AnnArbor", "default"];
-pub const BEAMER_COLORS: &[&str] = &["default", "beaver", "crane", "dolphin", "orchid", "seahorse", "whale", "wolverine", "spruce", "quantum"];
+pub const BEAMER_THEMES: &[&str] = &["metropolis", "moloch", "SimplePlus", "SimpleDarkBlue", "Nord", "Verona", "Madrid", "CambridgeUS", "Copenhagen", "Warsaw", "Berlin", "Singapore", "Boadilla", "AnnArbor", "default"];
+pub const BEAMER_COLORS: &[&str] = &["default", "beaver", "crane", "dolphin", "orchid", "seahorse", "whale", "wolverine", "spruce", "quantum", "navy-gold", "olive", "steel", "maroon"];
+
+/// Own two-colour palettes (primary, accent), defined in the preamble so no package is needed.
+fn palette(name: &str) -> Option<(&'static str, &'static str)> {
+    Some(match name {
+        "quantum" => ("14235C", "FF8A3D"),
+        "navy-gold" => ("0B1F3A", "C9A227"),
+        "olive" => ("3B4A2A", "B8A45A"),
+        "steel" => ("263238", "1FA8C9"),
+        "maroon" => ("5A1220", "C9A227"),
+        _ => return None,
+    })
+}
 
 /// Escape text for use inside LaTeX arguments.
 pub fn tex_escape(t: &str) -> String {
@@ -251,24 +266,41 @@ fn presentation(title: &str, author: &str, rank: &str, org: &str, o: &StarterOpt
     let theme = if BEAMER_THEMES.contains(&o.beamer_theme.as_str()) { o.beamer_theme.as_str() } else { "metropolis" };
     let color = if BEAMER_COLORS.contains(&o.beamer_color.as_str()) { o.beamer_color.as_str() } else { "default" };
     let aspect = if o.aspect == "43" { "43" } else { "169" };
-    let color_line = match color {
-        "default" => String::new(),
-        // Quantum Maze's own palette, defined here rather than as a package.
-        "quantum" => "\\definecolor{qmNavy}{HTML}{14235C}\\definecolor{qmAccent}{HTML}{FF8A3D}\n\\setbeamercolor{palette primary}{bg=qmNavy,fg=white}\n\\setbeamercolor{frametitle}{bg=qmNavy,fg=white}\n\\setbeamercolor{structure}{fg=qmAccent}\n\\setbeamercolor{progress bar}{fg=qmAccent}\n\\setbeamercolor{title separator}{fg=qmAccent}\n".to_string(),
-        c => format!("\\usecolortheme{{{c}}}\n"),
+    let deck = decks::get(&o.deck);
+    let color_line = match (color, palette(color)) {
+        ("default", _) => String::new(),
+        (_, Some((p, a))) => format!(
+            "\\definecolor{{qmPrimary}}{{HTML}}{{{p}}}\\definecolor{{qmAccent}}{{HTML}}{{{a}}}\n\\setbeamercolor{{palette primary}}{{bg=qmPrimary,fg=white}}\n\\setbeamercolor{{frametitle}}{{bg=qmPrimary,fg=white}}\n\\setbeamercolor{{title}}{{fg=qmPrimary}}\n\\setbeamercolor{{structure}}{{fg=qmPrimary}}\n\\setbeamercolor{{block title}}{{bg=qmPrimary,fg=white}}\n\\setbeamercolor{{block body}}{{bg=qmPrimary!6}}\n\\setbeamercolor{{alerted text}}{{fg=qmAccent!85!black}}\n\\setbeamercolor{{block title alerted}}{{bg=qmAccent,fg=black}}\n\\setbeamercolor{{block body alerted}}{{bg=qmAccent!12}}\n\\setbeamercolor{{progress bar}}{{fg=qmAccent}}\n\\setbeamercolor{{title separator}}{{fg=qmAccent}}\n"
+        ),
+        (c, None) => format!("\\usecolortheme{{{c}}}\n"),
     };
     let inst = if rank.is_empty() { org.to_string() } else { format!("{rank}, {org}") };
-    let main = format!(
-        r"% Quantum Maze presentation (Beamer). Compile with pdfLaTeX, XeLaTeX or LuaLaTeX.
+    // Themes outside the Beamer core fall back to Madrid when not installed.
+    let core = ["Madrid", "CambridgeUS", "Copenhagen", "Warsaw", "Berlin", "Singapore", "Boadilla", "AnnArbor", "default"];
+    let theme_line = if core.contains(&theme) { format!("\\usetheme{{{theme}}}") } else { format!("\\IfFileExists{{beamertheme{theme}.sty}}{{\\usetheme{{{theme}}}}}{{\\usetheme{{Madrid}}}}") };
+    let preamble = format!(
+        r"% Quantum Maze presentation (Beamer): {deck_title}
+% Compile with pdfLaTeX, XeLaTeX or LuaLaTeX.
 % Export to PowerPoint: Export > Presentation as PowerPoint (.pptx).
 \documentclass[aspectratio={aspect}]{{beamer}}
-\usetheme{{{theme}}}
+{theme_line}
 {color_line}\usepackage{{graphicx}}
 \usepackage{{booktabs}}
 \usepackage{{amsmath}}
 
+% Grey guidance text. Replace each \hint{{...}} with your own content.
+\newcommand{{\hint}}[1]{{\leavevmode{{\color{{gray}}\itshape #1}}}}
+
+% Protective marking printed at the top and bottom of every slide.
+% Leave empty for none, or set it as your organisation's rules require.
+\newcommand{{\Marking}}{{}}
+\IfFileExists{{eso-pic.sty}}{{\usepackage{{eso-pic}}
+  \AddToShipoutPictureFG{{\ifx\Marking\empty\else
+    \AtPageUpperLeft{{\makebox[\paperwidth]{{\raisebox{{-2.2ex}}{{\tiny\bfseries\color{{red!70!black}}\Marking}}}}}}%
+    \AtPageLowerLeft{{\makebox[\paperwidth]{{\raisebox{{0.8ex}}{{\tiny\bfseries\color{{red!70!black}}\Marking}}}}}}\fi}}}}{{}}
+
 \title{{{title}}}
-\subtitle{{Subtitle of the talk}}
+\subtitle{{{subtitle}}}
 \author{{{author}}}
 \institute{{{inst}}}
 \date{{\today}}
@@ -279,66 +311,16 @@ fn presentation(title: &str, author: &str, rank: &str, org: &str, o: &StarterOpt
   \titlepage
 \end{{frame}}
 
-\begin{{frame}}{{Outline}}
-  \tableofcontents
-\end{{frame}}
-
-\section{{Motivation}}
-
-\begin{{frame}}{{Why this matters}}
-  \begin{{itemize}}
-    \item<1-> First key point
-    \item<2-> Second point appears on click
-    \item<3-> Third point with maths: $y = e^{{-\alpha t}}\cos(\omega t)$
-  \end{{itemize}}
-\end{{frame}}
-
-\section{{Results}}
-
-\begin{{frame}}{{Main result}}
-  \begin{{columns}}[T]
-    \begin{{column}}{{0.55\textwidth}}
-      \includegraphics[width=\linewidth]{{figures/sample-figure}}
-    \end{{column}}
-    \begin{{column}}{{0.42\textwidth}}
-      \begin{{block}}{{Observation}}
-        The proposed method settles twice as fast.
-      \end{{block}}
-      \begin{{alertblock}}{{Caveat}}
-        Illustrative data only.
-      \end{{alertblock}}
-    \end{{column}}
-  \end{{columns}}
-\end{{frame}}
-
-\begin{{frame}}{{Summary table}}
-  \centering
-  \begin{{tabular}}{{lcc}}
-    \toprule
-    Method & Settling time (s) & Overshoot (\%) \\
-    \midrule
-    Baseline & 8.4 & 21.0 \\
-    Proposed & 4.1 & 12.5 \\
-    \bottomrule
-  \end{{tabular}}
-\end{{frame}}
-
-\section{{Conclusion}}
-
-\begin{{frame}}{{Conclusion}}
-  \begin{{enumerate}}
-    \item Restate the contribution
-    \item Mention limitations
-    \item Point to future work
-  \end{{enumerate}}
-  \vfill
-  \centering\Large Thank you!
-\end{{frame}}
-
-\end{{document}}
-"
+",
+        deck_title = deck.title,
+        subtitle = deck.subtitle,
     );
-    vec![("main.tex".into(), main.into_bytes()), ("figures/sample-figure.png".into(), SAMPLE_FIGURE.to_vec())]
+    let main = format!("{preamble}{}\n\\end{{document}}\n", deck.body);
+    let mut files = vec![("main.tex".to_string(), main.into_bytes())];
+    if deck.body.contains("figures/sample-figure") {
+        files.push(("figures/sample-figure.png".into(), SAMPLE_FIGURE.to_vec()));
+    }
+    files
 }
 
 /// Quantum Maze-written skeleton that loads the journal's official class.

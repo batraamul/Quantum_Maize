@@ -8,8 +8,19 @@ import type { StarterKind } from "../services/api";
 import { SAMPLE_ID, StoryTemplateGallery } from "../story/StoryTemplates";
 import type { Engine } from "../types";
 
-const THEMES = ["metropolis", "Madrid", "CambridgeUS", "Copenhagen", "Warsaw", "Berlin", "Singapore", "Boadilla", "AnnArbor", "default"];
-const COLORS = ["quantum", "default", "beaver", "crane", "dolphin", "orchid", "seahorse", "whale", "wolverine", "spruce"];
+const THEMES = ["metropolis", "moloch", "SimplePlus", "SimpleDarkBlue", "Nord", "Verona", "Madrid", "CambridgeUS", "Copenhagen", "Warsaw", "Berlin", "Singapore", "Boadilla", "AnnArbor", "default"];
+const COLORS = ["navy-gold", "quantum", "steel", "olive", "maroon", "default", "beaver", "crane", "dolphin", "orchid", "seahorse", "whale", "wolverine", "spruce"];
+const COLOR_LABEL: Record<string, string> = { "navy-gold": "Navy & gold", quantum: "Navy & saffron", steel: "Steel & cyan", olive: "Olive & sand", maroon: "Maroon & gold", default: "Theme default" };
+const DECKS: { id: string; title: string; desc: string }[] = [
+  { id: "research-talk", title: "Research talk", desc: "Conference or seminar talk: motivation, method, results, conclusion." },
+  { id: "selection-board", title: "Selection board presentation (senior scientific post)", desc: "Profile, programmes delivered, leadership record, vision and a 100-day to 5-year plan. 15 slides." },
+  { id: "decision-briefing", title: "Decision briefing (bottom line up front)", desc: "The decision sought first, then background, options, recommendation, risks and resources." },
+  { id: "programme-review", title: "Programme / project review", desc: "Status at a glance, milestones, technical progress, readiness level, budget, risks, help needed." },
+  { id: "technology-roadmap", title: "Technology vision and roadmap", desc: "Strategic context, capability gaps, thrust areas, readiness roadmap, partnerships, resources." },
+  { id: "project-proposal", title: "Research project proposal", desc: "Need, objectives, state of the art, approach, work packages, deliverables, cost, team, risks." },
+  { id: "design-review", title: "Technical design review (PDR / CDR)", desc: "Requirements, architecture, subsystem design, analysis, verification plan, compliance matrix." },
+  { id: "lab-overview", title: "Laboratory / division capability overview", desc: "Mandate, organisation, competences, facilities, flagship programmes, achievements, way ahead." },
+];
 
 export function NewProjectDialog() {
   const settings = useApp((s) => s.settings);
@@ -18,7 +29,8 @@ export function NewProjectDialog() {
   const [dir, setDir] = useState("");
   const [engine, setEngine] = useState<Engine>(settings?.defaultEngine ?? "pdflatex");
   const [theme, setTheme] = useState("metropolis");
-  const [color, setColor] = useState("quantum");
+  const [color, setColor] = useState("navy-gold");
+  const [deck, setDeck] = useState("research-talk");
   const [aspect, setAspect] = useState("169");
   const [busy, setBusy] = useState(false);
   const [storyTpl, setStoryTpl] = useState(SAMPLE_ID);
@@ -48,7 +60,7 @@ export function NewProjectDialog() {
   const create = async () => {
     if (invalid) return;
     setBusy(true);
-    const ok = await createProject(dir, name.trim(), kind, engine, kind === "presentation" ? { beamerTheme: theme, beamerColor: color, aspect } : undefined, kind === "story" && storyTpl !== SAMPLE_ID ? storyTpl : undefined);
+    const ok = await createProject(dir, name.trim(), kind, engine, kind === "presentation" ? { beamerTheme: theme, beamerColor: color, aspect, deck } : undefined, kind === "story" && storyTpl !== SAMPLE_ID ? storyTpl : undefined);
     setBusy(false);
     if (ok) ui.closeDialog();
   };
@@ -90,13 +102,20 @@ export function NewProjectDialog() {
           </button>
         </div>
       </div>
-      {kind === "presentation" && (
+      {kind === "presentation" && (<>
+        <div className="field">
+          <label>Format</label>
+          <select className="select" value={deck} onChange={(e) => { setDeck(e.target.value); const d = DECKS.find((x) => x.id === e.target.value)!; suggest(d.id === "research-talk" ? "My Presentation" : d.title.replace(/ \(.*\)$/, "")); }}>
+            {DECKS.map((d) => <option key={d.id} value={d.id}>{d.title}</option>)}
+          </select>
+          <span className="hint">{DECKS.find((d) => d.id === deck)!.desc} Grey guidance text marks what to replace; a protective marking line can be set in the preamble.</span>
+        </div>
         <div className="row" style={{ flexWrap: "wrap" }}>
           <label className="field grow"><span className="label">Theme</span><select className="select" value={theme} onChange={(e) => setTheme(e.target.value)}>{THEMES.map((t) => <option key={t}>{t}</option>)}</select></label>
-          <label className="field grow"><span className="label">Colours</span><select className="select" value={color} onChange={(e) => setColor(e.target.value)}>{COLORS.map((t) => <option key={t} value={t}>{t === "quantum" ? "Quantum Maze (navy & saffron)" : t}</option>)}</select></label>
+          <label className="field grow"><span className="label">Colours</span><select className="select" value={color} onChange={(e) => setColor(e.target.value)}>{COLORS.map((t) => <option key={t} value={t}>{COLOR_LABEL[t] ?? t}</option>)}</select></label>
           <label className="field grow"><span className="label">Shape</span><select className="select" value={aspect} onChange={(e) => setAspect(e.target.value)}><option value="169">Widescreen 16:9</option><option value="43">Standard 4:3</option></select></label>
         </div>
-      )}
+      </>)}
       {kind !== "story" && (
         <div className="field">
           <label>LaTeX engine</label>

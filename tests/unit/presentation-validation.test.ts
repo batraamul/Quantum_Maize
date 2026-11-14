@@ -107,3 +107,11 @@ describe("manuscript checks", () => {
     expect(s.missing).toBeGreaterThan(0);
   });
 });
+
+import { setBeamerTheme as sbt } from "../../src/presentation/beamer";
+describe("theme guard", () => {
+  it("is collapsed when the theme is changed", () => {
+    const src = "\\documentclass{beamer}\n\\IfFileExists{beamerthememoloch.sty}{\\usetheme{moloch}}{\\usetheme{Madrid}}\n\\begin{document}";
+    expect(sbt(src, "Berlin", "whale")).toBe("\\documentclass{beamer}\n\\usetheme{Berlin}\n\\usecolortheme{whale}\n\\begin{document}");
+  });
+});

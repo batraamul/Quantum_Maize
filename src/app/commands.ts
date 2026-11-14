@@ -111,6 +111,7 @@ export const commands: Record<string, Command> = {
   about: { id: "about", label: "About Quantum Maze", run: () => ui.openDialog("about") },
   newPresentation: { id: "newPresentation", label: "New Presentation…", run: () => ui.openDialog("newProject") },
   journalLibrary: { id: "journalLibrary", label: "Journal Template Library…", shortcut: "Ctrl+Shift+J", run: () => ui.openDialog("journals") },
+  notebooks: { id: "notebooks", label: "Notebooks…", shortcut: "Ctrl+Shift+B", run: () => ui.openDialog("notebooks") },
   importTemplate: { id: "importTemplate", label: "Import Journal Template…", run: () => ui.openImport({ mode: "template" }) },
   importProject: { id: "importProject", label: "Import Project (ZIP / Overleaf)…", run: () => ui.openImport({ mode: "project" }) },
   submission: { id: "submission", label: "Submission Checklist & Package", run: () => ui.showSidebarTab("submission"), enabled: () => useApp.getState().project?.meta.kind === "latex" },

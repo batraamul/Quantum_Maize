@@ -35,6 +35,8 @@ pub struct Settings {
     pub owner_email: String,
     /// Opt-in for online services (DOI lookup). Off by default.
     pub allow_online: bool,
+    /// Folder the user chose for notebooks (`*.qmnote.json`).
+    pub notebooks_dir: Option<String>,
 }
 
 impl Default for Settings {
@@ -63,6 +65,7 @@ impl Default for Settings {
             owner_organization: String::new(),
             owner_email: String::new(),
             allow_online: false,
+            notebooks_dir: None,
         }
     }
 }

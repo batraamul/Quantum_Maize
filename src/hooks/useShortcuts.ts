@@ -43,7 +43,7 @@ export function matches(e: KeyboardEvent, c: Combo): boolean {
 const GLOBAL: (keyof typeof commands)[] = [
   "newProject", "openProject", "newFile", "save", "saveAll", "settings", "quit", "toggleSidebar", "togglePreview",
   "toggleBottom", "toggleSplit", "zoomIn", "zoomOut", "zoomReset", "compile", "stopCompile", "syncForward", "exportPdf",
-  "journalLibrary", "present", "insertTable", "insertEquation", "insertFigure",
+  "journalLibrary", "notebooks", "present", "insertTable", "insertEquation", "insertFigure",
 ];
 
 export function useShortcuts() {

@@ -3,6 +3,7 @@
 pub mod commands;
 pub mod compiler;
 pub mod converter;
+pub mod notebooks;
 pub mod online;
 pub mod presentation;
 pub mod story;
@@ -93,6 +94,10 @@ pub fn run() {
             commands::export_story,
             commands::import_story_asset,
             commands::import_figure,
+            commands::notebooks_list,
+            commands::notebook_read,
+            commands::notebook_write,
+            commands::notebook_trash,
             commands::list_story_templates,
             commands::story_template_cover,
             commands::create_story_from_template,

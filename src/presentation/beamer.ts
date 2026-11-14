@@ -166,7 +166,8 @@ export function parseFrames(source: string): ParsedSlide[] {
 
 /** Replace (or insert) \usetheme / \usecolortheme in a Beamer preamble. */
 export function setBeamerTheme(src: string, theme: string, color: string): string {
-  let s = src;
+  // Collapse the "use theme if installed, else Madrid" guard written by the starter.
+  let s = src.replace(/\\IfFileExists\{beamertheme[^}]*\.sty\}\{(\\usetheme\{[^}]*\})\}\{\\usetheme\{[^}]*\}\}/, "$1");
   if (/\\usetheme(\[[^\]]*\])?\{[^}]*\}/.test(s)) s = s.replace(/\\usetheme(\[[^\]]*\])?\{[^}]*\}/, `\\usetheme{${theme}}`);
   else s = s.replace(/(\\documentclass[^\n]*\n)/, `$1\\usetheme{${theme}}\n`);
   s = s.replace(/\\usecolortheme\{[^}]*\}\n?/g, "");

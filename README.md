@@ -4,7 +4,7 @@ A local desktop studio for research writing. Write and compile LaTeX papers, sta
 
 The title bar and welcome screen show "Quantum Maze by *name, rank, organization*" from the profile you enter on first run (Settings → Profile).
 
-Status: version 0.4.0. Built and tested on Linux. Windows and macOS builds are configured but have not been run. See [DEVELOPMENT_STATUS.md](DEVELOPMENT_STATUS.md) for exactly what is verified and what is not, and [ARCHITECTURE.md](ARCHITECTURE.md) for the design.
+Status: version 0.5.0. Built and tested on Linux. Windows and macOS builds are configured but have not been run. See [DEVELOPMENT_STATUS.md](DEVELOPMENT_STATUS.md) for exactly what is verified and what is not, and [ARCHITECTURE.md](ARCHITECTURE.md) for the design.
 
 ![Journal project compiled beside the editor](docs/screenshots/ieee-project.png)
 
@@ -19,7 +19,8 @@ The window follows the arrangement LaTeX users know from online editors: file tr
 | Papers | Monaco editor with LaTeX completion, outline, split view · pdfLaTeX, XeLaTeX, LuaLaTeX via latexmk or direct passes · BibTeX and Biber · PDF preview with SyncTeX both ways · errors with file, line and a suggested fix · like Overleaf, a compile that hits recoverable errors still shows the PDF, with the error count beside the Compile button |
 | Journal formats | Library of 26 formats (IEEE, Elsevier, Springer Nature, ACM, APS, MDPI, DRDO journals and others) · projects from the official class in your TeX distribution · import a publisher's template ZIP · import any Overleaf/ZIP project |
 | Authoring | Table designer (merge cells, booktabs, longtable) · equation editor with live preview · figure and sub-figure insertion · reference list with cited/uncited checks · add a reference by DOI (opt-in) |
-| Presentations | Beamer starter with 10 themes and 10 colour schemes · slide list · full-screen presenter with timer · export to `.pptx` (exact picture slides or editable text slides) |
+| Presentations | 8 ready-structured formats (research talk, selection-board presentation for a senior scientific post, bottom-line-up-front decision briefing, programme review, technology roadmap, project proposal, design review, laboratory overview) · 15 Beamer themes including the modern metropolis, moloch, SimplePlus, SimpleDarkBlue, Nord and Verona · 14 colour schemes · optional protective-marking line on every slide · slide list · full-screen presenter with timer · export to `.pptx` (exact picture slides or editable text slides) |
+| Notebooks | Any number of notebooks kept as single `.qmnote.json` files in a folder you choose · 30 themed covers (aviation, drones, weapon systems, missiles, radar, communication, SDR, data security, cryptography, hacking, forensics, IoT, AI, quantum, space, naval and more) · 8 page styles (ruled, margin, grid, dots, plain, engineering pad, blueprint, terminal), 9 page colours, 4 writing styles · headings, text, bullet lists, checklists, tables, images (embedded), code, callouts · page search · automatic saving with a backup of the previous version |
 | Interactive stories | 15 block types (hero, scrollytelling, animated counters, timeline, gallery, flip cards, before/after slider, chart, image hotspots, quiz, video…) · 6 colour presets · **26 ready-made templates** (6 layouts such as place guide, news explainer, data story, profile, photo essay and project report, plus 20 long explainers on aviation, drones, instruments, AI image processing, computer vision, VLSI, embedded systems, IoT, LLMs, agentic AI, Linux, data security, cryptography, ethical hacking, drone forensics, wireless sensor networks, radio, SDR, cognitive radio and quantum computing) · save any story as your own template and share it as a ZIP · export as one self-contained HTML file or a web folder |
 | Word | LaTeX → `.docx` and `.docx` → structured LaTeX project through Pandoc, each with a conversion report listing what needs manual attention |
 | Submission | Checklist against the chosen journal profile · submission ZIP with sources, `.bbl`, final PDF and a SHA-256 manifest |
@@ -121,6 +122,7 @@ npm run tauri build          # release build and installers for the current plat
 | Stop compilation | Ctrl+Shift+. |
 | Save / Save all | Ctrl+S / Ctrl+Shift+S |
 | Journal library | Ctrl+Shift+J |
+| Notebooks | Ctrl+Shift+B |
 | Insert table / equation / figure | Ctrl+Alt+T / Ctrl+Alt+E / Ctrl+Alt+F |
 | Present slides | F5 |
 | Show cursor position in PDF | Ctrl+Alt+J |

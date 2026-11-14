@@ -21,7 +21,7 @@ import type {
   Settings,
   Snapshot,
   SourceLocation,
-  TexInstallation, StoryTemplate } from "../types";
+  TexInstallation, StoryTemplate, NotebookInfo } from "../types";
 
 export function errorMessage(e: unknown): string {
   if (e && typeof e === "object" && "message" in e) return String((e as { message: unknown }).message);
@@ -89,6 +89,10 @@ export const api = {
   doiLookup: (doi: string) => invoke<string>("doi_lookup", { doi }),
   setStoryPreview: (root: string, html: string) => invoke<void>("set_story_preview", { root, html }),
   exportStory: (root: string, html: string, dest: string, single: boolean) => invoke<string[]>("export_story", { root, html, dest, single }),
+  notebooksList: () => invoke<NotebookInfo[]>("notebooks_list"),
+  notebookRead: (file: string) => invoke<string>("notebook_read", { file }),
+  notebookWrite: (file: string, content: string, create: boolean) => invoke<void>("notebook_write", { file, content, create }),
+  notebookTrash: (file: string) => invoke<string>("notebook_trash", { file }),
   listStoryTemplates: () => invoke<StoryTemplate[]>("list_story_templates"),
   storyTemplateCover: (id: string) => invoke<string>("story_template_cover", { id }),
   createStoryFromTemplate: (parentDir: string, name: string, templateId: string) => invoke<ProjectInfo>("create_story_from_template", { parentDir, name, templateId }),
@@ -104,6 +108,7 @@ export const api = {
 export type StarterKind = "blank" | "research-paper" | "presentation" | "story";
 export interface StarterOptions {
   beamerTheme?: string;
+  deck?: string;
   beamerColor?: string;
   aspect?: string;
 }

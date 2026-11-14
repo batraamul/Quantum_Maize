@@ -28,6 +28,7 @@ export interface Settings {
   ownerOrganization: string;
   ownerEmail: string;
   allowOnline: boolean;
+  notebooksDir: string | null;
 }
 
 export type ProjectKind = "latex" | "presentation" | "story";
@@ -291,4 +292,15 @@ export interface StoryTemplate {
   preset: string;
   cover: string;
   origin: "bundled" | "user";
+}
+
+export interface NotebookInfo {
+  file: string;
+  title: string;
+  subject: string;
+  cover: string;
+  color: string;
+  pages: number;
+  updated: string;
+  size: number;
 }

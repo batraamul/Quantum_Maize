@@ -14,7 +14,7 @@ import { parseFrames, setBeamerTheme, type ParsedSlide } from "./beamer";
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = workerUrl;
 
-const THEMES = ["metropolis", "Madrid", "CambridgeUS", "Copenhagen", "Warsaw", "Berlin", "Singapore", "Boadilla", "AnnArbor", "default"];
+const THEMES = ["metropolis", "moloch", "SimplePlus", "SimpleDarkBlue", "Nord", "Verona", "Madrid", "CambridgeUS", "Copenhagen", "Warsaw", "Berlin", "Singapore", "Boadilla", "AnnArbor", "default"];
 const COLORS = ["default", "beaver", "crane", "dolphin", "orchid", "seahorse", "whale", "wolverine", "spruce"];
 
 export function toBase64(bytes: Uint8Array): string {

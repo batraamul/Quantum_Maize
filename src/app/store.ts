@@ -58,7 +58,7 @@ export interface PromptRequest {
 
 export type Dialog =
   | null | "newProject" | "settings" | "setup" | "about" | "shortcuts" | "recovery" | "journals" | "import" | "convert"
-  | "pptx" | "present" | "table" | "equation" | "figure" | "storyExport" | "storyTemplate";
+  | "pptx" | "present" | "table" | "equation" | "figure" | "storyExport" | "storyTemplate" | "notebooks";
 
 export interface ImportRequest {
   mode: "project" | "template";

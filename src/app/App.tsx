@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { MenuBar } from "../components/MenuBar";
-import { Library, MonitorPlay, PanelRight, Settings as SettingsIcon } from "lucide-react";
+import { Library, MonitorPlay, NotebookPen, PanelRight, Settings as SettingsIcon } from "lucide-react";
 import { runCommand } from "./commands";
 import { Toolbar } from "../components/Toolbar";
 import { StatusBar } from "../components/StatusBar";
@@ -17,6 +17,7 @@ import { checkExternalChanges, dirtyPaths, guardUnsaved, init, onBufferChanged, 
 import { JournalLibrary, ImportDialog } from "../journal-library/JournalLibrary";
 import { ConversionDialog } from "../conversion/ConversionDialog";
 import { PptxDialog, PresentMode } from "../presentation/PresentationTools";
+import { NotebooksView } from "../notebooks/Notebooks";
 import { SaveStoryTemplateDialog } from "../story/StoryTemplates";
 import { StoryExportDialog } from "../story/StoryExportDialog";
 import { EquationDialog, FigureDialog, TableDesigner } from "../authoring/AuthoringDialogs";
@@ -77,6 +78,7 @@ export function App() {
         {project && (
           <div className="row" style={{ gap: 2, paddingRight: 6 }}>
             {project.meta.kind === "presentation" && <button className="tool-btn" title="Present full-screen (F5)" onClick={() => runCommand("present")}><MonitorPlay size={16} /> Present</button>}
+            <button className="tool-btn" title="Notebooks (Ctrl+Shift+B)" onClick={() => runCommand("notebooks")}><NotebookPen size={16} /> Notes</button>
             <button className="tool-btn" title="Journal Template Library (Ctrl+Shift+J)" onClick={() => runCommand("journalLibrary")}><Library size={16} /> Journals</button>
             {project.meta.kind !== "story" && <button className="tool-btn" title="Show or hide the PDF" onClick={ui.togglePreview}><PanelRight size={16} /> Layout</button>}
             <button className="tool-btn" title="Settings" onClick={() => ui.openDialog("settings")}><SettingsIcon size={16} /></button>
@@ -99,6 +101,7 @@ export function App() {
       {dialog === "pptx" && project && <PptxDialog />}
       {dialog === "present" && project && <PresentMode />}
       {dialog === "storyExport" && project && <StoryExportDialog />}
+      {dialog === "notebooks" && <NotebooksView />}
       {dialog === "storyTemplate" && project && <SaveStoryTemplateDialog />}
       {dialog === "table" && <TableDesigner />}
       {dialog === "equation" && <EquationDialog />}

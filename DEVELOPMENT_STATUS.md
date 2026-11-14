@@ -1,6 +1,6 @@
 # Development status
 
-Last updated: 2026-11-14 · version 0.4.0
+Last updated: 2026-11-14 · version 0.5.0
 
 All seven phases of the product brief have working implementations on Linux, plus the two additions requested later (presentations with PowerPoint export, interactive stories) and the rename to Quantum Maze with a user-defined owner line. Everything in the "Verified" column below was exercised in the running application or by an automated test on Linux x86-64. Windows and macOS builds are configured but have **never been built or run**.
 
@@ -23,6 +23,8 @@ All seven phases of the product brief have working implementations on Linux, plu
 | + | Beamer presentations: starter with themes/colours, slide panel, presenter mode, PPTX export (exact and editable) | Integration test compiles 4 theme/colour combinations; PPTX opened in LibreOffice by test and by hand |
 | + | Interactive stories: 15 block types, 6 presets, live preview, export as single HTML or web folder | GUI: every block type operated; exported file inspected (no external URLs); unit tests for schema and renderer |
 | + | Story template library: 26 bundled templates (6 layouts, 20 topic explainers of 20 sections each), gallery with search and categories, save as template, export/import as ZIP | GUI: created stories from three templates, saved and exported a template; unit tests check every template loads, renders offline and ships exactly the media it uses; import rejects non-template ZIPs and drops scripts |
+| + | Presentation formats: 8 structured decks, 6 added modern themes, 4 added colour palettes, protective-marking line | Integration test compiles every format with a different theme and the marking set; GUI created and compiled the selection-board deck |
+| + | Notebooks: shelf, 30 covers, page styles, block editor with tables and embedded images, autosave with backup, trash | GUI: created a notebook, added every block type and an image, changed style, switched folder; Rust and frontend unit tests |
 | + | Owner profile (name, rank, organization) shown as "Quantum Maze by …" and used as default author | GUI |
 
 ## Tests
@@ -73,6 +75,18 @@ Run: `cd src-tauri && cargo test` and `npm test`.
 - The single-file export embeds all media as data URIs, so large videos make very large files; use the web-folder export for those.
 - The chart block draws animated bar charts from typed numbers; there is no line chart, map or 3-D block.
 - Flip-card animation falls back to a cross-fade where the webview lacks `backface-visibility` support (seen in the Linux test environment without GPU compositing).
+
+**Presentations**
+
+- The deck formats are structures with guidance text, written from common briefing practice (decision first, one message per slide). They are not an official format of any organisation; follow your own organisation's template and marking rules where they exist.
+- moloch, SimplePlus, SimpleDarkBlue, Nord and Verona are third-party themes that ship with full TeX Live/MacTeX. If one is missing the deck falls back to Madrid. Themes that need extra fonts (focus, trigon, Arguelles) are left out.
+
+**Notebooks**
+
+- Notes are plain text in blocks; there is no bold/italic inside a paragraph, no freehand drawing, no equations, and no export to PDF or Word yet.
+- Images are stored inside the JSON file (downscaled to 1600 px), so notebooks with many pictures become large files.
+- The "Handwritten" writing style uses a handwriting font already on the computer (present on macOS and Windows; many Linux systems fall back to a serif font).
+- Notebooks are not encrypted. Do not keep classified or sensitive material in them unless the folder itself is protected.
 
 **Story templates**
 

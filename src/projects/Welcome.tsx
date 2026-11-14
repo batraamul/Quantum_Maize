@@ -39,6 +39,7 @@ export function Welcome() {
               <button className="btn" onClick={() => ui.openDialog("newProject")}><Presentation size={14} /> Slides</button>
               <button className="btn" onClick={() => ui.openDialog("newProject")}><Globe size={14} /> Story</button>
               <button className="btn" onClick={() => ui.openDialog("convert")}>Word ⇄ LaTeX</button>
+              <button className="btn" onClick={() => ui.openDialog("notebooks")}>Notebooks</button>
             </div>
           </div>
         </div>

@@ -637,6 +637,32 @@ pub fn import_story_asset(state: S, root: String, source: String) -> AppResult<S
     story::import_asset(&state.root(&root)?, Path::new(&source))
 }
 
+// ---- notebooks ------------------------------------------------------------------
+
+fn notebooks_dir(state: &AppState) -> AppResult<PathBuf> {
+    Settings::load(&state.db)?.notebooks_dir.filter(|d| !d.trim().is_empty()).map(PathBuf::from).ok_or_else(|| AppError::Invalid("choose a notebooks folder first".into()))
+}
+
+#[tauri::command]
+pub fn notebooks_list(state: S) -> AppResult<Vec<crate::notebooks::NotebookInfo>> {
+    crate::notebooks::list(&notebooks_dir(&state)?)
+}
+
+#[tauri::command]
+pub fn notebook_read(state: S, file: String) -> AppResult<String> {
+    crate::notebooks::read(&notebooks_dir(&state)?, &file)
+}
+
+#[tauri::command]
+pub fn notebook_write(state: S, file: String, content: String, create: bool) -> AppResult<()> {
+    crate::notebooks::write(&notebooks_dir(&state)?, &file, &content, create)
+}
+
+#[tauri::command]
+pub fn notebook_trash(state: S, file: String) -> AppResult<String> {
+    crate::notebooks::trash(&notebooks_dir(&state)?, &file)
+}
+
 // ---- story templates -----------------------------------------------------------
 
 fn story_tpl_dir(state: &AppState) -> PathBuf {
