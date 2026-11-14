@@ -1,6 +1,8 @@
 import { useEffect, useRef } from "react";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
-import { ChevronRight, Columns2, FileCode2, Locate, X } from "lucide-react";
+import { ChevronRight, Columns2, FileCode2, Locate, X, Undo2, Redo2, Heading, Bold, Italic, Table2, Sigma, Image as ImageIcon, Quote, List, ListOrdered, Percent, Search } from "lucide-react";
+import type { ReactNode } from "react";
+import { runEditorAction } from "./activeEditor";
 import { monaco } from "./monacoSetup";
 import { getModel, isDirty } from "./models";
 import { setActiveEditor, wrapSelection } from "./activeEditor";
@@ -147,6 +149,34 @@ function Tabs() {
   );
 }
 
+/** Formatting strip above the source, for the active text file. */
+function EditorToolbar() {
+  const isTex = useApp((s) => !!s.activePath && s.openFiles.some((f) => f.path === s.activePath && f.kind === "text"));
+  const B = ({ title, onClick, children }: { title: string; onClick: () => void; children: ReactNode }) => (
+    <button className="icon-btn" title={title} disabled={!isTex} onMouseDown={(e) => e.preventDefault()} onClick={onClick}>{children}</button>
+  );
+  return (
+    <div className="editor-toolbar" role="toolbar" aria-label="Editor toolbar">
+      <B title={`Undo (${sc("Ctrl+Z")})`} onClick={() => runEditorAction("undo")}><Undo2 size={16} /></B>
+      <B title={`Redo (${sc("Ctrl+Shift+Z")})`} onClick={() => runEditorAction("redo")}><Redo2 size={16} /></B>
+      <span className="sep" />
+      <B title="Section heading" onClick={() => wrapSelection("\\section{", "}")}><Heading size={16} /></B>
+      <B title={`Bold (${sc("Ctrl+B")})`} onClick={() => wrapSelection("\\textbf{", "}")}><Bold size={16} /></B>
+      <B title={`Italic (${sc("Ctrl+I")})`} onClick={() => wrapSelection("\\textit{", "}")}><Italic size={16} /></B>
+      <span className="sep" />
+      <B title="Insert table" onClick={() => ui.openDialog("table")}><Table2 size={16} /></B>
+      <B title="Insert equation" onClick={() => ui.openDialog("equation")}><Sigma size={16} /></B>
+      <B title="Insert figure" onClick={() => ui.openDialog("figure")}><ImageIcon size={16} /></B>
+      <B title="Insert citation" onClick={() => wrapSelection("\\cite{", "}")}><Quote size={16} /></B>
+      <B title="Bulleted list" onClick={() => wrapSelection("\\begin{itemize}\n  \\item ", "\n\\end{itemize}")}><List size={16} /></B>
+      <B title="Numbered list" onClick={() => wrapSelection("\\begin{enumerate}\n  \\item ", "\n\\end{enumerate}")}><ListOrdered size={16} /></B>
+      <span style={{ flex: 1 }} />
+      <B title={`Toggle comment (${sc("Ctrl+/")})`} onClick={() => runEditorAction("editor.action.commentLine")}><Percent size={15} /></B>
+      <B title={`Search and replace (${sc("Ctrl+F")})`} onClick={() => runEditorAction("actions.find")}><Search size={16} /></B>
+    </div>
+  );
+}
+
 function PaneContent({ path, secondary }: { path: string | null; secondary?: boolean }) {
   const file = useApp((s) => s.openFiles.find((f) => f.path === path));
   const cursor = useApp((s) => s.cursor);
@@ -196,6 +226,7 @@ export function EditorArea() {
   return (
     <div className="editor-area">
       <Tabs />
+      <EditorToolbar />
       <div style={{ flex: 1, minHeight: 0 }}>
         {split ? (
           <PanelGroup direction="horizontal" autoSaveId="pf-split">

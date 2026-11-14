@@ -111,6 +111,10 @@ fn test11_error_is_located_and_pdf_still_produced() {
         let new_pdf = fs::read(bad.pdf_path.unwrap()).unwrap();
         assert!(new_pdf.starts_with(b"%PDF") && new_pdf != good_pdf);
     }
+    // Compiling again with nothing changed (latexmk skips the run) reports the same result.
+    let again = m.compile(&req(&root, "pdflatex", true), |_| {}).unwrap();
+    assert!(again.pdf_updated && again.error_count == 1, "{}\n{:#?}", again.raw_output, again.diagnostics);
+    assert!(again.diagnostics.iter().any(|d| d.message.contains("Undefined control sequence")));
 
     // A build that writes no PDF at all keeps the previous preview.
     let before = fs::read(root.join(".qmaze/build/main.pdf")).unwrap();

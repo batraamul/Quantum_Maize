@@ -483,3 +483,29 @@ button.status-item:hover { background: var(--bg-4); color: var(--text-1); }
 /* Error count beside the Compile button (as in Overleaf) */
 .err-badge { margin-left: 6px; min-width: 26px; height: 22px; padding: 0 7px; border-radius: 11px; border: 0; background: #d9363e; color: #fff; font-weight: 700; font-size: .78rem; cursor: pointer; align-self: center; }
 .err-badge:hover { filter: brightness(1.15); }
+
+/* ---- Editor-left / PDF-right layout with compile controls on the PDF pane ---- */
+.title-center { flex: 1; text-align: center; font-weight: 600; color: var(--text-1); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 0 12px; }
+.compile-bar { display: flex; align-items: center; gap: 2px; position: relative; }
+.recompile { height: 28px; padding: 0 14px; border: 0; border-radius: 14px 0 0 14px; background: #1e8e4e; color: #fff; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.recompile.split { padding: 0 7px; border-radius: 0 14px 14px 0; border-left: 1px solid #ffffff40; margin-right: 6px; }
+.recompile:hover:not(:disabled) { background: #23a35a; }
+.recompile.running { background: #4c6b59; }
+.recompile:disabled { opacity: .55; cursor: not-allowed; }
+.logs-btn { position: relative; height: 28px; min-width: 32px; padding: 0 6px; border: 0; border-radius: var(--radius-s); background: transparent; color: var(--text-2); cursor: pointer; display: inline-flex; align-items: center; }
+.logs-btn:hover, .logs-btn.active { background: var(--bg-3); color: var(--text-1); }
+.logs-btn .count { position: absolute; top: -3px; left: 17px; min-width: 16px; height: 16px; padding: 0 4px; border-radius: 8px; font-size: .68rem; font-weight: 700; line-height: 16px; color: #fff; text-align: center; }
+.logs-btn .count.err { background: #d9363e; }
+.logs-btn .count.warn { background: #c98a00; }
+.logs-btn:has(.count) { margin-right: 10px; }
+.pdf-panel { position: relative; }
+.pdf-overlay { position: absolute; inset: 39px 0 0 0; z-index: 5; background: var(--bg-1); display: flex; flex-direction: column; }
+.pdf-overlay .bottom { height: 100%; }
+.editor-toolbar { height: 34px; display: flex; align-items: center; gap: 2px; padding: 0 8px; background: var(--bg-1s); border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.editor-toolbar .sep { width: 1px; height: 18px; background: var(--border-strong); margin: 0 5px; }
+.files-outline { height: 100%; display: flex; flex-direction: column; min-height: 0; }
+.outline-dock { flex: 0 0 auto; display: flex; flex-direction: column; min-height: 0; border-top: 1px solid var(--border-strong); background: var(--bg-1); }
+.outline-dock.open { flex: 1 1 42%; }
+.outline-head { display: flex; align-items: center; gap: 6px; height: 34px; padding: 0 10px; border: 0; background: transparent; color: var(--text-1); font-weight: 700; cursor: pointer; flex-shrink: 0; text-align: left; }
+.outline-list { overflow-y: auto; min-height: 0; padding-bottom: 8px; }
+.outline-item.current { background: var(--accent-soft); color: var(--text-1); font-weight: 600; }

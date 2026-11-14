@@ -236,6 +236,7 @@ fn run_compile(req: &CompileRequest, cancel: &Arc<AtomicBool>, mut emit: impl Fn
 
     // To tell "this run wrote a PDF" from "an old PDF is still lying there".
     let pdf_before = mtime(&pdf_out);
+    let log_before = mtime(&log_path);
 
     let mut latexmk_ok = false;
     if let Some(lm) = latexmk {
@@ -270,7 +271,10 @@ fn run_compile(req: &CompileRequest, cancel: &Arc<AtomicBool>, mut emit: impl Fn
     // up to date; the existing log/PDF then describe the current sources.
     let up_to_date = tool == "latexmk" && exit_code == Some(0);
     let fresh = |p: &Path| mtime(p).is_some_and(|t| t >= start_time - Duration::from_secs(2));
-    let current = |p: &Path| p.exists() && (fresh(p) || up_to_date);
+    // latexmk also skips the run (but exits 12) when nothing changed since a run that had
+    // errors. The existing log and PDF are then still the result for the current sources.
+    let no_rerun = tool == "latexmk" && exit_code == Some(12) && log_before.is_some() && mtime(&log_path) == log_before;
+    let current = |p: &Path| p.exists() && (fresh(p) || up_to_date || no_rerun);
     let mut diagnostics = Vec::new();
     if current(&log_path) {
         let bytes = fs::read(&log_path)?;
@@ -311,7 +315,12 @@ fn run_compile(req: &CompileRequest, cancel: &Arc<AtomicBool>, mut emit: impl Fn
     let infos = diagnostics.len() - errors - warnings;
     let success = !cancelled && !timed_out && errors == 0 && current(&pdf_out) && exit_code == Some(0);
     // Like Overleaf: if this run wrote a PDF despite errors, show it (with the errors).
-    let pdf_made = success || (!cancelled && !timed_out && fresh(&pdf_out) && mtime(&pdf_out) != pdf_before && fs::metadata(&pdf_out).map(|m| m.len() > 0).unwrap_or(false));
+    let pdf_made = success || (!cancelled
+            && !timed_out
+            && ((fresh(&pdf_out) && mtime(&pdf_out) != pdf_before)
+                // not rerun: the PDF counts if it was written by the same run as the log
+                || (no_rerun && matches!((mtime(&pdf_out), mtime(&log_path)), (Some(p), Some(l)) if p + Duration::from_secs(10) >= l)))
+            && fs::metadata(&pdf_out).map(|m| m.len() > 0).unwrap_or(false));
 
     let build_dir = root.join(BUILD_DIR);
     let last_pdf = build_dir.join(format!("{stem}.pdf"));

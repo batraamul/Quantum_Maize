@@ -4,10 +4,12 @@ import { ActivityBar, Sidebar } from "../projects/Sidebar";
 import { EditorArea } from "../editor/EditorArea";
 import { PdfViewer } from "../pdf/PdfViewer";
 import { BottomPanel } from "../compiler/BottomPanel";
+import { CompileBar } from "../compiler/CompileBar";
 import { StoryWorkbench } from "../story/StoryWorkbench";
 
 /**
- * Main editing layout: activity bar | sidebar | (editor | pdf) / bottom panel.
+ * Main editing layout: rail | file tree + outline | editor | PDF pane.
+ * Compile controls sit at the top of the PDF pane and the logs open over the PDF.
  * All panels are resizable/collapsible; sizes persist via autoSaveId.
  */
 export function Workbench() {
@@ -27,34 +29,23 @@ export function Workbench() {
       <PanelGroup direction="horizontal" autoSaveId="pf-main" style={{ flex: 1 }}>
         {sidebar && (
           <>
-            <Panel id="sidebar" order={1} defaultSize={17} minSize={11} maxSize={40}>
+            <Panel id="sidebar" order={1} defaultSize={16} minSize={11} maxSize={40}>
               <Sidebar />
             </Panel>
             <PanelResizeHandle className="resize-handle" />
           </>
         )}
         <Panel id="center" order={2} minSize={30}>
-          <PanelGroup direction="vertical" autoSaveId="pf-center">
-            <Panel id="top" order={1} minSize={25}>
-              <PanelGroup direction="horizontal" autoSaveId="pf-editor-pdf">
-                <Panel id="editor" order={1} minSize={20} defaultSize={52}>
-                  <EditorArea />
-                </Panel>
-                {preview && (
-                  <>
-                    <PanelResizeHandle className="resize-handle" />
-                    <Panel id="pdf" order={2} minSize={18} defaultSize={48}>
-                      <PdfViewer />
-                    </Panel>
-                  </>
-                )}
-              </PanelGroup>
+          <PanelGroup direction="horizontal" autoSaveId="pf-editor-pdf">
+            <Panel id="editor" order={1} minSize={20} defaultSize={50}>
+              <EditorArea />
             </Panel>
-            {bottom && (
+            {(preview || bottom) && (
               <>
-                <PanelResizeHandle className="resize-handle vertical" />
-                <Panel id="bottom" order={2} defaultSize={28} minSize={10} maxSize={70}>
-                  <BottomPanel />
+                <PanelResizeHandle className="resize-handle" />
+                <Panel id="pdf" order={2} minSize={22} defaultSize={50}>
+                  {/* Logs open over the PDF, in the same pane, and close back to it. */}
+                  <PdfViewer leading={<CompileBar />} overlay={bottom ? <BottomPanel /> : undefined} />
                 </Panel>
               </>
             )}

@@ -84,7 +84,24 @@ export function Sidebar() {
   if (tab === "project") return <ProjectSettingsPanel />;
   if (tab === "slides") return <SlidesPanel />;
   if (tab === "submission") return <SubmissionPanel />;
-  return <Explorer />;
+  return <FilesAndOutline />;
+}
+
+/** File tree on top, collapsible file outline underneath. */
+function FilesAndOutline() {
+  const [open, setOpen] = useState(() => localStorage.getItem("qm-outline-open") !== "0");
+  const toggle = () => setOpen((v) => { localStorage.setItem("qm-outline-open", v ? "0" : "1"); return !v; });
+  return (
+    <div className="files-outline">
+      <div style={{ flex: open ? "1 1 58%" : "1 1 auto", minHeight: 0 }}><Explorer /></div>
+      <div className={"outline-dock" + (open ? " open" : "")}>
+        <button className="outline-head" onClick={toggle} aria-expanded={open}>
+          <ChevronRight size={14} style={{ transform: open ? "rotate(90deg)" : undefined, transition: "transform .15s" }} /> File outline
+        </button>
+        {open && <OutlineList />}
+      </div>
+    </div>
+  );
 }
 
 // ---- explorer -------------------------------------------------------------------
@@ -191,7 +208,7 @@ function Explorer() {
     <div className="panel">
       <div className="panel-header">
         <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }} title={project.root}>
-          {project.meta.name}
+          File tree
         </span>
         <div className="actions">
           <button className="icon-btn" title="New file" onClick={() => newFile()}>
@@ -269,23 +286,30 @@ function Explorer() {
 
 // ---- outline ----------------------------------------------------------------------
 
-function OutlinePanel() {
+function OutlineList() {
   const outline = useApp((s) => s.outline);
-  const labels = ["Part", "Ch", "§", "§§", "§§§", "¶"];
+  const active = useApp((s) => s.activePath);
+  const line = useApp((s) => s.cursor.line);
+  // Highlight the heading the cursor is under.
+  let cur = -1;
+  outline.forEach((o, i) => { if (o.file === active && o.line <= line) cur = i; });
+  return (
+    <div className="outline-list">
+      {outline.length === 0 && <div className="hint" style={{ padding: "10px 14px" }}>We can’t find any sections or subsections in this project.</div>}
+      {outline.map((o, i) => (
+        <div key={i} className={"outline-item" + (i === cur ? " current" : "")} style={{ paddingLeft: 12 + Math.max(0, o.level - 1) * 14 }} onClick={() => openFile(o.file, { line: o.line })} title={`${o.file}:${o.line}`}>
+          <span className="t" style={{ fontStyle: o.starred ? "italic" : undefined }}>{o.title}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function OutlinePanel() {
   return (
     <div className="panel">
-      <div className="panel-header">Outline</div>
-      <div className="panel-body" style={{ padding: "6px 0" }}>
-        {outline.length === 0 && <div className="empty-state hint" style={{ padding: 20, textAlign: "center" }}>No \section commands found in the main document.</div>}
-        {outline.map((o, i) => (
-          <div key={i} className="outline-item" style={{ paddingLeft: 6 + Math.max(0, o.level - 1) * 14 }} onClick={() => openFile(o.file, { line: o.line })} title={`${o.file}:${o.line}`}>
-            <span className="lvl">{labels[o.level]}</span>
-            <span className="t" style={{ fontWeight: o.level <= 2 ? 600 : 400, fontStyle: o.starred ? "italic" : undefined }}>
-              {o.title}
-            </span>
-          </div>
-        ))}
-      </div>
+      <div className="panel-header">File outline</div>
+      <div className="panel-body" style={{ padding: "6px 0" }}><OutlineList /></div>
     </div>
   );
 }

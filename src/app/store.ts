@@ -809,8 +809,11 @@ export async function compile(opts: { auto?: boolean } = {}) {
     } else if (!res.cancelled) {
       set({ pdfStale: !!get().pdfData });
     }
-    if (!res.success && !res.cancelled && !opts.auto) {
+    if (!res.success && !res.cancelled && !res.pdfUpdated && !opts.auto) {
+      // Nothing to show: open the logs. With a PDF, the count beside Recompile is enough.
       set({ bottomVisible: true, bottomTab: res.errorCount > 0 ? "errors" : "output" });
+    } else if (res.pdfUpdated && !opts.auto) {
+      set({ bottomVisible: false });
     }
     if (!opts.auto || !res.success) {
       if (res.cancelled) toast("info", "Compilation cancelled");
@@ -1026,7 +1029,7 @@ export async function restoreRecovery(apply: boolean) {
 export const ui = {
   toggleSidebar: () => set((s) => ({ sidebarVisible: !s.sidebarVisible })),
   showSidebarTab: (t: SidebarTab) => set((s) => ({ sidebarVisible: s.sidebarTab === t ? !s.sidebarVisible : true, sidebarTab: t })),
-  togglePreview: () => set((s) => ({ previewVisible: !s.previewVisible })),
+  togglePreview: () => set((s) => (s.previewVisible || s.bottomVisible ? { previewVisible: false, bottomVisible: false } : { previewVisible: true })),
   toggleBottom: () => set((s) => ({ bottomVisible: !s.bottomVisible })),
   showBottom: (t: BottomTab) => set({ bottomVisible: true, bottomTab: t }),
   toggleSplit: () =>

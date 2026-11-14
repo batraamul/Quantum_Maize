@@ -4,9 +4,13 @@ A local desktop studio for research writing. Write and compile LaTeX papers, sta
 
 The title bar and welcome screen show "Quantum Maze by *name, rank, organization*" from the profile you enter on first run (Settings → Profile).
 
-Status: version 0.3.1. Built and tested on Linux. Windows and macOS builds are configured but have not been run. See [DEVELOPMENT_STATUS.md](DEVELOPMENT_STATUS.md) for exactly what is verified and what is not, and [ARCHITECTURE.md](ARCHITECTURE.md) for the design.
+Status: version 0.4.0. Built and tested on Linux. Windows and macOS builds are configured but have not been run. See [DEVELOPMENT_STATUS.md](DEVELOPMENT_STATUS.md) for exactly what is verified and what is not, and [ARCHITECTURE.md](ARCHITECTURE.md) for the design.
 
 ![Journal project compiled beside the editor](docs/screenshots/ieee-project.png)
+
+## Layout
+
+The window follows the arrangement LaTeX users know from online editors: file tree with the file outline beneath it on the left, source in the middle with a formatting strip, and the PDF on the right. **Recompile** sits at the top of the PDF pane; its arrow sets auto-compile and the engine. The button beside it shows the error count and opens the logs over the PDF.
 
 ## What it does
 

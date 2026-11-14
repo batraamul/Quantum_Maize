@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { memo, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import * as pdfjsLib from "pdfjs-dist";
 import type { PDFDocumentProxy, RenderTask } from "pdfjs-dist";
@@ -34,7 +35,7 @@ interface Size {
 const PAGE_GAP = 14;
 const PAD_TOP = 18;
 
-export function PdfViewer() {
+export function PdfViewer({ leading, overlay }: { leading?: ReactNode; overlay?: ReactNode } = {}) {
   const data = useApp((s) => s.pdfData);
   const version = useApp((s) => s.pdfVersion);
   const stale = useApp((s) => s.pdfStale);
@@ -278,7 +279,10 @@ export function PdfViewer() {
 
   return (
     <div className="pdf-panel">
+      {overlay && <div className="pdf-overlay">{overlay}</div>}
       <div className="pdf-toolbar">
+        {leading}
+        <div style={{ flex: 1, minWidth: 4 }} />
         <button className={"icon-btn" + (thumbs ? " active" : "")} title="Page thumbnails" onClick={() => setThumbs((v) => !v)} disabled={!doc}>
           <PanelLeft size={16} />
         </button>
@@ -293,7 +297,7 @@ export function PdfViewer() {
           onChange={(e) => setPageInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && goTo(parseInt(pageInput, 10) || 1)}
         />
-        <span className="muted" style={{ fontSize: ".85rem", padding: "0 4px" }}>
+        <span className="muted" style={{ fontSize: ".85rem", padding: "0 4px", whiteSpace: "nowrap" }}>
           / {sizes.length || "–"}
         </span>
         <button className="icon-btn" title="Next page" onClick={() => goTo(page + 1)} disabled={!doc || page >= sizes.length}>
