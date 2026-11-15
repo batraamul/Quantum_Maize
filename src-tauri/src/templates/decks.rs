@@ -1,5 +1,6 @@
-//! Presentation formats: ready-structured Beamer decks. Each is plain Beamer (no extra
-//! packages beyond booktabs/amsmath/graphicx) so it compiles with any theme.
+//! Presentation formats: ready-structured Beamer decks. They use the infographic commands
+//! of `qmdesign.sty` (written into every presentation project), which need only Beamer and
+//! TikZ, so they compile with every slide design and with a classic Beamer theme.
 //! Guidance text is wrapped in `\hint{...}`; replace it with your own content.
 //! Structures follow common briefing practice: bottom line up front, top-down order,
 //! one point per slide.
@@ -24,6 +25,7 @@ pub const DECKS: &[Deck] = &[
     Deck { id: "technology-roadmap", title: "Technology vision and roadmap", description: "Strategic context, capability gaps, thrust areas, readiness roadmap, partnerships, resources and outcomes.", subtitle: "Technology vision and roadmap", body: TECHNOLOGY_ROADMAP },
     Deck { id: "project-proposal", title: "Research project proposal", description: "For sanction or funding: need, objectives, state of the art, approach, work packages, deliverables, schedule, cost, team, risks.", subtitle: "Project proposal", body: PROJECT_PROPOSAL },
     Deck { id: "design-review", title: "Technical design review (PDR / CDR)", description: "Requirements, architecture, subsystem design, analysis, verification plan, compliance matrix, risks and actions.", subtitle: "Design review", body: DESIGN_REVIEW },
+    Deck { id: "infographics", title: "Infographic gallery (every chart and diagram)", description: "One deck showing every infographic: numbers, rings, bars, timeline, roadmap, schedule, cards, matrix, pyramid, cycle, risk matrix.", subtitle: "Infographic gallery", body: INFOGRAPHIC_GALLERY },
     Deck { id: "lab-overview", title: "Laboratory / division capability overview", description: "Mandate, organisation, core competences, facilities, flagship programmes, achievements, collaborations and way ahead.", subtitle: "Capability overview", body: LAB_OVERVIEW },
 ];
 
@@ -74,13 +76,11 @@ const RESEARCH_TALK: &str = r"\begin{frame}{Outline}
 \section{Conclusion}
 
 \begin{frame}{Conclusion}
-  \begin{enumerate}
-    \item Restate the contribution
-    \item Mention limitations
-    \item Point to future work
-  \end{enumerate}
+  \qmSteps[11mm]{Result/\hint{the main finding, with its number},
+    Why it matters/\hint{what it enables that was not possible before},
+    Next/\hint{the next experiment or the open question}}
   \vfill
-  \centering\Large Thank you!
+  \centering\Large Thank you. Questions?
 \end{frame}
 ";
 
@@ -88,50 +88,31 @@ const SELECTION_BOARD: &str = r"% Aim for 12--15 minutes. The board has your app
 % direction rather than repeating the CV. One message per slide.
 
 \begin{frame}{Profile at a glance}
-  \begin{columns}[T]
-    \begin{column}{0.56\textwidth}
-      \begin{tabular}{@{}ll@{}}
-        Present post & \hint{Designation, organisation} \\
-        Experience & \hint{NN years: domains} \\
-        Qualifications & \hint{Highest degree, institute} \\
-        Specialisation & \hint{Two or three areas} \\
-        Post applied for & \hint{Designation / level} \\
-      \end{tabular}
-    \end{column}
-    \begin{column}{0.4\textwidth}
-      \begin{block}{In numbers}
-        \hint{N} systems delivered to users \\
-        \hint{N} publications, \hint{N} patents \\
-        \hint{N} people and \hint{amount} budget led
-      \end{block}
-    \end{column}
-  \end{columns}
+  \begin{tabular}{@{}ll@{}}
+    Present post & \hint{Designation, organisation} \\
+    Experience & \hint{NN years: domains} \\
+    Qualifications & \hint{Highest degree, institute} \\
+    Specialisation & \hint{Two or three areas} \\
+    Post applied for & \hint{Designation / level} \\
+  \end{tabular}
+  \vfill
+  % Headline numbers: value/label. Keep to four.
+  \qmStats{\hint{N}/Systems delivered to users, \hint{N}/Publications, \hint{N}/Patents and transfers, \hint{N}/People led}
 \end{frame}
 
+\section{Record}
+
 \begin{frame}{Career trajectory}
-  \centering\small
-  \begin{tabular}{@{}llp{0.5\textwidth}@{}}
-    \toprule
-    Period & Role and organisation & Responsibility \\
-    \midrule
-    \hint{Year--Year} & \hint{Role, organisation} & \hint{What you were accountable for} \\
-    \hint{Year--Year} & \hint{Role, organisation} & \hint{What you were accountable for} \\
-    \hint{Year--Year} & \hint{Role, organisation} & \hint{What you were accountable for} \\
-    \hint{Year--now} & \hint{Role, organisation} & \hint{What you are accountable for} \\
-    \bottomrule
-  \end{tabular}
+  % period/role. Put braces round an entry that contains a comma.
+  \qmTimeline{\hint{Year--Year}/\hint{Role, organisation}, \hint{Year--Year}/\hint{Role, organisation}, \hint{Year--Year}/\hint{Role, organisation}, \hint{Year--now}/\hint{Role, organisation}}
+  \vfill
+  \qmBanner{\hint{The thread that runs through these posts: what you have been accountable for.}}
 \end{frame}
 
 \begin{frame}{Three contributions I would be judged by}
-  \begin{block}{1. \hint{System, product or result}}
-    \hint{Problem, what you personally did, measurable outcome, who uses it today.}
-  \end{block}
-  \begin{block}{2. \hint{System, product or result}}
-    \hint{Problem, what you personally did, measurable outcome, who uses it today.}
-  \end{block}
-  \begin{block}{3. \hint{System, product or result}}
-    \hint{Problem, what you personally did, measurable outcome, who uses it today.}
-  \end{block}
+  \qmCards[38mm]{\hint{System or result}/\hint{Problem. What you personally did. Measurable outcome. Who uses it today.},
+    \hint{System or result}/\hint{Problem. What you personally did. Measurable outcome. Who uses it today.},
+    \hint{System or result}/\hint{Problem. What you personally did. Measurable outcome. Who uses it today.}}
 \end{frame}
 
 \begin{frame}{Programmes and systems delivered}
@@ -197,25 +178,19 @@ const SELECTION_BOARD: &str = r"% Aim for 12--15 minutes. The board has your app
   \end{columns}
 \end{frame}
 
+\section{The way ahead}
+
 \begin{frame}{My understanding of the role}
-  \begin{itemize}
-    \item \textbf{Mandate:} \hint{what the organisation exists to deliver, in one line}
-    \item \textbf{Stakeholders:} \hint{users, ministry, industry, academia}
-    \item \textbf{What success looks like in five years:} \hint{two measurable outcomes}
-    \item \textbf{Main constraints:} \hint{people, timelines, technology access, funding}
-  \end{itemize}
+  \qmMatrix[23mm]{Mandate}{\hint{What the organisation exists to deliver, in one line}}
+    {Stakeholders}{\hint{Users, ministry, industry, academia}}
+    {Success in five years}{\hint{Two measurable outcomes}}
+    {Main constraints}{\hint{People, timelines, technology access, funding}}
 \end{frame}
 
 \begin{frame}{Vision}
-  \centering
-  \Large \hint{One sentence: where this laboratory or directorate should stand in five years.}
+  \qmBanner{\hint{One sentence: where this laboratory or directorate should stand in five years.}}
   \vfill
-  \normalsize
-  \begin{columns}[T]
-    \begin{column}{0.31\textwidth}\begin{block}{Capability}\hint{What users will have}\end{block}\end{column}
-    \begin{column}{0.31\textwidth}\begin{block}{Technology}\hint{What we will master}\end{block}\end{column}
-    \begin{column}{0.31\textwidth}\begin{block}{People}\hint{What the team will be}\end{block}\end{column}
-  \end{columns}
+  \qmCards[22mm]{Capability/\hint{What users will have}, Technology/\hint{What we will master}, People/\hint{What the team will be}}
 \end{frame}
 
 \begin{frame}{Technology thrust areas I would drive}
@@ -232,17 +207,10 @@ const SELECTION_BOARD: &str = r"% Aim for 12--15 minutes. The board has your app
 \end{frame}
 
 \begin{frame}{Plan: first 100 days to five years}
-  \centering\small
-  \begin{tabular}{@{}lp{0.72\textwidth}@{}}
-    \toprule
-    Horizon & Commitments \\
-    \midrule
-    First 100 days & \hint{Listen and assess; review every programme; fix two blocking issues} \\
-    Year 1 & \hint{Deliver the nearest milestone; set priorities; fill critical posts} \\
-    Year 3 & \hint{First new capability with the user; industry partner in production} \\
-    Year 5 & \hint{Outcome stated in the vision, measured} \\
-    \bottomrule
-  \end{tabular}
+  \qmRoadmap[30mm]{First 100 days/\hint{Listen and assess; review every programme; fix two blocking issues},
+    Year 1/\hint{Deliver the nearest milestone; set priorities; fill critical posts},
+    Year 3/\hint{First new capability with the user; industry partner in production},
+    Year 5/\hint{Outcome stated in the vision, measured}}
 \end{frame}
 
 \begin{frame}{Risks I expect, and how I would manage them}
@@ -259,11 +227,9 @@ const SELECTION_BOARD: &str = r"% Aim for 12--15 minutes. The board has your app
 \end{frame}
 
 \begin{frame}{What I bring}
-  \begin{enumerate}
-    \item \hint{Domain depth: the technical ground you have personally covered}
-    \item \hint{Delivery record: systems that reached users}
-    \item \hint{Leadership: teams, budgets and partnerships handled}
-  \end{enumerate}
+  \qmSteps[12mm]{Domain depth/\hint{the technical ground you have personally covered},
+    Delivery record/\hint{systems that reached users},
+    Leadership/\hint{teams, budgets and partnerships handled}}
   \vfill
   \centering\Large Thank you. I welcome your questions.
 \end{frame}
@@ -277,17 +243,13 @@ const SELECTION_BOARD: &str = r"% Aim for 12--15 minutes. The board has your app
 const DECISION_BRIEFING: &str = r"% Lead with the decision. A senior reader should be able to stop after the second slide.
 
 \begin{frame}{Bottom line up front}
-  \begin{alertblock}{Decision sought}
-    \hint{One sentence: what you are asking to be approved, by whom, by when.}
-  \end{alertblock}
+  \qmBanner{\hint{Decision sought: one sentence --- what you are asking to be approved, by whom, by when.}}
+  \vfill
   \begin{block}{Recommendation}
     \hint{The option you recommend and the single strongest reason.}
   \end{block}
-  \begin{itemize}
-    \item Cost: \hint{amount, over what period}
-    \item Time: \hint{when the benefit arrives}
-    \item Main risk: \hint{one line}
-  \end{itemize}
+  \vfill
+  \qmStats[17mm]{\hint{amount}/Cost over \hint{period}, \hint{date}/When the benefit arrives, \hint{level}/Main risk: \hint{one line}}
 \end{frame}
 
 \begin{frame}{Background}
@@ -314,16 +276,10 @@ const DECISION_BRIEFING: &str = r"% Lead with the decision. A senior reader shou
 \end{frame}
 
 \begin{frame}{Options considered}
-  \centering\small
-  \begin{tabular}{@{}p{0.26\textwidth}cccc@{}}
-    \toprule
-    Option & Performance & Time & Cost & Risk \\
-    \midrule
-    A. \hint{Do nothing} & \hint{Low} & -- & -- & \hint{High} \\
-    B. \hint{Upgrade existing} & \hint{Medium} & \hint{12 months} & \hint{amount} & \hint{Low} \\
-    C. \hint{New development} & \hint{High} & \hint{36 months} & \hint{amount} & \hint{Medium} \\
-    \bottomrule
-  \end{tabular}
+  \qmCompare[34mm]{Option A: \hint{name}}{\hint{Cost}\\ \hint{Time to benefit}\\ \hint{Main advantage}\\ \hint{Main drawback}}
+    {Option B: \hint{name}}{\hint{Cost}\\ \hint{Time to benefit}\\ \hint{Main advantage}\\ \hint{Main drawback}}
+  \vfill
+  {\small Also considered and set aside: \hint{do nothing; any third option, with the reason in a few words}.}
 \end{frame}
 
 \begin{frame}{Recommendation and reasons}
@@ -337,30 +293,32 @@ const DECISION_BRIEFING: &str = r"% Lead with the decision. A senior reader shou
 \end{frame}
 
 \begin{frame}{Resources and schedule}
-  \centering\small
-  \begin{tabular}{@{}lp{0.3\textwidth}p{0.36\textwidth}@{}}
-    \toprule
-    Phase & Period & Resources \\
-    \midrule
-    \hint{Sanction} & \hint{Month Year} & \hint{--} \\
-    \hint{Development} & \hint{Month Year -- Month Year} & \hint{People, funds, facilities} \\
-    \hint{Trials} & \hint{Month Year} & \hint{Ranges, user support} \\
-    \hint{Induction} & \hint{Month Year} & \hint{Production partner} \\
-    \bottomrule
-  \end{tabular}
+  \qmStats[17mm]{\hint{amount}/Total cost, \hint{N}/People, \hint{NN months}/Duration}
+  \vfill
+  % task/first period/last period. The first number is how many periods the chart shows.
+  \qmGantt[Q]{6}{\hint{Phase 1}/1/2, \hint{Phase 2}/2/4, \hint{Trials}/4/5, \hint{Handover}/6/6}
 \end{frame}
 
 \begin{frame}{Risks and mitigation}
-  \centering\small
-  \begin{tabular}{@{}p{0.3\textwidth}ccp{0.36\textwidth}@{}}
-    \toprule
-    Risk & Likelihood & Impact & Mitigation \\
-    \midrule
-    \hint{Technical} & \hint{M} & \hint{H} & \hint{Early prototype of the hardest part} \\
-    \hint{Schedule} & \hint{M} & \hint{M} & \hint{Parallel procurement} \\
-    \hint{Supply} & \hint{L} & \hint{H} & \hint{Second source} \\
-    \bottomrule
-  \end{tabular}
+  \begin{columns}[c]
+    \begin{column}{0.60\textwidth}
+      \small
+      \begin{tabular}{@{}cp{0.36\textwidth}p{0.44\textwidth}@{}}
+        \toprule
+        No. & Risk & Mitigation \\
+        \midrule
+        1 & \hint{Description} & \hint{Action, owner} \\
+        2 & \hint{Description} & \hint{Action, owner} \\
+        3 & \hint{Description} & \hint{Action, owner} \\
+        \bottomrule
+      \end{tabular}
+    \end{column}
+    \begin{column}{0.36\textwidth}
+      \centering
+      % likelihood/impact/number, each from 1 (low) to 5 (high)
+      \qmRisk[5.6mm]{4/4/1, 2/3/2, 3/2/3}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 \begin{frame}{If approved: next steps}
@@ -377,21 +335,23 @@ const DECISION_BRIEFING: &str = r"% Lead with the decision. A senior reader shou
 ";
 
 const PROGRAMME_REVIEW: &str = r"\begin{frame}{Status at a glance}
-  \centering
-  \begin{tabular}{@{}lcp{0.5\textwidth}@{}}
+  \small
+  \begin{tabular}{@{}llp{0.56\textwidth}@{}}
     \toprule
     Area & Status & Comment \\
     \midrule
-    Technical & \hint{Green} & \hint{Key parameters met in laboratory tests} \\
-    Schedule & \hint{Amber} & \hint{Two months behind on one subsystem} \\
-    Cost & \hint{Green} & \hint{Within sanction} \\
-    Risk & \hint{Amber} & \hint{One open high risk} \\
+    % Tags: change the colour and the word together.
+    Technical & \qmTag[green!50!black]{GREEN} & \hint{Key parameters met in laboratory tests} \\
+    Schedule & \qmTag[orange!90!black]{AMBER} & \hint{Two months behind on one subsystem} \\
+    Cost & \qmTag[green!50!black]{GREEN} & \hint{Within sanction} \\
+    Risk & \qmTag[red!75!black]{RED} & \hint{One open high risk} \\
     \bottomrule
   \end{tabular}
   \vfill
-  \begin{alertblock}{Help needed from this review}
-    \hint{One line. If nothing, say so.}
-  \end{alertblock}
+  % Percentages: replace the numbers.
+  \qmDonuts{60/Work complete, 55/Time elapsed, 48/Budget spent}
+  \vfill
+  \qmBanner{Help needed from this review: \hint{one line. If nothing, say so.}}
 \end{frame}
 
 \begin{frame}{Objectives and scope}
@@ -404,17 +364,10 @@ const PROGRAMME_REVIEW: &str = r"\begin{frame}{Status at a glance}
 \end{frame}
 
 \begin{frame}{Milestones}
-  \centering\small
-  \begin{tabular}{@{}p{0.36\textwidth}lll@{}}
-    \toprule
-    Milestone & Planned & Actual / forecast & Status \\
-    \midrule
-    \hint{Preliminary design review} & \hint{Mon YY} & \hint{Mon YY} & \hint{Done} \\
-    \hint{Critical design review} & \hint{Mon YY} & \hint{Mon YY} & \hint{Done} \\
-    \hint{Prototype integration} & \hint{Mon YY} & \hint{Mon YY} & \hint{Delayed} \\
-    \hint{User trials} & \hint{Mon YY} & \hint{Mon YY} & \hint{Planned} \\
-    \bottomrule
-  \end{tabular}
+  \qmTimeline{\hint{Month Year}/\hint{Milestone achieved}, \hint{Month Year}/\hint{Milestone achieved}, \hint{Month Year}/\hint{Next milestone}, \hint{Month Year}/\hint{Completion}}
+  \vfill
+  % task/first period/last period
+  \qmGantt[Q]{8}{\hint{Design}/1/2, \hint{Fabrication}/2/4, \hint{Integration}/4/6, \hint{Trials}/6/8}
 \end{frame}
 
 \begin{frame}{Technical progress since last review}
@@ -448,7 +401,10 @@ const PROGRAMME_REVIEW: &str = r"\begin{frame}{Status at a glance}
 \end{frame}
 
 \begin{frame}{Technology readiness}
-  \centering\small
+  % Overall readiness level today (1--9).
+  \qmTRL{5}
+  \vfill
+  \small\centering
   \begin{tabular}{@{}p{0.34\textwidth}ccp{0.3\textwidth}@{}}
     \toprule
     Subsystem & TRL now & TRL at completion & Next step \\
@@ -461,30 +417,48 @@ const PROGRAMME_REVIEW: &str = r"\begin{frame}{Status at a glance}
 \end{frame}
 
 \begin{frame}{Budget}
-  \centering\small
-  \begin{tabular}{@{}lrrr@{}}
-    \toprule
-    Head & Sanctioned & Spent & Committed \\
-    \midrule
-    \hint{Equipment} & \hint{0.00} & \hint{0.00} & \hint{0.00} \\
-    \hint{Consumables} & \hint{0.00} & \hint{0.00} & \hint{0.00} \\
-    \hint{Contracts} & \hint{0.00} & \hint{0.00} & \hint{0.00} \\
-    \midrule
-    Total & \hint{0.00} & \hint{0.00} & \hint{0.00} \\
-    \bottomrule
-  \end{tabular}
+  \begin{columns}[c]
+    \begin{column}{0.52\textwidth}
+      \small
+      \begin{tabular}{@{}lrrr@{}}
+        \toprule
+        Head & Sanctioned & Spent & Committed \\
+        \midrule
+        \hint{Equipment} & \hint{0.00} & \hint{0.00} & \hint{0.00} \\
+        \hint{Consumables} & \hint{0.00} & \hint{0.00} & \hint{0.00} \\
+        \hint{Contracts} & \hint{0.00} & \hint{0.00} & \hint{0.00} \\
+        \midrule
+        Total & \hint{0.00} & \hint{0.00} & \hint{0.00} \\
+        \bottomrule
+      \end{tabular}
+    \end{column}
+    \begin{column}{0.44\textwidth}
+      % Percentage of each head spent: replace the numbers.
+      \qmBars[.36]{\hint{Equipment}/70, \hint{Consumables}/45, \hint{Contracts}/30}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 \begin{frame}{Risks and issues}
-  \centering\small
-  \begin{tabular}{@{}p{0.3\textwidth}ccp{0.3\textwidth}l@{}}
-    \toprule
-    Risk / issue & L & I & Mitigation & Owner \\
-    \midrule
-    \hint{Description} & \hint{M} & \hint{H} & \hint{Action} & \hint{Name} \\
-    \hint{Description} & \hint{L} & \hint{M} & \hint{Action} & \hint{Name} \\
-    \bottomrule
-  \end{tabular}
+  \begin{columns}[c]
+    \begin{column}{0.62\textwidth}
+      \small
+      \begin{tabular}{@{}cp{0.34\textwidth}p{0.34\textwidth}l@{}}
+        \toprule
+        No. & Risk / issue & Mitigation & Owner \\
+        \midrule
+        1 & \hint{Description} & \hint{Action} & \hint{Name} \\
+        2 & \hint{Description} & \hint{Action} & \hint{Name} \\
+        3 & \hint{Description} & \hint{Action} & \hint{Name} \\
+        \bottomrule
+      \end{tabular}
+    \end{column}
+    \begin{column}{0.34\textwidth}
+      \centering
+      % likelihood/impact/number, each from 1 (low) to 5 (high)
+      \qmRisk[5.6mm]{4/5/1, 2/3/2, 3/2/3}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 \begin{frame}{Plan for the next period}
@@ -500,8 +474,9 @@ const PROGRAMME_REVIEW: &str = r"\begin{frame}{Status at a glance}
 ";
 
 const TECHNOLOGY_ROADMAP: &str = r"\begin{frame}{The message}
-  \centering\Large
-  \hint{One sentence: the capability to be achieved, and by when.}
+  \qmBanner{\hint{One sentence: the capability to be achieved, and by when.}}
+  \vfill
+  \qmPyramid{Capability for the user, Systems and programmes, Critical technologies, People and facilities}
 \end{frame}
 
 \begin{frame}{Strategic context}
@@ -527,35 +502,32 @@ const TECHNOLOGY_ROADMAP: &str = r"\begin{frame}{The message}
 \end{frame}
 
 \begin{frame}{Technology thrust areas}
-  \begin{columns}[T]
-    \begin{column}{0.31\textwidth}\begin{block}{\hint{Thrust 1}}\hint{Goal, key technologies, lead group.}\end{block}\end{column}
-    \begin{column}{0.31\textwidth}\begin{block}{\hint{Thrust 2}}\hint{Goal, key technologies, lead group.}\end{block}\end{column}
-    \begin{column}{0.31\textwidth}\begin{block}{\hint{Thrust 3}}\hint{Goal, key technologies, lead group.}\end{block}\end{column}
-  \end{columns}
+  \qmCards[36mm]{\hint{Thrust area 1}/\hint{Why now: operational need or technology shift. First demonstrator and date.},
+    \hint{Thrust area 2}/\hint{Why now: operational need or technology shift. First demonstrator and date.},
+    \hint{Thrust area 3}/\hint{Why now: operational need or technology shift. First demonstrator and date.},
+    \hint{Thrust area 4}/\hint{Why now: operational need or technology shift. First demonstrator and date.}}
 \end{frame}
 
 \begin{frame}{Roadmap}
-  \centering\small
-  \begin{tabular}{@{}p{0.2\textwidth}p{0.23\textwidth}p{0.23\textwidth}p{0.23\textwidth}@{}}
-    \toprule
-    Thrust & Near term (0--2 yr) & Mid term (3--5 yr) & Long term (6--10 yr) \\
-    \midrule
-    \hint{Thrust 1} & \hint{Laboratory demonstrator} & \hint{Field prototype} & \hint{Inducted system} \\
-    \hint{Thrust 2} & \hint{Feasibility study} & \hint{Demonstrator} & \hint{Prototype} \\
-    \hint{Thrust 3} & \hint{Component development} & \hint{Subsystem} & \hint{Integration} \\
-    \bottomrule
-  \end{tabular}
+  \qmRoadmap[26mm]{Now: \hint{years}/\hint{Technologies matured; demonstrators},
+    Next: \hint{years}/\hint{Systems developed; user trials},
+    Later: \hint{years}/\hint{Capability inducted; next generation started}}
+  \vfill
+  \qmGantt[Y]{6}{\hint{Thrust area 1}/1/3, \hint{Thrust area 2}/2/4, \hint{Thrust area 3}/2/6, \hint{Thrust area 4}/4/6}
 \end{frame}
 
 \begin{frame}{Readiness targets}
-  \centering\small
-  \begin{tabular}{@{}p{0.34\textwidth}ccc@{}}
+  % Where the leading technology stands today (1--9).
+  \qmTRL{4}
+  \vfill
+  \small\centering
+  \begin{tabular}{@{}p{0.36\textwidth}ccc@{}}
     \toprule
     Technology & TRL today & TRL in 3 years & TRL in 5 years \\
     \midrule
-    \hint{Technology A} & \hint{3} & \hint{5} & \hint{7} \\
-    \hint{Technology B} & \hint{4} & \hint{6} & \hint{8} \\
-    \hint{Technology C} & \hint{2} & \hint{4} & \hint{6} \\
+    \hint{Technology A} & \hint{4} & \hint{6} & \hint{8} \\
+    \hint{Technology B} & \hint{3} & \hint{5} & \hint{7} \\
+    \hint{Technology C} & \hint{5} & \hint{7} & \hint{9} \\
     \bottomrule
   \end{tabular}
 \end{frame}
@@ -583,27 +555,20 @@ const TECHNOLOGY_ROADMAP: &str = r"\begin{frame}{The message}
 \end{frame}
 
 \begin{frame}{Outcomes and measures}
-  \begin{enumerate}
-    \item \hint{Outcome for the user, with the measure and the date}
-    \item \hint{Outcome for self-reliance, with the measure and the date}
-    \item \hint{Outcome for the organisation, with the measure and the date}
-  \end{enumerate}
-  \begin{alertblock}{First step}
-    \hint{What should start in the next quarter.}
-  \end{alertblock}
+  \qmStats{\hint{N}/Systems inducted, \hint{N}/Technologies transferred to industry, \hint{N\%}/Indigenous content, \hint{N}/Specialists trained}
+  \vfill
+  \qmSteps{Measure/\hint{how each outcome will be counted, and by whom},
+    Review/\hint{how often progress is reviewed against the roadmap},
+    Adjust/\hint{what would make you change the plan}}
 \end{frame}
 ";
 
 const PROJECT_PROPOSAL: &str = r"\begin{frame}{Summary}
-  \begin{block}{Proposal}
-    \hint{What will be developed, for whom, in how long, at what cost.}
-  \end{block}
-  \begin{tabular}{@{}ll@{}}
-    Duration & \hint{NN months} \\
-    Cost & \hint{amount} \\
-    Principal investigator & \hint{Name, designation} \\
-    Outcome & \hint{Deliverable at readiness level N} \\
-  \end{tabular}
+  \qmBanner{\hint{What will be developed, for whom, in how long, at what cost.}}
+  \vfill
+  \qmStats{\hint{NN months}/Duration, \hint{amount}/Cost, \hint{TRL N}/Readiness at completion, \hint{N}/Deliverables}
+  \vfill
+  {\small Principal investigator: \hint{Name, designation}}
 \end{frame}
 
 \begin{frame}{Need}
@@ -636,35 +601,20 @@ const PROJECT_PROPOSAL: &str = r"\begin{frame}{Summary}
 \end{frame}
 
 \begin{frame}{Technical approach}
-  \begin{columns}[T]
-    \begin{column}{0.5\textwidth}
-      \begin{enumerate}
-        \item \hint{Step or subsystem}
-        \item \hint{Step or subsystem}
-        \item \hint{Step or subsystem}
-        \item \hint{Validation}
-      \end{enumerate}
-    \end{column}
-    \begin{column}{0.46\textwidth}
-      \begin{block}{What is new}
-        \hint{The idea that makes this work where others have not.}
-      \end{block}
-    \end{column}
-  \end{columns}
+  \qmProcess{\hint{Requirements}, \hint{Design}, \hint{Prototype}, \hint{Test}, \hint{Deliver}}
+  \vfill
+  \begin{itemize}
+    \item \textbf{Method:} \hint{the principle the solution rests on}
+    \item \textbf{What is new:} \hint{the step beyond the state of the art}
+    \item \textbf{How it will be proved:} \hint{tests, facilities, acceptance criteria}
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{Work packages and deliverables}
-  \centering\small
-  \begin{tabular}{@{}lp{0.3\textwidth}p{0.3\textwidth}l@{}}
-    \toprule
-    WP & Scope & Deliverable & Month \\
-    \midrule
-    1 & \hint{Requirements and design} & \hint{Design document} & \hint{6} \\
-    2 & \hint{Development} & \hint{Prototype} & \hint{18} \\
-    3 & \hint{Testing} & \hint{Test report} & \hint{24} \\
-    4 & \hint{Trials and transfer} & \hint{Trial report, documents} & \hint{30} \\
-    \bottomrule
-  \end{tabular}
+  % work package/first period/last period
+  \qmGantt[Q]{8}{\hint{WP1 Design}/1/2, \hint{WP2 Development}/2/5, \hint{WP3 Integration}/5/6, \hint{WP4 Trials}/6/8}
+  \vfill
+  \qmTimeline{\hint{Month N}/\hint{Design report}, \hint{Month N}/\hint{Prototype}, \hint{Month N}/\hint{Test report}, \hint{Month N}/\hint{Final deliverable}}
 \end{frame}
 
 \begin{frame}{Cost}
@@ -692,16 +642,25 @@ const PROJECT_PROPOSAL: &str = r"\begin{frame}{Summary}
 \end{frame}
 
 \begin{frame}{Risks}
-  \centering\small
-  \begin{tabular}{@{}p{0.34\textwidth}cp{0.42\textwidth}@{}}
-    \toprule
-    Risk & Level & Mitigation \\
-    \midrule
-    \hint{Technical risk} & \hint{M} & \hint{Fallback design} \\
-    \hint{Component availability} & \hint{M} & \hint{Alternative source} \\
-    \hint{Manpower} & \hint{L} & \hint{Cross-training} \\
-    \bottomrule
-  \end{tabular}
+  \begin{columns}[c]
+    \begin{column}{0.60\textwidth}
+      \small
+      \begin{tabular}{@{}cp{0.36\textwidth}p{0.44\textwidth}@{}}
+        \toprule
+        No. & Risk & Mitigation \\
+        \midrule
+        1 & \hint{Technical: description} & \hint{Action} \\
+        2 & \hint{Schedule: description} & \hint{Action} \\
+        3 & \hint{Supply: description} & \hint{Action} \\
+        \bottomrule
+      \end{tabular}
+    \end{column}
+    \begin{column}{0.36\textwidth}
+      \centering
+      % likelihood/impact/number, each from 1 (low) to 5 (high)
+      \qmRisk[5.6mm]{3/4/1, 2/3/2, 3/2/3}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 \begin{frame}{Request}
@@ -779,15 +738,16 @@ const DESIGN_REVIEW: &str = r"\begin{frame}{Purpose of this review}
 \end{frame}
 
 \begin{frame}{Verification and test plan}
-  \centering\small
+  \qmProcess{Analysis, Unit test, Integration test, Environmental test, Field trial}
+  \vfill
+  \small\centering
   \begin{tabular}{@{}p{0.3\textwidth}p{0.26\textwidth}p{0.3\textwidth}@{}}
     \toprule
-    Test & Level & Facility and date \\
+    Requirement & Method & Facility and date \\
     \midrule
-    \hint{Functional} & \hint{Subsystem} & \hint{Laboratory, Mon YY} \\
-    \hint{Environmental} & \hint{Unit} & \hint{Test house, Mon YY} \\
-    \hint{Electromagnetic compatibility} & \hint{System} & \hint{Chamber, Mon YY} \\
-    \hint{Field trial} & \hint{System} & \hint{Range, Mon YY} \\
+    \hint{Requirement 1} & \hint{Test / analysis / inspection} & \hint{Where, when} \\
+    \hint{Requirement 2} & \hint{Test / analysis / inspection} & \hint{Where, when} \\
+    \hint{Requirement 3} & \hint{Test / analysis / inspection} & \hint{Where, when} \\
     \bottomrule
   \end{tabular}
 \end{frame}
@@ -818,25 +778,17 @@ const DESIGN_REVIEW: &str = r"\begin{frame}{Purpose of this review}
 \end{frame}
 
 \begin{frame}{Conclusion}
-  \begin{itemize}
-    \item \hint{The design meets the requirements, with these exceptions}
-    \item \hint{Open actions do not prevent the next phase}
-  \end{itemize}
-  \begin{alertblock}{Decision requested}
-    \hint{Repeat the decision from the first slide.}
-  \end{alertblock}
+  % Percentages: replace the numbers.
+  \qmDonuts{90/Requirements met by design, 75/Analyses complete, 60/Drawings released}
+  \vfill
+  \qmBanner{Decision requested: \hint{approval to proceed to the next phase, with the actions listed.}}
 \end{frame}
 ";
 
 const LAB_OVERVIEW: &str = r"\begin{frame}{Mandate}
-  \centering\Large
-  \hint{One sentence: what this laboratory or division exists to deliver.}
-  \vfill\normalsize
-  \begin{columns}[T]
-    \begin{column}{0.31\textwidth}\begin{block}{Established}\hint{Year}\end{block}\end{column}
-    \begin{column}{0.31\textwidth}\begin{block}{Strength}\hint{Scientists, technical staff}\end{block}\end{column}
-    \begin{column}{0.31\textwidth}\begin{block}{Users}\hint{Services, agencies}\end{block}\end{column}
-  \end{columns}
+  \qmBanner{\hint{One sentence: what this laboratory or division exists to deliver.}}
+  \vfill
+  \qmStats{\hint{Year}/Established, \hint{N}/Scientists and technical staff, \hint{N}/Systems with users, \hint{N}/Patents and papers}
 \end{frame}
 
 \begin{frame}{Organisation}
@@ -849,16 +801,10 @@ const LAB_OVERVIEW: &str = r"\begin{frame}{Mandate}
 \end{frame}
 
 \begin{frame}{Core competences}
-  \begin{columns}[T]
-    \begin{column}{0.48\textwidth}
-      \begin{block}{\hint{Competence 1}}\hint{What the group can design, build and test.}\end{block}
-      \begin{block}{\hint{Competence 2}}\hint{What the group can design, build and test.}\end{block}
-    \end{column}
-    \begin{column}{0.48\textwidth}
-      \begin{block}{\hint{Competence 3}}\hint{What the group can design, build and test.}\end{block}
-      \begin{block}{\hint{Competence 4}}\hint{What the group can design, build and test.}\end{block}
-    \end{column}
-  \end{columns}
+  \qmCards[34mm]{\hint{Competence 1}/\hint{What the group can design, build or test, and the evidence.},
+    \hint{Competence 2}/\hint{What the group can design, build or test, and the evidence.},
+    \hint{Competence 3}/\hint{What the group can design, build or test, and the evidence.},
+    \hint{Competence 4}/\hint{What the group can design, build or test, and the evidence.}}
 \end{frame}
 
 \begin{frame}{Facilities}
@@ -888,11 +834,9 @@ const LAB_OVERVIEW: &str = r"\begin{frame}{Mandate}
 \end{frame}
 
 \begin{frame}{Achievements}
-  \begin{itemize}
-    \item \hint{System inducted, with year}
-    \item \hint{Technology transferred to industry}
-    \item \hint{Patents, papers, awards in the last five years}
-  \end{itemize}
+  \qmTimeline{\hint{Year}/\hint{System inducted or milestone}, \hint{Year}/\hint{System inducted or milestone}, \hint{Year}/\hint{Award or transfer}, \hint{Year}/\hint{Most recent result}}
+  \vfill
+  \qmStats[17mm]{\hint{N}/Technologies transferred, \hint{N}/Awards, \hint{N}/Doctorates guided}
 \end{frame}
 
 \begin{frame}{Collaborations}
@@ -904,12 +848,114 @@ const LAB_OVERVIEW: &str = r"\begin{frame}{Mandate}
 \end{frame}
 
 \begin{frame}{Way ahead}
-  \begin{enumerate}
-    \item \hint{Priority for the next two years}
-    \item \hint{Capability to build in five years}
-    \item \hint{Support required}
-  \end{enumerate}
+  \qmRoadmap[26mm]{This year/\hint{Deliveries and trials already committed},
+    Three years/\hint{New systems and facilities},
+    Five years and beyond/\hint{Capabilities the laboratory intends to lead}}
+\end{frame}
+";
+
+const INFOGRAPHIC_GALLERY: &str = r"% Every infographic the qmdesign package offers, one or two per slide.
+% Copy the command you want into your own deck and change the words and numbers.
+% Lists are comma separated; put braces round an item that itself contains a comma.
+
+\section{Numbers}
+
+\begin{frame}{Headline numbers and status}
+  \qmStats{42\%/Faster processing, 3.1x/Throughput, 18/Publications, 6/Systems fielded}
   \vfill
-  \centering\Large Thank you
+  \qmDonuts{72/Work complete, 45/Budget spent, 90/Tests passed}
+\end{frame}
+
+\begin{frame}{Bars and readiness}
+  \qmBars{Range/85, Endurance/60, Payload/40, Autonomy/75}
+  \vfill
+  \qmTRL{6}
+\end{frame}
+
+\section{Flow and time}
+
+\begin{frame}{Process and timeline}
+  \qmProcess{Define, Design, Build, Test, Field}
+  \vfill
+  \qmTimeline{2024/Concept study, 2025/Laboratory prototype, 2026/Field trials, 2027/Induction}
+\end{frame}
+
+\begin{frame}{Roadmap}
+  \qmRoadmap[26mm]{Now/Mature the critical technologies and build demonstrators,
+    Next/Develop the system and complete user trials,
+    Later/Induct the capability and begin the next generation}
+\end{frame}
+
+\begin{frame}{Schedule and steps}
+  \begin{columns}[c]
+    \begin{column}{0.56\textwidth}
+      \qmGantt[Q]{6}{Design/1/2, Build/2/4, Integration/3/5, Trials/5/6}
+    \end{column}
+    \begin{column}{0.40\textwidth}
+      \qmSteps{Assess/baseline, Prioritise/three goals, Deliver/demonstrators}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Structure}
+
+\begin{frame}{Cards}
+  \qmCards[32mm]{Sense/Wideband spectrum sensing at the edge,
+    Decide/Learning-based channel selection,
+    Act/Agile waveform switching,
+    Learn/Feedback from every mission}
+\end{frame}
+
+\begin{frame}{Matrix and comparison}
+  \begin{columns}[c]
+    \begin{column}{0.50\textwidth}
+      \qmMatrix[19mm]{Strengths}{Team and test range}{Weaknesses}{Supply chain}{Opportunities}{Dual use}{Threats}{Obsolescence}
+    \end{column}
+    \begin{column}{0.46\textwidth}
+      \qmCompare[32mm]{Option A}{Lower cost\\ Longer schedule}{Option B}{Higher cost\\ Faster fielding}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Pyramid, funnel and cycle}
+  \begin{columns}[c]
+    \begin{column}{0.32\textwidth}
+      \qmPyramid{Vision, Strategy, Programmes, Technologies}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \qmFunnel{Ideas, Studies, Prototypes, Products}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \qmCycle[Spiral]{Plan, Build, Test, Learn}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Risk and message}
+
+\begin{frame}{Risk matrix}
+  \begin{columns}[c]
+    \begin{column}{0.40\textwidth}
+      \centering\qmRisk{4/5/1, 2/3/2, 3/2/3}
+    \end{column}
+    \begin{column}{0.56\textwidth}
+      \small
+      \begin{tabular}{@{}cll@{}}
+        \toprule
+        No. & Risk & Status \\
+        \midrule
+        1 & Imported component & \qmTag[red!75!black]{AT RISK} \\
+        2 & Test range availability & \qmTag[orange!90!black]{WATCH} \\
+        3 & Software integration & \qmTag[green!50!black]{ON TRACK} \\
+        \bottomrule
+      \end{tabular}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Quotation and key message}
+  \qmQuote{Deliver capability to the user, not reports to the shelf.}{Guiding principle}
+  \vfill
+  \qmBanner{One sentence the audience must remember.}
 \end{frame}
 ";

@@ -111,4 +111,6 @@ export interface StarterOptions {
   deck?: string;
   beamerColor?: string;
   aspect?: string;
+  /** Slide design drawn by qmdesign.sty; "classic" = an ordinary Beamer theme. */
+  design?: string;
 }

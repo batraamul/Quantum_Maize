@@ -46,6 +46,9 @@ pub struct StarterOptions {
     pub aspect: String,
     /// Presentation format (see `decks::DECKS`); empty = research talk.
     pub deck: String,
+    /// Slide design (see `SLIDE_DESIGNS`). Empty = `classic`, so older callers keep their Beamer theme.
+    #[serde(default)]
+    pub design: String,
 }
 
 const SAMPLE_FIGURE: &[u8] = include_bytes!("../../assets/starter/sample-figure.png");
@@ -59,6 +62,10 @@ const STORY_ASSETS: &[(&str, &[u8])] = &[
 ];
 
 pub const BEAMER_THEMES: &[&str] = &["metropolis", "moloch", "SimplePlus", "SimpleDarkBlue", "Nord", "Verona", "Madrid", "CambridgeUS", "Copenhagen", "Warsaw", "Berlin", "Singapore", "Boadilla", "AnnArbor", "default"];
+/// Slide designs drawn by `qmdesign.sty`; `classic` keeps an ordinary Beamer theme.
+pub const SLIDE_DESIGNS: &[&str] = &["elegant", "executive", "geometric", "blueprint", "wave", "minimal", "radar", "circuit", "aurora", "classic"];
+const QMDESIGN_STY: &str = include_str!("../../assets/presentation/qmdesign.sty");
+
 pub const BEAMER_COLORS: &[&str] = &["default", "beaver", "crane", "dolphin", "orchid", "seahorse", "whale", "wolverine", "spruce", "quantum", "navy-gold", "olive", "steel", "maroon"];
 
 /// Own two-colour palettes (primary, accent), defined in the preamble so no package is needed.
@@ -267,29 +274,49 @@ fn presentation(title: &str, author: &str, rank: &str, org: &str, o: &StarterOpt
     let color = if BEAMER_COLORS.contains(&o.beamer_color.as_str()) { o.beamer_color.as_str() } else { "default" };
     let aspect = if o.aspect == "43" { "43" } else { "169" };
     let deck = decks::get(&o.deck);
-    let color_line = match (color, palette(color)) {
-        ("default", _) => String::new(),
-        (_, Some((p, a))) => format!(
-            "\\definecolor{{qmPrimary}}{{HTML}}{{{p}}}\\definecolor{{qmAccent}}{{HTML}}{{{a}}}\n\\setbeamercolor{{palette primary}}{{bg=qmPrimary,fg=white}}\n\\setbeamercolor{{frametitle}}{{bg=qmPrimary,fg=white}}\n\\setbeamercolor{{title}}{{fg=qmPrimary}}\n\\setbeamercolor{{structure}}{{fg=qmPrimary}}\n\\setbeamercolor{{block title}}{{bg=qmPrimary,fg=white}}\n\\setbeamercolor{{block body}}{{bg=qmPrimary!6}}\n\\setbeamercolor{{alerted text}}{{fg=qmAccent!85!black}}\n\\setbeamercolor{{block title alerted}}{{bg=qmAccent,fg=black}}\n\\setbeamercolor{{block body alerted}}{{bg=qmAccent!12}}\n\\setbeamercolor{{progress bar}}{{fg=qmAccent}}\n\\setbeamercolor{{title separator}}{{fg=qmAccent}}\n"
-        ),
-        (c, None) => format!("\\usecolortheme{{{c}}}\n"),
-    };
+    let design = if SLIDE_DESIGNS.contains(&o.design.as_str()) { o.design.as_str() } else { "classic" };
+    let classic = design == "classic";
     let inst = if rank.is_empty() { org.to_string() } else { format!("{rank}, {org}") };
     // Themes outside the Beamer core fall back to Madrid when not installed.
     let core = ["Madrid", "CambridgeUS", "Copenhagen", "Warsaw", "Berlin", "Singapore", "Boadilla", "AnnArbor", "default"];
-    let theme_line = if core.contains(&theme) { format!("\\usetheme{{{theme}}}") } else { format!("\\IfFileExists{{beamertheme{theme}.sty}}{{\\usetheme{{{theme}}}}}{{\\usetheme{{Madrid}}}}") };
+    let own = palette(color).map(|(p, a)| format!("\\definecolor{{qmPrimary}}{{HTML}}{{{p}}}\\definecolor{{qmAccent}}{{HTML}}{{{a}}}\n"));
+    let look = if classic {
+        let theme_line = if core.contains(&theme) { format!("\\usetheme{{{theme}}}") } else { format!("\\IfFileExists{{beamertheme{theme}.sty}}{{\\usetheme{{{theme}}}}}{{\\usetheme{{Madrid}}}}") };
+        let color_line = match (color, &own) {
+            ("default", _) => String::new(),
+            (_, Some(defs)) => format!(
+                "{defs}\\setbeamercolor{{palette primary}}{{bg=qmPrimary,fg=white}}\n\\setbeamercolor{{frametitle}}{{bg=qmPrimary,fg=white}}\n\\setbeamercolor{{title}}{{fg=qmPrimary}}\n\\setbeamercolor{{structure}}{{fg=qmPrimary}}\n\\setbeamercolor{{block title}}{{bg=qmPrimary,fg=white}}\n\\setbeamercolor{{block body}}{{bg=qmPrimary!6}}\n\\setbeamercolor{{alerted text}}{{fg=qmAccent!85!black}}\n\\setbeamercolor{{block title alerted}}{{bg=qmAccent,fg=black}}\n\\setbeamercolor{{block body alerted}}{{bg=qmAccent!12}}\n\\setbeamercolor{{progress bar}}{{fg=qmAccent}}\n\\setbeamercolor{{title separator}}{{fg=qmAccent}}\n"
+            ),
+            (c, None) => format!("\\usecolortheme{{{c}}}\n"),
+        };
+        format!("{theme_line}\n{color_line}")
+    } else {
+        // A design brings its own colour pair; one of the app's palettes replaces it.
+        match &own {
+            Some(defs) => format!("% Colours of the design. Delete this line to use the design's own pair.\n{defs}"),
+            None => "% To use your own colours, define them here before the design is loaded, e.g.\n% \\definecolor{qmPrimary}{HTML}{0B1F3A}\\definecolor{qmAccent}{HTML}{C9A227}\n".to_string(),
+        }
+    };
     let preamble = format!(
         r"% Quantum Maze presentation (Beamer): {deck_title}
 % Compile with pdfLaTeX, XeLaTeX or LuaLaTeX.
 % Export to PowerPoint: Export > Presentation as PowerPoint (.pptx).
 \documentclass[aspectratio={aspect}]{{beamer}}
-{theme_line}
-{color_line}\usepackage{{graphicx}}
+{look}
+% Slide design. Change the word to restyle every slide:
+%   elegant, executive, geometric, blueprint, wave, minimal, radar, circuit, aurora
+%   classic = an ordinary Beamer theme (add a usetheme line above).
+% qmdesign.sty is in this project folder. It also provides the infographics
+% (\qmStats, \qmTimeline, \qmRoadmap, \qmCards, \qmBars, \qmDonuts, \qmTRL, \qmGantt, \qmRisk ...).
+\newcommand{{\qmDesign}}{{{design}}}
+\usepackage{{qmdesign}}
+% \qmNoSectionSlides   % uncomment to drop the divider slide at each \section
+
+\usepackage{{graphicx}}
 \usepackage{{booktabs}}
 \usepackage{{amsmath}}
 
-% Grey guidance text. Replace each \hint{{...}} with your own content.
-\newcommand{{\hint}}[1]{{\leavevmode{{\color{{gray}}\itshape #1}}}}
+% Grey guidance text is written as \hint{{...}}. Replace each with your own content.
 
 % Protective marking printed at the top and bottom of every slide.
 % Leave empty for none, or set it as your organisation's rules require.
@@ -307,16 +334,14 @@ fn presentation(title: &str, author: &str, rank: &str, org: &str, o: &StarterOpt
 
 \begin{{document}}
 
-\begin{{frame}}
-  \titlepage
-\end{{frame}}
+\qmTitleSlide
 
 ",
         deck_title = deck.title,
         subtitle = deck.subtitle,
     );
     let main = format!("{preamble}{}\n\\end{{document}}\n", deck.body);
-    let mut files = vec![("main.tex".to_string(), main.into_bytes())];
+    let mut files = vec![("main.tex".to_string(), main.into_bytes()), ("qmdesign.sty".to_string(), QMDESIGN_STY.as_bytes().to_vec())];
     if deck.body.contains("figures/sample-figure") {
         files.push(("figures/sample-figure.png".into(), SAMPLE_FIGURE.to_vec()));
     }

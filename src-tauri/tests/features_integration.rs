@@ -62,26 +62,54 @@ fn beamer_starter_compiles_with_all_themes() {
 fn every_presentation_format_compiles() {
     if !have("pdflatex") { return; }
     let d = tempfile::tempdir().unwrap();
+    // Classic Beamer themes for the first pass, then every format again with a slide design.
     let looks = [("moloch", "navy-gold"), ("Madrid", "olive"), ("SimplePlus", "default"), ("metropolis", "steel"), ("Nord", "default"), ("Verona", "default"), ("SimpleDarkBlue", "default"), ("Boadilla", "maroon")];
+    let designs: Vec<&str> = templates::SLIDE_DESIGNS.iter().copied().filter(|x| *x != "classic").collect();
     let mut failures = Vec::new();
-    for (i, deck) in templates::decks::DECKS.iter().enumerate() {
-        let (theme, color) = looks[i % looks.len()];
+    for pass in 0..2 {
+        for (i, deck) in templates::decks::DECKS.iter().enumerate() {
+            let (theme, color) = looks[i % looks.len()];
+            let mut o = opts();
+            o.beamer_theme = theme.into();
+            o.beamer_color = if pass == 0 || i % 2 == 0 { color.into() } else { "default".into() };
+            o.design = if pass == 0 { "classic".into() } else { designs[i % designs.len()].into() };
+            o.aspect = if i % 3 == 0 { "43".into() } else { "169".into() };
+            o.deck = deck.id.into();
+            o.rank = "Scientist G & Director".into(); // '&' must be escaped
+            let files = templates::files(StarterTemplate::Presentation, deck.title, &o);
+            assert!(files.iter().any(|(n, _)| n == "qmdesign.sty"));
+            let info = create_project_with(d.path(), &format!("{}-{pass}", deck.id), files, "main.tex", "pdflatex", "presentation", None).unwrap();
+            let root = PathBuf::from(&info.root);
+            // Also exercise the protective marking.
+            let main = root.join("main.tex");
+            let src = std::fs::read_to_string(&main).unwrap().replace("\\newcommand{\\Marking}{}", "\\newcommand{\\Marking}{RESTRICTED (example)}");
+            assert!(src.contains("RESTRICTED (example)"));
+            std::fs::write(&main, src).unwrap();
+            let r = compile(&root, "pdflatex");
+            if !r.success {
+                failures.push(format!("{} with {}/{theme}/{color}: {:#?}", deck.id, o.design, r.diagnostics.iter().filter(|x| x.severity == qmaze_lib::compiler::log_parser::Severity::Error).take(3).collect::<Vec<_>>()));
+            }
+        }
+    }
+    assert!(failures.is_empty(), "{}", failures.join("\n\n"));
+}
+
+#[test]
+fn every_slide_design_compiles_with_every_infographic() {
+    if !have("pdflatex") { return; }
+    let d = tempfile::tempdir().unwrap();
+    let mut failures = Vec::new();
+    for (i, design) in templates::SLIDE_DESIGNS.iter().enumerate() {
         let mut o = opts();
-        o.beamer_theme = theme.into();
-        o.beamer_color = color.into();
-        o.deck = deck.id.into();
-        o.rank = "Scientist G & Director".into(); // '&' must be escaped
-        let files = templates::files(StarterTemplate::Presentation, deck.title, &o);
-        let info = create_project_with(d.path(), deck.id, files, "main.tex", "pdflatex", "presentation", None).unwrap();
-        let root = PathBuf::from(&info.root);
-        // Also exercise the protective marking.
-        let main = root.join("main.tex");
-        let src = std::fs::read_to_string(&main).unwrap().replace("\\newcommand{\\Marking}{}", "\\newcommand{\\Marking}{RESTRICTED (example)}");
-        assert!(src.contains("RESTRICTED (example)"));
-        std::fs::write(&main, src).unwrap();
-        let r = compile(&root, "pdflatex");
+        o.design = (*design).into();
+        o.beamer_theme = "Madrid".into();
+        o.beamer_color = if i % 2 == 0 { "default".into() } else { "navy-gold".into() };
+        o.deck = "infographics".into();
+        let files = templates::files(StarterTemplate::Presentation, "Gallery", &o);
+        let info = create_project_with(d.path(), design, files, "main.tex", "pdflatex", "presentation", None).unwrap();
+        let r = compile(&PathBuf::from(&info.root), "pdflatex");
         if !r.success {
-            failures.push(format!("{} with {theme}/{color}: {:#?}", deck.id, r.diagnostics.iter().filter(|x| x.severity == qmaze_lib::compiler::log_parser::Severity::Error).take(3).collect::<Vec<_>>()));
+            failures.push(format!("{design}: {:#?}", r.diagnostics.iter().filter(|x| x.severity == qmaze_lib::compiler::log_parser::Severity::Error).take(3).collect::<Vec<_>>()));
         }
     }
     assert!(failures.is_empty(), "{}", failures.join("\n\n"));

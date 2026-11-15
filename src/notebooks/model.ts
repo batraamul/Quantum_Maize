@@ -15,6 +15,50 @@ export interface Block {
   caption?: string;
   width?: number;
   kind?: "note" | "important" | "idea" | "question";
+  /** Horizontal alignment of text, or of an image on the page. */
+  align?: Align;
+  /** Text size step: an index into TEXT_SIZES (absent = normal). */
+  size?: number;
+}
+
+export type Align = "left" | "center" | "right" | "justify";
+const ALIGNS: Align[] = ["left", "center", "right", "justify"];
+
+/** Text sizes. `lines` is how many ruled lines one line of writing occupies, so writing always sits on a rule. */
+export const TEXT_SIZES: { px: number; lines: number }[] = [
+  { px: 13, lines: 1 }, { px: 16.5, lines: 1 }, { px: 20, lines: 1 }, { px: 24, lines: 1 }, { px: 30, lines: 2 }, { px: 38, lines: 2 },
+];
+export const NORMAL_SIZE = 1;
+const HEADING_SIZES: Record<number, { px: number; lines: number }> = { 1: { px: 30, lines: 2 }, 2: { px: 22, lines: 1 }, 3: { px: 17, lines: 1 } };
+const SIZABLE: BlockType[] = ["text", "bullets", "checklist", "callout", "table"];
+const ALIGNABLE: BlockType[] = ["text", "heading", "callout", "table", "image"];
+
+export const canResize = (b: Block) => SIZABLE.includes(b.type) || b.type === "heading" || b.type === "image";
+export const canAlign = (b: Block) => ALIGNABLE.includes(b.type);
+
+/** Font size and line span a block is written at. */
+export function blockSize(b: Block): { px: number; lines: number } | null {
+  if (b.type === "heading") return HEADING_SIZES[b.level ?? 2];
+  if (SIZABLE.includes(b.type)) return TEXT_SIZES[b.size ?? NORMAL_SIZE] ?? TEXT_SIZES[NORMAL_SIZE];
+  return null;
+}
+
+/** One step larger (d = 1) or smaller (d = -1): text size, heading level, or picture width. */
+export function resized(b: Block, d: 1 | -1): Block {
+  if (b.type === "heading") return { ...b, level: Math.min(3, Math.max(1, (b.level ?? 2) - d)) as 1 | 2 | 3 };
+  if (b.type === "image") return { ...b, width: Math.min(100, Math.max(10, Math.round((b.width ?? 70) / 10) * 10 + d * 10)) };
+  if (SIZABLE.includes(b.type)) return { ...b, size: Math.min(TEXT_SIZES.length - 1, Math.max(0, (b.size ?? NORMAL_SIZE) + d)) };
+  return b;
+}
+
+/** Moves the block `id` so it sits before the block currently at index `to` (`to` = length puts it last). */
+export function moveBlock(blocks: Block[], id: string, to: number): Block[] {
+  const from = blocks.findIndex((b) => b.id === id);
+  if (from < 0 || to === from || to === from + 1) return blocks;
+  const c = [...blocks];
+  const [it] = c.splice(from, 1);
+  c.splice(Math.min(c.length, Math.max(0, to > from ? to - 1 : to)), 0, it);
+  return c;
 }
 
 export interface Page {
@@ -119,8 +163,10 @@ function parseBlock(v: unknown): Block | null {
     b.header = r.header !== false;
   } else if (type === "image") {
     const src = typeof r.src === "string" && IMG.test(r.src) ? r.src : ""; // embedded raster images only
-    Object.assign(b, { src, caption: str(r.caption, 1000), width: Math.min(100, Math.max(20, Number(r.width) || 70)) });
+    Object.assign(b, { src, caption: str(r.caption, 1000), width: Math.min(100, Math.max(10, Number(r.width) || 70)) });
   }
+  if (ALIGNABLE.includes(type) && ALIGNS.includes(r.align as Align) && !(type === "image" && r.align === "justify")) b.align = r.align as Align;
+  if (SIZABLE.includes(type) && Number.isInteger(r.size) && (r.size as number) >= 0 && (r.size as number) < TEXT_SIZES.length && r.size !== NORMAL_SIZE) b.size = r.size as number;
   return b;
 }
 

@@ -59,3 +59,44 @@ describe("covers", () => {
     expect(coverSvg("no-such-theme", "x", "")).toContain("CLASSIC NOTEBOOK");
   });
 });
+
+import { blockSize, moveBlock, newBlock, resized, TEXT_SIZES } from "../../src/notebooks/model";
+
+describe("notebook block layout", () => {
+  it("keeps valid alignment and text size and drops invalid ones", () => {
+    const nb = parseNotebook(JSON.stringify({ pages: [{ title: "p", blocks: [
+      { type: "text", text: "a", align: "right", size: 3 },
+      { type: "text", text: "b", align: "diagonal", size: 99 },
+      { type: "image", src: "", align: "justify" },
+      { type: "code", text: "c", align: "center", size: 2 },
+    ] }] }));
+    const b = nb.pages[0].blocks;
+    expect([b[0].align, b[0].size]).toEqual(["right", 3]);
+    expect([b[1].align, b[1].size, b[2].align, b[3].align, b[3].size]).toEqual([undefined, undefined, undefined, undefined, undefined]);
+  });
+
+  it("resizes text, headings and pictures within limits", () => {
+    let t = newBlock("text");
+    for (let i = 0; i < 10; i++) t = resized(t, 1);
+    expect(t.size).toBe(TEXT_SIZES.length - 1);
+    expect(blockSize(t)!.lines).toBe(2);
+    for (let i = 0; i < 10; i++) t = resized(t, -1);
+    expect(t.size).toBe(0);
+    expect(resized({ ...newBlock("heading"), level: 2 }, 1).level).toBe(1);
+    expect(resized({ ...newBlock("heading"), level: 3 }, -1).level).toBe(3);
+    expect(resized({ ...newBlock("image"), width: 95 }, 1).width).toBe(100);
+    expect(resized({ ...newBlock("image"), width: 12 }, -1).width).toBe(10);
+    expect(blockSize(newBlock("image"))).toBeNull();
+  });
+
+  it("moves a block to a drop position", () => {
+    const bs = ["a", "b", "c", "d"].map((id) => ({ ...newBlock("text"), id }));
+    const ids = (x: typeof bs) => x.map((b) => b.id).join("");
+    expect(ids(moveBlock(bs, "a", 4))).toBe("bcda");
+    expect(ids(moveBlock(bs, "d", 0))).toBe("dabc");
+    expect(ids(moveBlock(bs, "b", 3))).toBe("acbd");
+    expect(moveBlock(bs, "b", 1)).toBe(bs);
+    expect(moveBlock(bs, "b", 2)).toBe(bs);
+    expect(moveBlock(bs, "zz", 0)).toBe(bs);
+  });
+});

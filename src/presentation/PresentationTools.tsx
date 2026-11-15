@@ -11,6 +11,7 @@ import { getModel } from "../editor/models";
 import { insertSnippet } from "../editor/activeEditor";
 import { Modal } from "../components/Common";
 import { parseFrames, setBeamerTheme, type ParsedSlide } from "./beamer";
+import { SLIDE_DESIGNS, setSlideDesign, slideDesign } from "./designs";
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = workerUrl;
 
@@ -43,6 +44,16 @@ export function SlidesPanel() {
     m.pushEditOperations([], [{ range: m.getFullModelRange(), text: setBeamerTheme(m.getValue(), t, c) }], () => null);
     void compile();
   };
+  const design = slideDesign(src);
+  const applyDesign = (d: string) => {
+    const m = getModel(project.meta.mainFile);
+    if (!m) return toast("warning", "Open the main file first");
+    let text = setSlideDesign(m.getValue(), d);
+    // A classic Beamer theme needs a \usetheme line; give it one if the deck has none.
+    if (d === "classic" && !/\\usetheme/.test(text)) text = setBeamerTheme(text, "Madrid", "default");
+    m.pushEditOperations([], [{ range: m.getFullModelRange(), text }], () => null);
+    void compile();
+  };
   return (
     <div className="panel">
       <div className="panel-header">
@@ -62,7 +73,14 @@ export function SlidesPanel() {
             <FileDown size={14} /> PowerPoint
           </button>
         </div>
-        <div className="row">
+        {design !== null && (
+          <label className="field" style={{ margin: 0 }}><span className="label">Slide design</span>
+            <select className="select" value={SLIDE_DESIGNS.some((d) => d.id === design) ? design : "classic"} onChange={(e) => applyDesign(e.target.value)} title="Background, title and divider slides">
+              {SLIDE_DESIGNS.map((d) => <option key={d.id} value={d.id}>{d.label}</option>)}
+            </select>
+          </label>
+        )}
+        <div className="row" style={{ display: design !== null && design !== "classic" ? "none" : undefined }}>
           <select className="select grow" value={THEMES.includes(theme) ? theme : "default"} onChange={(e) => applyTheme(e.target.value, color)} title="Beamer theme">
             {THEMES.map((t) => <option key={t}>{t}</option>)}
           </select>

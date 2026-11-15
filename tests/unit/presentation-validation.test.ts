@@ -115,3 +115,41 @@ describe("theme guard", () => {
     expect(sbt(src, "Berlin", "whale")).toBe("\\documentclass{beamer}\n\\usetheme{Berlin}\n\\usecolortheme{whale}\n\\begin{document}");
   });
 });
+
+import { SLIDE_DESIGNS, setSlideDesign, slideDesign } from "../../src/presentation/designs";
+
+describe("slide designs", () => {
+  const deck = [
+    "\\documentclass[aspectratio=169]{beamer}",
+    "% \\newcommand{\\qmDesign}{radar}  (a commented example must be ignored)",
+    "\\newcommand{\\qmDesign}{elegant}",
+    "\\usepackage{qmdesign}",
+    "\\title{Vision}\\author{A. B.}",
+    "\\begin{document}",
+    "\\qmTitleSlide",
+    "\\section{Record}",
+    "\\begin{frame}{Numbers}\\qmStats{1/a, 2/b}\\end{frame}",
+    "\\section{Plan}",
+    "\\begin{frame}{Roadmap}\\begin{itemize}\\item One\\end{itemize}\\end{frame}",
+    "\\end{document}",
+  ].join("\n");
+
+  it("reads and changes the design named in the preamble", () => {
+    expect(slideDesign(deck)).toBe("elegant");
+    expect(slideDesign("\\documentclass{beamer}\\usetheme{Madrid}")).toBeNull();
+    const next = setSlideDesign(deck, "blueprint");
+    expect(slideDesign(next)).toBe("blueprint");
+    expect(next).toContain("% \\newcommand{\\qmDesign}{radar}");
+    expect(setSlideDesign(deck, "no-such-design")).toBe(deck);
+    expect(SLIDE_DESIGNS.map((d) => d.id)).toContain("classic");
+  });
+
+  it("lists the title slide and the divider slide of each section", () => {
+    const titles = parseFrames(deck).map((f) => f.title);
+    expect(titles).toEqual(["Vision", "Record", "Numbers", "Plan", "Roadmap"]);
+    expect(parseFrames(deck)[0].isTitle).toBe(true);
+    // No dividers with a classic theme or when they are switched off.
+    expect(parseFrames(setSlideDesign(deck, "classic")).map((f) => f.title)).toEqual(["Vision", "Numbers", "Roadmap"]);
+    expect(parseFrames(deck.replace("\\usepackage{qmdesign}", "\\usepackage{qmdesign}\\qmNoSectionSlides")).map((f) => f.title)).toEqual(["Vision", "Numbers", "Roadmap"]);
+  });
+});

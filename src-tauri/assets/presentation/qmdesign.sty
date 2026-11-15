@@ -1,0 +1,326 @@
+% qmdesign.sty -- slide designs and infographics for Quantum Maze presentations.
+% Original work written for Quantum Maze; it uses only Beamer and TikZ, which every
+% full TeX installation has. You may edit this file: it belongs to your project.
+%
+% Choose a design BEFORE loading the package:
+%     \newcommand{\qmDesign}{elegant}
+%     \usepackage{qmdesign}
+% Designs: elegant, executive, geometric, blueprint, wave, minimal, radar, circuit, aurora.
+% Use `classic` to keep an ordinary Beamer theme and still get the infographics.
+% Colours: define qmPrimary and qmAccent before loading to override a design's own pair.
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{qmdesign}[2026/11/14 Quantum Maze slide designs and infographics]
+\RequirePackage{tikz}
+\usetikzlibrary{calc}
+\providecommand{\qmDesign}{elegant}
+\edef\qm@design{\qmDesign}
+\newif\ifqm@dark \qm@darkfalse
+\newif\ifqm@classic \qm@classicfalse
+\newif\ifqm@secslides \qm@secslidestrue
+\newcommand{\qm@pair}[2]{% default primary / accent unless the document set its own
+  \@ifundefinedcolor{qmPrimary}{\definecolor{qmPrimary}{HTML}{#1}}{}%
+  \@ifundefinedcolor{qmAccent}{\definecolor{qmAccent}{HTML}{#2}}{}}
+\newcommand{\qm@paper}[2]{\definecolor{qmPaper}{HTML}{#1}\definecolor{qmInk}{HTML}{#2}}
+\def\qm@font{sans}
+\def\qm@is#1{\def\qm@tmp{#1}\ifx\qm@tmp\qm@design}
+
+\qm@is{classic}\qm@classictrue\fi
+\qm@is{elegant}\qm@pair{1F2A44}{B8963E}\qm@paper{FBF7EF}{2A2A2E}\def\qm@font{serif}\fi
+\qm@is{executive}\qm@pair{16263F}{D4AF37}\qm@paper{0E1A2B}{EEF2F8}\qm@darktrue\fi
+\qm@is{geometric}\qm@pair{0F4C5C}{E36414}\qm@paper{FFFFFF}{1D2733}\fi
+\qm@is{blueprint}\qm@pair{123A6B}{4CC9F0}\qm@paper{0B2545}{EAF3FF}\qm@darktrue\fi
+\qm@is{wave}\qm@pair{1B4332}{C8963E}\qm@paper{FCFBF7}{1F2A24}\fi
+\qm@is{minimal}\qm@pair{111827}{2563EB}\qm@paper{FFFFFF}{111827}\fi
+\qm@is{radar}\qm@pair{14532D}{3DDC84}\qm@paper{08110D}{E4F3EA}\qm@darktrue\fi
+\qm@is{circuit}\qm@pair{0B3954}{00A6A6}\qm@paper{F6F9FB}{14212B}\fi
+\qm@is{aurora}\qm@pair{3A0CA3}{4CC9F0}\qm@paper{0D0B1E}{F1EEFF}\qm@darktrue\fi
+\@ifundefinedcolor{qmPaper}{% unknown name or classic: plain white slide
+  \ifqm@classic\else\PackageWarningNoLine{qmdesign}{Unknown design `\qm@design'; using `minimal'}\def\qm@design{minimal}\fi
+  \qm@pair{1F3A5F}{D98E04}\qm@paper{FFFFFF}{1D2733}}{}
+
+% Working colours used by the infographics.
+\ifqm@dark
+  \colorlet{qmFill}{qmAccent}\colorlet{qmFillInk}{qmPaper}
+  \colorlet{qmSoft}{white!9!qmPaper}\colorlet{qmLine}{white!28!qmPaper}\colorlet{qmMuted}{qmInk!62!qmPaper}
+  \colorlet{qmTitle}{qmInk}\colorlet{qmAccentInk}{qmPaper}\colorlet{qmSecInk}{qmInk}
+\else
+  \colorlet{qmFill}{qmPrimary}\colorlet{qmFillInk}{white}
+  \colorlet{qmSoft}{qmPrimary!7!qmPaper}\colorlet{qmLine}{qmPrimary!22!qmPaper}\colorlet{qmMuted}{qmInk!58!qmPaper}
+  \colorlet{qmTitle}{qmPrimary}\colorlet{qmAccentInk}{white}\colorlet{qmSecInk}{white}
+\fi
+
+% ---------------------------------------------------------------- backgrounds
+\newcommand{\qm@canvas}[1]{\begin{tikzpicture}[x=\paperwidth,y=\paperheight]\useasboundingbox (0,0) rectangle (1,1);\fill[qmPaper] (0,0) rectangle (1,1);#1\end{tikzpicture}}
+\newlength{\qm@u}\setlength{\qm@u}{0.01\paperheight}% 1 unit = 1% of slide height; keeps circles round in both aspect ratios
+\def\qm@bg{}\def\qm@bgtitle{}\def\qm@bgsection{}
+
+\qm@is{elegant}
+  \def\qm@bg{\fill[qmAccent!13!qmPaper] (1,0) circle[radius=30\qm@u];\draw[qmAccent!55!qmPaper,line width=.5pt] (1,0) circle[radius=34\qm@u];
+    \draw[qmAccent,line width=.6pt] ($(0,0)+(3\qm@u,3\qm@u)$) rectangle ($(1,1)-(3\qm@u,3\qm@u)$);
+    \fill[qmAccent] ($(0,1)+(3\qm@u,-3\qm@u)$) -- ++(9\qm@u,0) -- ++(-9\qm@u,-9\qm@u) -- cycle;}
+  \def\qm@bgtitle{\fill[qmPrimary] (1,.5) circle[radius=62\qm@u];\draw[qmAccent,line width=1.2pt] (1,.5) circle[radius=66\qm@u];\draw[qmAccent!60!qmPaper,line width=.5pt] (1,.5) circle[radius=71\qm@u];
+    \fill[qmAccent!18!qmPaper] (0,0) circle[radius=22\qm@u];\draw[qmAccent,line width=.6pt] ($(0,0)+(3\qm@u,3\qm@u)$) rectangle ($(1,1)-(3\qm@u,3\qm@u)$);}
+  \def\qm@bgsection{\fill[qmPrimary] (0,0) rectangle (1,1);\draw[qmAccent,line width=.8pt] ($(0,0)+(3\qm@u,3\qm@u)$) rectangle ($(1,1)-(3\qm@u,3\qm@u)$);
+    \draw[qmAccent!70!qmPrimary,line width=.5pt] (0,.5) circle[radius=40\qm@u];\draw[qmAccent!45!qmPrimary,line width=.5pt] (0,.5) circle[radius=47\qm@u];}
+\fi
+\qm@is{executive}
+  \def\qm@bg{\fill[white!6!qmPaper] (.62,1) -- (1,1) -- (1,.28) -- cycle;\fill[white!3!qmPaper] (.80,1) -- (1,1) -- (1,.62) -- cycle;
+    \fill[qmAccent] (0,1) rectangle ($(1,1)-(0,1.1\qm@u)$);\draw[qmAccent!45!qmPaper,line width=.4pt] (0,.085) -- (1,.085);}
+  \def\qm@bgtitle{\fill[white!7!qmPaper] (.42,0) -- (.78,0) -- (1,.55) -- (1,1) -- (.86,1) -- cycle;\fill[qmAccent] (.80,0) -- (.835,0) -- (1,.40) -- (1,.49) -- cycle;
+    \fill[qmAccent!55!qmPaper] (.87,0) -- (.885,0) -- (1,.27) -- (1,.31) -- cycle;\fill[qmAccent] (0,0) rectangle ($(0,1)+(1.4\qm@u,0)$);}
+  \def\qm@bgsection{\fill[white!6!qmPaper] (.72,0) -- (1,0) -- (1,1) -- (.90,1) -- cycle;\fill[qmAccent] (.72,0) -- (.732,0) -- (.912,1) -- (.90,1) -- cycle;\fill[qmAccent!55!qmPaper] (.76,0) -- (.766,0) -- (.946,1) -- (.94,1) -- cycle;\fill[qmAccent] (0,0) rectangle ($(0,1)+(1.4\qm@u,0)$);}
+\fi
+\qm@is{geometric}
+  \def\qm@bg{\fill[qmPrimary,opacity=.10] (1,0) -- (1,.46) -- (.70,0) -- cycle;\fill[qmAccent,opacity=.85] (1,0) -- (1,.16) -- (.905,0) -- cycle;\fill[qmPrimary,opacity=.22] (1,0) -- (1,.30) -- (.82,0) -- cycle;
+    \fill[qmPrimary] (0,1) -- (0,.80) -- (.045,1) -- cycle;\fill[qmAccent,opacity=.8] (0,1) -- (.075,1) -- (0,.90) -- cycle;}
+  \def\qm@bgtitle{\fill[qmPrimary] (.56,0) -- (1,0) -- (1,1) -- (.80,1) -- cycle;\fill[qmAccent] (.50,0) -- (.56,0) -- (.80,1) -- (.74,1) -- cycle;\fill[white,opacity=.10] (.78,0) -- (1,0) -- (1,.62) -- cycle;
+    \fill[white,opacity=.08] (1,1) -- (1,.40) -- (.84,1) -- cycle;\fill[qmPrimary,opacity=.10] (0,0) -- (.20,0) -- (0,.36) -- cycle;}
+  \def\qm@bgsection{\fill[qmPrimary] (0,0) rectangle (1,1);\fill[white,opacity=.07] (0,0) -- (.5,0) -- (0,.9) -- cycle;\fill[qmAccent] (1,1) -- (1,.62) -- (.80,1) -- cycle;\fill[white,opacity=.10] (1,0) -- (1,.5) -- (.72,0) -- cycle;}
+\fi
+\qm@is{blueprint}
+  \def\qm@grid{\foreach \i in {1,...,39}{\draw[white,opacity=.055,line width=.3pt] (\i*.025,0) -- (\i*.025,1);}\foreach \i in {1,...,19}{\draw[white,opacity=.055,line width=.3pt] (0,\i*.05) -- (1,\i*.05);}
+    \foreach \i in {1,...,7}{\draw[white,opacity=.10,line width=.4pt] (\i*.125,0) -- (\i*.125,1);}\foreach \i in {1,...,3}{\draw[white,opacity=.10,line width=.4pt] (0,\i*.25) -- (1,\i*.25);}}
+  \def\qm@brackets{\foreach \x/\y/\a/\b in {0/0/1/1,1/0/-1/1,0/1/1/-1,1/1/-1/-1}{\draw[qmAccent,line width=.9pt] ($(\x,\y)+(\a*3\qm@u,\b*10\qm@u)$) -- ($(\x,\y)+(\a*3\qm@u,\b*3\qm@u)$) -- ($(\x,\y)+(\a*10\qm@u,\b*3\qm@u)$);}}
+  \def\qm@bg{\qm@grid\qm@brackets}
+  \def\qm@bgtitle{\qm@grid\qm@brackets\draw[qmAccent,opacity=.55,line width=.6pt] (.80,.5) circle[radius=30\qm@u];\draw[qmAccent,opacity=.35,line width=.5pt,dash pattern=on 3pt off 3pt] (.80,.5) circle[radius=38\qm@u];
+    \draw[qmAccent,opacity=.5,line width=.5pt] ($(.80,.5)-(44\qm@u,0)$) -- ($(.80,.5)+(44\qm@u,0)$) ($(.80,.5)-(0,44\qm@u)$) -- ($(.80,.5)+(0,44\qm@u)$);\fill[qmAccent] (.80,.5) circle[radius=1.3\qm@u];
+    \draw[qmAccent,line width=.9pt] ($(.80,.5)+(30\qm@u,0)$) arc[start angle=0,end angle=62,radius=30\qm@u];}
+  \def\qm@bgsection{\qm@grid\qm@brackets\fill[qmAccent] (0,.47) rectangle (.06,.48);}
+\fi
+\qm@is{wave}
+  \def\qm@bg{\fill[qmPrimary!10!qmPaper] (0,0) -- (0,.085) .. controls (.25,.16) and (.45,.02) .. (.70,.07) .. controls (.85,.10) and (.95,.14) .. (1,.12) -- (1,0) -- cycle;
+    \fill[qmPrimary!26!qmPaper] (0,0) -- (0,.05) .. controls (.22,.10) and (.50,-.01) .. (.74,.045) .. controls (.88,.075) and (.96,.085) .. (1,.075) -- (1,0) -- cycle;
+    \fill[qmAccent!30!qmPaper] (1,1) -- (.80,1) .. controls (.86,.93) and (.95,.94) .. (1,.84) -- cycle;}
+  \def\qm@bgtitle{\fill[qmPrimary!12!qmPaper] (0,0) -- (0,.20) .. controls (.25,.30) and (.50,.10) .. (.75,.30) .. controls (.88,.40) and (.96,.47) .. (1,.46) -- (1,0) -- cycle;
+    \fill[qmPrimary!45!qmPaper] (0,0) -- (0,.13) .. controls (.24,.22) and (.52,.04) .. (.76,.19) .. controls (.89,.27) and (.96,.33) .. (1,.32) -- (1,0) -- cycle;
+    \fill[qmPrimary] (0,0) -- (0,.06) .. controls (.26,.14) and (.52,-.01) .. (.78,.09) .. controls (.90,.14) and (.96,.19) .. (1,.18) -- (1,0) -- cycle;
+    \fill[qmAccent!45!qmPaper] (1,1) -- (.66,1) .. controls (.78,.86) and (.93,.90) .. (1,.68) -- cycle;\fill[qmAccent] (1,1) -- (.80,1) .. controls (.87,.92) and (.96,.93) .. (1,.80) -- cycle;}
+  \def\qm@bgsection{\fill[qmPrimary] (0,0) rectangle (1,1);\fill[white,opacity=.07] (0,0) -- (0,.30) .. controls (.25,.46) and (.50,.10) .. (.75,.24) .. controls (.88,.31) and (.96,.37) .. (1,.34) -- (1,0) -- cycle;
+    \fill[qmAccent] (0,0) -- (0,.10) .. controls (.26,.20) and (.52,0) .. (.78,.07) .. controls (.90,.10) and (.96,.13) .. (1,.12) -- (1,0) -- cycle;}
+\fi
+\qm@is{minimal}
+  \def\qm@bg{\fill[qmAccent] (0,0) rectangle ($(0,1)+(1.6\qm@u,0)$);\fill[qmPrimary!4!qmPaper] (0,0) rectangle (1,.07);}
+  \def\qm@bgtitle{\fill[qmPrimary] (.66,0) rectangle (1,1);\fill[qmAccent] ($(.66,0)-(1.6\qm@u,0)$) rectangle (.66,1);\fill[qmAccent] ($(.66,.5)+(-18\qm@u,-18\qm@u)$) rectangle ++(36\qm@u,36\qm@u);
+    \fill[qmPaper] ($(.66,.5)+(-15.5\qm@u,-15.5\qm@u)$) rectangle ++(31\qm@u,31\qm@u);\fill[qmPrimary] ($(.66,.5)+(-9\qm@u,-9\qm@u)$) rectangle ++(18\qm@u,18\qm@u);
+    \fill[qmAccent] (0,0) rectangle ($(0,1)+(1.6\qm@u,0)$);}
+  \def\qm@bgsection{\fill[qmPrimary] (0,0) rectangle (1,1);\fill[qmAccent] (0,0) rectangle ($(0,1)+(3\qm@u,0)$);}
+\fi
+\qm@is{radar}
+  \def\qm@rings#1#2{\foreach \r in {12,24,36,48,60}{\draw[qmAccent,opacity=#2,line width=.5pt] #1 circle[radius=\r\qm@u];}
+    \foreach \a in {0,30,...,330}{\draw[qmAccent,opacity=.5*#2,line width=.3pt] #1 -- ($#1+(\a:60\qm@u)$);}}
+  \def\qm@bg{\begin{scope}\clip (0,0) rectangle (1,1);\qm@rings{(1,0)}{.16}\fill[qmAccent,opacity=.07] (1,0) -- ($(1,0)+(118:60\qm@u)$) arc[start angle=118,end angle=150,radius=60\qm@u] -- cycle;\end{scope}
+    \fill[qmAccent] (0,1) rectangle ($(.16,1)-(0,1\qm@u)$);}
+  \def\qm@bgtitle{\begin{scope}\clip (0,0) rectangle (1,1);\qm@rings{(.80,.46)}{.34}\fill[qmAccent,opacity=.13] (.80,.46) -- ($(.80,.46)+(40:60\qm@u)$) arc[start angle=40,end angle=82,radius=60\qm@u] -- cycle;
+    \draw[qmAccent,line width=1pt] (.80,.46) -- ($(.80,.46)+(82:60\qm@u)$);\foreach \a/\r in {20/30,130/43,205/22,300/52}{\fill[qmAccent] ($(.80,.46)+(\a:\r\qm@u)$) circle[radius=1\qm@u];\draw[qmAccent,opacity=.6,line width=.4pt] ($(.80,.46)+(\a:\r\qm@u)$) circle[radius=2.4\qm@u];}\end{scope}}
+  \def\qm@bgsection{\begin{scope}\clip (0,0) rectangle (1,1);\qm@rings{(0,.5)}{.22}\end{scope}}
+\fi
+\qm@is{circuit}
+  \def\qm@trace#1{\draw[qmAccent,line width=.7pt,line cap=round,line join=round] #1;}
+  \def\qm@pad#1{\fill[qmPaper] #1 circle[radius=1.1\qm@u];\draw[qmAccent,line width=.7pt] #1 circle[radius=1.1\qm@u];}
+  \def\qm@bg{\fill[qmPrimary] (0,1) rectangle ($(1,1)-(0,1\qm@u)$);\begin{scope}[opacity=.75]
+    \qm@trace{(1,.30) -- (.955,.30) -- (.935,.26) -- (.935,.16)}\qm@pad{(.935,.16)}\qm@trace{(1,.22) -- (.975,.22) -- (.962,.195) -- (.962,.10)}\qm@pad{(.962,.10)}
+    \qm@trace{(1,.38) -- (.93,.38) -- (.905,.33) -- (.905,.23)}\qm@pad{(.905,.23)}\qm@trace{(.70,0) -- (.70,.035) -- (.74,.07) -- (.83,.07)}\qm@pad{(.83,.07)}\qm@trace{(.78,0) -- (.78,.025) -- (.80,.04) -- (.88,.04)}\qm@pad{(.88,.04)}\end{scope}}
+  \def\qm@bgtitle{\fill[qmPrimary] (.60,0) rectangle (1,1);\begin{scope}
+    \foreach \y/\x/\d in {.86/.74/.08,.76/.70/.12,.66/.78/.06,.56/.72/.14,.46/.68/.10,.36/.76/.07,.26/.71/.11,.16/.79/.05}{\qm@trace{(1,\y) -- (\x+.05,\y) -- (\x+.02,\y-.05) -- (\x+.02,\y-\d)}\fill[qmPrimary] (\x+.02,\y-\d) circle[radius=1.1\qm@u];\draw[qmAccent,line width=.7pt] (\x+.02,\y-\d) circle[radius=1.1\qm@u];}
+    \end{scope}\fill[qmAccent] (.60,0) rectangle ($(.60,1)+(.9\qm@u,0)$);}
+  \def\qm@bgsection{\fill[qmPrimary] (0,0) rectangle (1,1);\begin{scope}[opacity=.8]\foreach \y/\x/\d in {.90/.80/.10,.78/.74/.08,.66/.84/.12,.30/.78/.09,.18/.86/.07}{\qm@trace{(1,\y) -- (\x+.05,\y) -- (\x+.02,\y-.05) -- (\x+.02,\y-\d)}\fill[qmAccent] (\x+.02,\y-\d) circle[radius=1\qm@u];}\end{scope}}
+\fi
+\qm@is{aurora}
+  \def\qm@glow#1#2#3{\shade[inner color=#2,outer color=qmPaper,opacity=.9] #1 circle[radius=#3\qm@u];}
+  \def\qm@bg{\begin{scope}\clip (0,0) rectangle (1,1);\qm@glow{(1,1)}{qmPrimary!75!qmPaper}{70}\qm@glow{(0,0)}{qmAccent!28!qmPaper}{48}\end{scope}\fill[qmAccent] (0,0) rectangle ($(1,0)+(0,.8\qm@u)$);}
+  \def\qm@bgtitle{\begin{scope}\clip (0,0) rectangle (1,1);\qm@glow{(.95,.85)}{qmPrimary}{95}\qm@glow{(.72,.10)}{qmAccent!55!qmPaper}{60}\qm@glow{(.05,.95)}{qmPrimary!50!qmAccent!45!qmPaper}{45}
+    \draw[white,opacity=.16,line width=.5pt] (.82,.42) circle[radius=26\qm@u];\draw[white,opacity=.10,line width=.5pt] (.82,.42) circle[radius=34\qm@u];\end{scope}}
+  \def\qm@bgsection{\begin{scope}\clip (0,0) rectangle (1,1);\qm@glow{(0,.5)}{qmPrimary}{90}\qm@glow{(1,0)}{qmAccent!45!qmPaper}{55}\end{scope}}
+\fi
+
+% ---------------------------------------------------------------- Beamer look
+\ifqm@classic\else
+  \usetheme{default}
+  \setbeamertemplate{navigation symbols}{}
+  \def\qm@tmp{serif}\ifx\qm@font\qm@tmp
+    \usefonttheme{serif}\IfFileExists{mathpazo.sty}{\RequirePackage{mathpazo}}{}
+  \else
+    \@ifundefined{XeTeXversion}{\@ifundefined{directlua}{\IfFileExists{helvet.sty}{\RequirePackage[scaled=.92]{helvet}}{}}{}}{}
+  \fi
+  \setbeamersize{text margin left=.07\paperwidth,text margin right=.07\paperwidth}
+  \setbeamercolor{normal text}{fg=qmInk,bg=qmPaper}
+  \setbeamercolor{structure}{fg=qmFill}
+  \setbeamercolor{frametitle}{fg=qmTitle}
+  \setbeamercolor{title}{fg=qmTitle}\setbeamercolor{subtitle}{fg=qmMuted}
+  \setbeamercolor{alerted text}{fg=qmAccent!80!qmInk}
+  \setbeamercolor{block title}{bg=qmFill,fg=qmFillInk}\setbeamercolor{block body}{bg=qmSoft,fg=qmInk}
+  \setbeamercolor{block title alerted}{bg=qmAccent,fg=qmAccentInk}\setbeamercolor{block body alerted}{bg=qmAccent!13!qmPaper,fg=qmInk}
+  \setbeamercolor{block title example}{bg=qmMuted,fg=qmPaper}\setbeamercolor{block body example}{bg=qmSoft,fg=qmInk}
+  \setbeamercolor{item}{fg=qmAccent}\setbeamercolor{section in toc}{fg=qmInk}\setbeamercolor{caption name}{fg=qmAccent}
+  \setbeamerfont{frametitle}{size=\Large,series=\bfseries}
+  \setbeamerfont{title}{size=\huge,series=\bfseries}\setbeamerfont{subtitle}{size=\large}
+  \setbeamerfont{block title}{series=\bfseries,size=\normalsize}
+  \setbeamertemplate{blocks}[rounded][shadow=false]
+  \setbeamertemplate{itemize item}{\raisebox{.25ex}{\tikz\fill[qmAccent] (0,0) rectangle (.8ex,.8ex);}}
+  \setbeamertemplate{itemize subitem}{\raisebox{.3ex}{\tikz\draw[qmAccent,line width=.7pt] (0,0) circle[radius=.33ex];}}
+  \setbeamertemplate{enumerate item}{\tikz[baseline=(n.base)]\node[circle,fill=qmFill,text=qmFillInk,inner sep=1.2pt,font=\scriptsize\bfseries,minimum size=1.5em](n){\insertenumlabel};}
+  \setbeamertemplate{sections/subsections in toc}[default]
+  \setbeamertemplate{section in toc}{\leavevmode\tikz[baseline=(n.base)]\node[circle,fill=qmFill,text=qmFillInk,inner sep=1pt,font=\scriptsize\bfseries,minimum size=1.6em](n){\inserttocsectionnumber};\hskip.8em\inserttocsection\par\vskip.35em}
+  \setbeamertemplate{background}{\qm@canvas{\qm@bg}}
+  \setbeamertemplate{frametitle}{\nointerlineskip\vskip.06\paperheight
+    \hbox to\paperwidth{\hskip.07\paperwidth\vbox{\hsize=.86\paperwidth\raggedright
+      {\usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}\strut\insertframetitle\strut\par}
+      \ifx\insertframesubtitle\@empty\else{\vskip-.3ex\small\color{qmMuted}\insertframesubtitle\par}\fi
+      \vskip.5ex{\color{qmAccent}\hrule height 1.4pt width .09\paperwidth}}\hss}\vskip.8ex}
+  \setbeamertemplate{footline}{\leavevmode
+    \hbox to\paperwidth{\hskip.07\paperwidth{\color{qmAccent}\fontsize{6.5}{8}\selectfont\bfseries\insertframenumber}{\color{qmMuted}\fontsize{6.5}{8}\selectfont\,/\,\inserttotalframenumber\quad\textbar\quad\insertshorttitle\ifx\insertshortinstitute\@empty\else\quad\textbar\quad\insertshortinstitute\fi}\hfill}\vskip.018\paperheight
+    \ifnum\inserttotalframenumber>1 \pgfmathsetlengthmacro\qm@prog{\paperwidth*min(1,\insertframenumber/\inserttotalframenumber)}\else\def\qm@prog{0pt}\fi
+    {\color{qmAccent}\hrule height .9pt width \qm@prog}}
+  \setbeamertemplate{title page}{\vbox to .78\paperheight{\vfil
+    \hbox{\vbox{\hsize=.50\paperwidth\raggedright
+      {\color{qmAccent}\fontsize{7.5}{9}\selectfont\bfseries\MakeUppercase{\insertdate}\par}\vskip1.6ex
+      {\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par}\vskip1.2ex
+      {\color{qmAccent}\hrule height 2pt width .12\paperwidth}\vskip1.6ex
+      \ifx\insertsubtitle\@empty\else{\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}\vskip3.2ex\fi
+      {\normalsize\bfseries\color{qmInk}\insertauthor\par}\vskip.5ex{\small\color{qmMuted}\insertinstitute\par}}}\vfil}}
+  \newcommand{\qm@sectionpage}{\vbox to .78\paperheight{\vfil\hbox{\hskip.30\paperwidth\vbox{\hsize=.55\paperwidth\raggedright
+      {\color{qmAccent}\fontsize{34}{36}\selectfont\bfseries\ifnum\value{section}<10 0\fi\arabic{section}\par}\vskip1.2ex
+      {\color{qmAccent}\hrule height 1.6pt width .10\paperwidth}\vskip1.8ex
+      {\fontsize{22}{26}\selectfont\bfseries\color{qmSecInk}\insertsection\par}}}\vfil}}
+  % A divider slide at each \section. Put \qmNoSectionSlides in the preamble to switch them off.
+  \newcommand{\qmNoSectionSlides}{\qm@secslidesfalse}
+  \AtBeginSection[]{\ifqm@secslides{\setbeamertemplate{background}{\qm@canvas{\qm@bgsection}}\setbeamertemplate{footline}{}\frame[plain,noframenumbering]{\qm@sectionpage}}\fi}
+\fi
+% The title slide. Works with every design (and with a classic Beamer theme).
+\newcommand{\qmTitleSlide}{\ifqm@classic\frame{\titlepage}\else{\setbeamertemplate{background}{\qm@canvas{\qm@bgtitle}}\setbeamertemplate{footline}{}\frame[plain,noframenumbering]{\titlepage}}\fi}
+\ifqm@classic\providecommand{\qmNoSectionSlides}{}\fi
+
+% ---------------------------------------------------------------- infographics
+% Lists are comma separated; put braces round an item that itself contains a comma.
+\newcommand{\qm@count}[1]{\gdef\qm@n{0}\foreach \qm@x in {#1}{\xdef\qm@n{\the\numexpr\qm@n+1\relax}}}
+\newlength{\qm@w}\newlength{\qm@g}
+\newcommand{\qm@cols}[2][3mm]{\qm@count{#2}\setlength{\qm@g}{#1}\pgfmathsetlength{\qm@w}{(\linewidth-(\qm@n-1)*\qm@g)/\qm@n}}
+\tikzset{qm card/.style={rounded corners=1.6mm,fill=qmSoft,draw=qmLine,line width=.4pt},
+  qm txt/.style={inner sep=0pt,align=center,text=qmInk},qm on/.style={inner sep=0pt,align=center,text=qmFillInk,font=\bfseries}}
+% Grey guidance text. Replace each \hint{...} with your own content.
+\providecommand{\hint}[1]{\leavevmode{\color{qmMuted}\itshape #1}}
+\newcommand{\qm@hintplain}[1]{{\itshape #1}}
+\tikzset{qm on/.append style={execute at begin node=\let\hint\qm@hintplain}}
+% Per-item helpers (conditionals are resolved before the drawing commands use them).
+\newcommand{\qm@shade}[1]{\pgfmathtruncatemacro\qm@sh{100-#1*55/\qm@n}\ifnum\qm@sh<62 \def\qm@tc{qmInk}\else\def\qm@tc{qmFillInk}\fi}
+\newcommand{\qm@chev}[2]{\ifnum#1>0 \def\qm@notch{-- (3mm,#2)}\def\qm@dx{.8mm}\def\qm@in{1.5mm}\else\def\qm@notch{}\def\qm@dx{-1mm}\def\qm@in{0mm}\fi}
+\newcommand{\qm@pic}[1]{\par\noindent\hbox to\linewidth{\hss\begin{tikzpicture}#1\end{tikzpicture}\hss}\par}
+
+% \qmStats{42\%/Label, 3.1x/Label, 18/Label}  -- headline numbers
+\newcommand{\qmStats}[2][19mm]{\qm@cols{#2}\qm@pic{\foreach \v/\l [count=\i from 0] in {#2}{\begin{scope}[xshift=\i*(\qm@w+\qm@g)]
+  \path[qm card] (0,0) rectangle (\qm@w,#1);\fill[qmAccent,rounded corners=.6mm] (2.5mm,#1-1.2mm) rectangle (\qm@w-2.5mm,#1-.2mm);
+  \node[qm txt,text=qmFill,font=\fontsize{20}{22}\selectfont\bfseries,anchor=north,text width=\qm@w-3mm] at (.5\qm@w,#1-3.6mm) {\v};
+  \node[qm txt,font=\scriptsize,anchor=south,text width=\qm@w-4mm] at (.5\qm@w,2.2mm) {\l};\end{scope}}}}
+
+% \qmCards{Title/Text, Title/Text, Title/Text}  -- numbered cards; optional height: \qmCards[34mm]{...}
+\newcommand{\qmCards}[2][30mm]{\qm@cols{#2}\qm@pic{\foreach \t/\x [count=\i from 0] in {#2}{\begin{scope}[xshift=\i*(\qm@w+\qm@g)]
+  \path[qm card] (0,0) rectangle (\qm@w,#1);\fill[qmFill,rounded corners=1.6mm] (0,#1-7mm) rectangle (\qm@w,#1);\fill[qmFill] (0,#1-7mm) rectangle (\qm@w,#1-5mm);
+  \node[circle,fill=qmAccent,text=qmAccentInk,font=\scriptsize\bfseries,inner sep=0pt,minimum size=4.6mm] at (4.6mm,#1-3.5mm) {\the\numexpr\i+1\relax};
+  \node[qm on,font=\small\bfseries,anchor=west,align=left,text width=\qm@w-11mm] at (8.4mm,#1-3.5mm) {\t};
+  \node[qm txt,font=\scriptsize,anchor=north west,align=left,text width=\qm@w-5mm] at (2.5mm,#1-9.4mm) {\x};\end{scope}}}}
+
+% \qmProcess{Define, Design, Build, Test, Field}  -- chevron flow
+\newcommand{\qmProcess}[2][11mm]{\qm@cols[1mm]{#2}\qm@pic{\foreach \t [count=\i from 0] in {#2}{\qm@shade{\i}\qm@chev{\i}{.5*#1}
+  \begin{scope}[xshift=\i*(\qm@w+\qm@g)]\fill[qmFill!\qm@sh!qmSoft] (0,0) -- (\qm@w-3mm,0) -- (\qm@w,.5*#1) -- (\qm@w-3mm,#1) -- (0,#1) \qm@notch -- cycle;
+  \node[qm on,font=\scriptsize\bfseries,text width=\qm@w-8mm,text=\qm@tc] at (.5\qm@w+\qm@dx,.5*#1) {\t};\end{scope}}}}
+
+% \qmRoadmap{Now/What happens, Next/What happens, Later/What happens}  -- phases with a description under each
+\newcommand{\qmRoadmap}[2][22mm]{\qm@cols[1mm]{#2}\qm@pic{\foreach \t/\x [count=\i from 0] in {#2}{\qm@shade{\i}\qm@chev{\i}{4.5mm}
+  \begin{scope}[xshift=\i*(\qm@w+\qm@g)]\fill[qmFill!\qm@sh!qmSoft] (0,0) -- (\qm@w-3mm,0) -- (\qm@w,4.5mm) -- (\qm@w-3mm,9mm) -- (0,9mm) \qm@notch -- cycle;
+  \node[qm on,font=\small\bfseries,text width=\qm@w-8mm,text=\qm@tc] at (.5\qm@w+\qm@dx,4.5mm) {\t};
+  \path[qm card] (\qm@in,-1.5mm) rectangle (\qm@w-2.5mm,-1.5mm-#1);
+  \node[qm txt,font=\scriptsize,anchor=north west,align=left,text width=\qm@w-9mm] at (\qm@in+2mm,-3.5mm) {\x};\end{scope}}}}
+
+% \qmTimeline{2024/Concept, 2025/Prototype, 2026/Trials, 2027/Induction}
+\newcommand{\qmTimeline}[1]{\qm@cols[0mm]{#1}\qm@pic{\draw[qmLine,line width=1.6pt,line cap=round] (0,0) -- (\linewidth,0);
+  \foreach \w/\x [count=\i from 0] in {#1}{\begin{scope}[xshift=\i*\qm@w+.5\qm@w]
+  \fill[qmPaper] (0,0) circle[radius=2.3mm];\draw[qmFill,line width=1.2pt] (0,0) circle[radius=2.3mm];\fill[qmAccent] (0,0) circle[radius=1.1mm];
+  \node[qm txt,text=qmFill,font=\small\bfseries,anchor=south,text width=\qm@w-3mm] at (0,4mm) {\w};
+  \node[qm txt,font=\scriptsize,anchor=north,text width=\qm@w-4mm] at (0,-4mm) {\x};\end{scope}}}}
+
+% \qmSteps{Title/Detail, Title/Detail, Title/Detail}  -- numbered vertical steps
+\newcommand{\qmSteps}[2][9.5mm]{\qm@count{#2}\qm@pic{\draw[qmLine,line width=1.2pt] (3mm,-.5*#1) -- (3mm,{-(\qm@n-.5)*#1});
+  \foreach \t/\x [count=\i from 0] in {#2}{\node[circle,fill=qmFill,text=qmFillInk,font=\scriptsize\bfseries,inner sep=0pt,minimum size=6mm] at (3mm,{-(\i+.5)*#1}) {\the\numexpr\i+1\relax};
+  \node[qm txt,anchor=west,align=left,text width=\linewidth-11mm,font=\small] at (9mm,{-(\i+.5)*#1}) {{\bfseries\color{qmFill}\t}\quad{\footnotesize\x}};}}}
+
+% \qmBars{Range/85, Endurance/60, Payload/40}  -- values are percentages
+\newcommand{\qmBars}[2][.30]{\qm@count{#2}\qm@pic{\pgfmathsetlengthmacro\qm@lab{#1*\linewidth}\pgfmathsetlengthmacro\qm@trk{\linewidth-\qm@lab-12mm}
+  \foreach \l/\v [count=\i from 0] in {#2}{\begin{scope}[yshift=-\i*7mm]
+  \node[qm txt,font=\small,anchor=east,align=right,text width=\qm@lab-2mm] at (\qm@lab-2mm,0) {\l};
+  \fill[qmSoft,rounded corners=1.1mm] (\qm@lab,-1.1mm) rectangle ++(\qm@trk,2.2mm);\draw[qmLine,line width=.3pt,rounded corners=1.1mm] (\qm@lab,-1.1mm) rectangle ++(\qm@trk,2.2mm);
+  \pgfmathsetlengthmacro\qm@len{max(2.2mm,min(100,\v)/100*\qm@trk)}\fill[qmFill,rounded corners=1.1mm] (\qm@lab,-1.1mm) rectangle ++(\qm@len,2.2mm);
+  \node[qm txt,text=qmFill,font=\small\bfseries,anchor=west] at (\qm@lab+\qm@trk+1.5mm,0) {\v\%};\end{scope}}}}
+
+% \qmDonuts{72/On schedule, 45/Budget used, 90/Tests passed}  -- percentage rings
+\newcommand{\qmDonuts}[1]{\qm@cols[0mm]{#1}\pgfmathsetlengthmacro\qm@r{min(9mm,.5*\qm@w-3.2mm)}\pgfmathsetlengthmacro\qm@t{\qm@r/3}\qm@pic{\foreach \v/\l [count=\i from 0] in {#1}{\begin{scope}[xshift=\i*\qm@w+.5\qm@w]
+  \draw[qmSoft,line width=\qm@t] (0,0) circle[radius=\qm@r];\draw[qmLine,line width=.3pt] (0,0) circle[radius=\qm@r+.5*\qm@t] (0,0) circle[radius=\qm@r-.5*\qm@t];
+  \ifdim\v pt>0pt \draw[qmFill,line width=\qm@t,line cap=round] (0,\qm@r) arc[start angle=90,end angle={90-3.6*min(\v,99.9)},radius=\qm@r];\fi
+  \node[qm txt,text=qmFill,font=\small\bfseries] at (0,0) {\v\%};\node[qm txt,font=\scriptsize,anchor=north,text width=\qm@w-3mm] at (0,-\qm@r-3.5mm) {\l};\end{scope}}}}
+
+% \qmMatrix{Strengths}{..}{Weaknesses}{..}{Opportunities}{..}{Threats}{..}  -- 2 x 2 (SWOT and similar)
+\newcommand{\qmMatrix}[9][21mm]{\qm@pic{\pgfmathsetlengthmacro\qm@hw{.5*\linewidth-1mm}
+  \foreach \x/\y/\t/\b/\s in {0/1/{#2}/{#3}/100,1/1/{#4}/{#5}/72,0/0/{#6}/{#7}/72,1/0/{#8}/{#9}/100}{\begin{scope}[xshift=\x*(\qm@hw+2mm),yshift=\y*(#1+2mm)]
+  \path[qm card] (0,0) rectangle (\qm@hw,#1);\fill[qmFill!\s!qmSoft,rounded corners=1.6mm] (0,0) rectangle (2mm,#1);
+  \node[qm txt,text=qmFill,font=\small\bfseries,anchor=north west,align=left,text width=\qm@hw-7mm] at (4mm,#1-2mm) {\t};
+  \node[qm txt,font=\scriptsize,anchor=north west,align=left,text width=\qm@hw-7mm] at (4mm,#1-7mm) {\b};\end{scope}}}}
+
+% \qmCompare{Option A}{points}{Option B}{points}
+\newcommand{\qmCompare}[5][26mm]{\qm@pic{\pgfmathsetlengthmacro\qm@hw{.5*\linewidth-4mm}
+  \foreach \x/\t/\b/\c/\k in {0/{#2}/{#3}/qmFill/qmFillInk,1/{#4}/{#5}/qmAccent/qmAccentInk}{\begin{scope}[xshift=\x*(\qm@hw+8mm)]
+  \path[qm card] (0,0) rectangle (\qm@hw,#1);\fill[\c,rounded corners=1.6mm] (0,#1-7mm) rectangle (\qm@hw,#1);\fill[\c] (0,#1-7mm) rectangle (\qm@hw,#1-5mm);
+  \node[qm on,font=\small\bfseries,text width=\qm@hw-5mm,text=\k] at (.5*\qm@hw,#1-3.5mm) {\t};
+  \node[qm txt,font=\scriptsize,anchor=north west,align=left,text width=\qm@hw-6mm] at (3mm,#1-9.5mm) {\b};\end{scope}}
+  \node[circle,fill=qmPaper,draw=qmLine,line width=.5pt,text=qmMuted,font=\tiny\bfseries,inner sep=0pt,minimum size=7mm] at (.5\linewidth,.5*#1) {VS};}}
+
+% \qmPyramid{Vision, Strategy, Programmes, Technologies}  -- top first.   \qmFunnel{...} is the same, widest first.
+\newcommand{\qm@stack}[3]{\qm@count{#3}\qm@pic{\pgfmathsetlengthmacro\qm@bw{min(.96*\linewidth,72mm)}\foreach \t [count=\i from 0] in {#3}{\qm@shade{\i}
+  \pgfmathsetlengthmacro\qm@a{.5*\qm@bw*(#1)}\pgfmathsetlengthmacro\qm@b{.5*\qm@bw*(#2)}
+  \fill[qmFill!\qm@sh!qmSoft] (-\qm@a,-\i*8mm) -- (\qm@a,-\i*8mm) -- (\qm@b,-\i*8mm-7.2mm) -- (-\qm@b,-\i*8mm-7.2mm) -- cycle;
+  \node[qm on,font=\scriptsize\bfseries,text=\qm@tc] at (0,-\i*8mm-3.6mm) {\t};}}}
+\newcommand{\qmPyramid}[1]{\qm@stack{(\i+.55)/(\qm@n+.55)}{(\i+1.55)/(\qm@n+.55)}{#1}}
+\newcommand{\qmFunnel}[1]{\qm@stack{1-\i*.72/\qm@n}{1-(\i+1)*.72/\qm@n}{#1}}
+
+% \qmCycle[Centre]{Plan, Build, Test, Learn}
+\newcommand{\qmCycle}[2][]{\qm@count{#2}\qm@pic{\draw[qmLine,line width=2.2mm] (0,0) circle[radius=17mm];
+  \foreach \t [count=\i from 0] in {#2}{\pgfmathsetmacro\qm@ang{90-\i*360/\qm@n}
+  \draw[qmAccent,line width=1pt,-latex] (\qm@ang-360/\qm@n*.30:17mm) arc[start angle=\qm@ang-360/\qm@n*.30,end angle=\qm@ang-360/\qm@n*.70,radius=17mm];
+  \node[circle,fill=qmFill,text=qmFillInk,font=\tiny\bfseries,align=center,inner sep=.5pt,minimum size=13mm,text width=11mm] at (\qm@ang:17mm) {\t};}
+  \node[qm txt,text=qmFill,font=\small\bfseries,text width=18mm] at (0,0) {#1};}}
+
+% \qmTRL{6}  -- technology readiness level 1-9 with the current level marked
+\newcommand{\qmTRL}[1]{\setlength{\qm@g}{1mm}\pgfmathsetlength{\qm@w}{(\linewidth-8\qm@g)/9}\qm@pic{\foreach \i in {1,...,9}{\begin{scope}[xshift=(\i-1)*(\qm@w+\qm@g)]
+  \ifnum\i>#1 \path[qm card] (0,0) rectangle (\qm@w,9mm);\node[qm txt,text=qmMuted,font=\small\bfseries] at (.5\qm@w,4.5mm) {\i};
+  \else\fill[qmFill,rounded corners=1.6mm] (0,0) rectangle (\qm@w,9mm);\node[qm on,font=\small\bfseries] at (.5\qm@w,4.5mm) {\i};\fi
+  \ifnum\i=#1 \draw[qmAccent,line width=1.2pt,rounded corners=2mm] (-.7mm,-.7mm) rectangle (\qm@w+.7mm,9.7mm);\fill[qmAccent] (.5\qm@w,11.2mm) -- ++(-1.4mm,2.2mm) -- ++(2.8mm,0) -- cycle;
+  \node[qm txt,text=qmAccent,font=\tiny\bfseries,anchor=south] at (.5\qm@w,13.8mm) {TRL #1};\fi\end{scope}}
+  \foreach \a/\b/\l in {1/3/Research,4/6/Development and demonstration,7/9/Qualification and deployment}{
+  \draw[qmLine,line width=.6pt] ({(\a-1)*(\qm@w+\qm@g)},-2mm) -- ++(0,-1.4mm) -- ({(\b-1)*(\qm@w+\qm@g)+\qm@w},-3.4mm) -- ++(0,1.4mm);
+  \node[qm txt,text=qmMuted,font=\tiny,anchor=north] at ({((\a+\b)/2-1)*(\qm@w+\qm@g)+.5*\qm@w},-4.4mm) {\l};}}}
+
+% \qmGantt[Q]{6}{Design/1/2, Build/2/4, Trials/4/6}  -- task/first period/last period; optional prefix for the column heads
+\newcommand{\qmGantt}[3][]{\qm@count{#3}\qm@pic{\pgfmathsetlengthmacro\qm@lab{.26*\linewidth}\pgfmathsetlengthmacro\qm@cw{(\linewidth-\qm@lab)/#2}
+  \foreach \c in {1,...,#2}{\ifodd\c\fill[qmSoft] (\qm@lab+\c*\qm@cw-\qm@cw,2.5mm) rectangle ++(\qm@cw,{-\qm@n*6.5mm-3.5mm});\fi
+  \node[qm txt,text=qmMuted,font=\tiny\bfseries] at (\qm@lab+\c*\qm@cw-.5*\qm@cw,5mm) {#1\c};}
+  \draw[qmLine,line width=.5pt] (0,2.5mm) -- (\linewidth,2.5mm);
+  \foreach \t/\s/\e [count=\i from 0] in {#3}{\node[qm txt,font=\scriptsize,anchor=east,align=right,text width=\qm@lab-3mm] at (\qm@lab-2mm,-\i*6.5mm-3mm) {\t};
+  \ifodd\i\def\qm@tc{qmAccent}\else\def\qm@tc{qmFill}\fi\fill[\qm@tc,rounded corners=1.2mm] (\qm@lab+\s*\qm@cw-\qm@cw+.6mm,-\i*6.5mm-1mm) rectangle (\qm@lab+\e*\qm@cw-.6mm,-\i*6.5mm-5mm);}}}
+
+% \qmRisk{4/5/R1, 2/3/R2, 3/2/R3}  -- likelihood/impact/label on a 5 x 5 matrix (1 = low, 5 = high)
+\newcommand{\qmRisk}[2][7mm]{\qm@pic{\foreach \l in {1,...,5}{\foreach \m in {1,...,5}{\pgfmathtruncatemacro\qm@s{\l*\m}
+  \ifnum\qm@s<5 \def\qm@tc{green!55!black}\else\ifnum\qm@s<12 \def\qm@tc{yellow!80!orange}\else\ifnum\qm@s<16 \def\qm@tc{orange}\else\def\qm@tc{red!80!black}\fi\fi\fi\fill[\qm@tc] (\m*#1-#1,\l*#1-#1) rectangle ++(#1-.4mm,#1-.4mm);}
+  \node[qm txt,font=\tiny,anchor=east] at (-1mm,\l*#1-.5*#1) {\l};\node[qm txt,font=\tiny,anchor=north] at (\l*#1-.5*#1,-1mm) {\l};}
+  \node[qm txt,text=qmMuted,font=\tiny\bfseries,rotate=90,anchor=south] at (-4.5mm,2.5*#1) {LIKELIHOOD};\node[qm txt,text=qmMuted,font=\tiny\bfseries,anchor=north] at (2.5*#1,-4.5mm) {IMPACT};
+  \foreach \l/\m/\t in {#2}{\node[circle,fill=white,draw=black!75,line width=.5pt,text=black,font=\tiny\bfseries,inner sep=.6pt,minimum size=4.6mm] at (\m*#1-.5*#1-.2mm,\l*#1-.5*#1-.2mm) {\t};}}}
+
+% \qmQuote{The quotation.}{Who said it}
+\newcommand{\qmQuote}[2]{\qm@pic{\fill[qmAccent] (0,0) rectangle (1.2mm,-16mm);\node[qm txt,text=qmAccent,font=\fontsize{40}{40}\selectfont\bfseries,anchor=north west] at (4mm,2mm) {``};
+  \node[qm txt,font=\large\itshape,anchor=north west,align=left,text width=\linewidth-20mm] (q) at (15mm,-1mm) {#1};
+  \node[qm txt,text=qmMuted,font=\small\bfseries,anchor=north west,align=left] at ([yshift=-2.5mm]q.south west) {--- #2};}}
+
+% \qmBanner{One sentence the audience must remember.}
+\newcommand{\qmBanner}[1]{\qm@pic{\node[execute at begin node=\let\hint\qm@hintplain,fill=qmFill,text=qmFillInk,rounded corners=1.6mm,font=\normalsize\bfseries,align=center,inner sep=3mm,text width=\linewidth-6mm] (b) {#1};
+  \fill[qmAccent,rounded corners=.8mm] ([xshift=1.6mm]b.south west) rectangle ([xshift=-1.6mm,yshift=1mm]b.south east);}}
+
+% \qmTag{ON TRACK}  \qmTag[red!75!black]{AT RISK}  -- small status label for use in text or tables
+\newcommand{\qmTag}[2][qmFill]{\tikz[baseline=(t.base)]\node[fill=#1,text=white,rounded corners=.8mm,font=\tiny\bfseries,inner xsep=1.6mm,inner ysep=.9mm](t){#2};}
+\endinput

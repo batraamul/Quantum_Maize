@@ -57,11 +57,24 @@ export function parseFrames(source: string): ParsedSlide[] {
     const g = readGroup(src, sm.index! + sm[0].length - 1);
     if (g) sections.push(detex(g.text));
   }
-  const re = /\\begin\{frame\}/g;
+  // A qmdesign deck has a \qmTitleSlide and, unless switched off, a divider slide at each \section.
+  const design = /^[ \t]*\\newcommand\{\\qmDesign\}\{([A-Za-z]*)\}/m.exec(src)?.[1];
+  const dividers = !!design && design !== "classic" && !/\\qmNoSectionSlides/.test(src);
+  const re = /\\begin\{frame\}|\\qmTitleSlide(?![A-Za-z])|\\section\s*(?:\[[^\]]*\])?\s*\{/g;
   let m: RegExpExecArray | null;
   const docTitle = preambleField(src, "title");
   const docSub = [preambleField(src, "subtitle"), preambleField(src, "author"), preambleField(src, "institute")].filter(Boolean).join(" · ");
+  const body0 = src.indexOf("\\begin{document}");
   while ((m = re.exec(src))) {
+    if (m[0].startsWith("\\qmTitleSlide")) {
+      if (m.index > body0) out.push({ line: lineAt(src, m.index), title: docTitle, subtitle: docSub || undefined, bullets: [], images: [], isTitle: true, overlays: false });
+      continue;
+    }
+    if (m[0].startsWith("\\section")) {
+      const g = readGroup(src, m.index + m[0].length - 1);
+      if (dividers && g) out.push({ line: lineAt(src, m.index), title: detex(g.text), bullets: [], images: [], isTitle: false, overlays: false });
+      continue;
+    }
     const start = m.index + m[0].length;
     const end = src.indexOf("\\end{frame}", start);
     if (end < 0) break;

@@ -4,15 +4,15 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties, ReactNode } from "react";
 import { open as openDialog } from "@tauri-apps/plugin-dialog";
 import {
-  ArrowDown, ArrowLeft, ArrowUp, BookOpen, CheckSquare, Code2, FolderOpen, Heading, Image as ImageIcon, Lightbulb, List, Minus, Palette, Plus, Search, Table2, Trash2, Type, X,
+  AlignCenter, AlignJustify, AlignLeft, AlignRight, ArrowDown, ArrowLeft, ArrowUp, BookOpen, CheckSquare, Code2, FolderOpen, GripVertical, Heading, Image as ImageIcon, Lightbulb, List, Minus, Palette, Plus, Search, Table2, Trash2, Type, X,
 } from "lucide-react";
 import { api, errorMessage } from "../services/api";
 import { confirm, ownerByline, toast, ui, updateSettings, useApp } from "../app/store";
 import { Modal } from "../components/Common";
 import type { NotebookInfo } from "../types";
 import { COVER_THEMES, coverUri } from "./covers";
-import { BLOCK_LABEL, FONTS, PAPER_COLORS, PAPER_STYLES, fileNameFor, newBlock, newNotebook, newPage, pageText, parseNotebook } from "./model";
-import type { Block, BlockType, Notebook, Page } from "./model";
+import { BLOCK_LABEL, FONTS, PAPER_COLORS, PAPER_STYLES, blockSize, canAlign, canResize, fileNameFor, moveBlock, newBlock, newNotebook, newPage, pageText, parseNotebook, resized } from "./model";
+import type { Align, Block, BlockType, Notebook, Page } from "./model";
 
 export function NotebooksView() {
   const dir = useApp((s) => s.settings?.notebooksDir ?? null);
@@ -158,12 +158,28 @@ function NewNotebookDialog({ onClose, onCreated }: { onClose: () => void; onCrea
 
 // ---- editor -------------------------------------------------------------------------
 
-function AutoText({ value, onChange, placeholder, className, style, onKeyDown }: { value: string; onChange: (v: string) => void; placeholder?: string; className?: string; style?: CSSProperties; onKeyDown?: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void }) {
+type TextKeys = (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
+
+function AutoText({ value, onChange, placeholder, className, style, onKeyDown }: { value: string; onChange: (v: string) => void; placeholder?: string; className?: string; style?: CSSProperties; onKeyDown?: TextKeys }) {
   const ref = useRef<HTMLTextAreaElement>(null);
   const fit = () => { const el = ref.current; if (el) { el.style.height = "0px"; el.style.height = `${el.scrollHeight}px`; } };
-  useEffect(fit, [value]);
+  useEffect(fit);
   useEffect(() => { window.addEventListener("resize", fit); return () => window.removeEventListener("resize", fit); }, []);
   return <textarea ref={ref} rows={1} className={"nb-ta " + (className ?? "")} style={style} value={value} placeholder={placeholder} spellCheck onChange={(e) => onChange(e.target.value)} onKeyDown={onKeyDown} />;
+}
+
+/** Where the text baseline falls in a line of the given font, as a fraction of the font size
+ *  below the middle of the line. Measured, because it differs between fonts and platforms;
+ *  it is what lets writing sit exactly on the ruled lines. */
+function baselineFactor(fontFamily: string): number {
+  const d = document.createElement("div");
+  d.style.cssText = "position:absolute;visibility:hidden;left:-9999px;top:0;font-size:100px;line-height:100px;white-space:nowrap";
+  d.style.fontFamily = fontFamily;
+  d.innerHTML = 'x<span style="display:inline-block;width:1px;height:0;vertical-align:baseline"></span>';
+  document.body.appendChild(d);
+  const k = ((d.lastElementChild as HTMLElement).offsetTop - 50) / 100;
+  d.remove();
+  return Number.isFinite(k) && k > 0.1 && k < 0.6 ? k : 0.36;
 }
 
 /** Downscales a picked image and returns it as a data URI (kept inside the notebook JSON). */
@@ -185,14 +201,58 @@ async function fileToDataUri(file: File): Promise<string> {
   }
 }
 
-function BlockView({ b, onChange }: { b: Block; onChange: (b: Block) => void }) {
+/** A picture on the page. Its box is rounded up to whole ruled lines so the writing below stays on the lines.
+ *  Drag the picture to move it; drag the corner to resize it. */
+function ImageFrame({ b, onChange, onGrab }: { b: Block; onChange: (b: Block) => void; onGrab: (e: React.PointerEvent) => void }) {
+  const box = useRef<HTMLDivElement>(null);
+  const frame = useRef<HTMLDivElement>(null);
+  const [live, setLive] = useState<number | null>(null);
+  const width = live ?? b.width ?? 70;
+  useEffect(() => {
+    const el = box.current, inner = frame.current;
+    if (!el || !inner) return;
+    const fit = () => {
+      const lh = parseFloat(getComputedStyle(el).getPropertyValue("--lh")) || 30;
+      el.style.height = `${Math.max(1, Math.ceil((inner.offsetHeight + 8) / lh)) * lh}px`;
+    };
+    const ro = new ResizeObserver(fit);
+    ro.observe(inner);
+    fit();
+    return () => ro.disconnect();
+  }, []);
+  const resize = (e: React.PointerEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const total = box.current?.clientWidth || 1;
+    const start = frame.current?.offsetWidth || 1;
+    const x0 = e.clientX;
+    const align = b.align ?? "center";
+    const gain = align === "center" ? 2 : align === "right" ? -1 : 1; // centred pictures grow on both sides
+    let w = b.width ?? 70;
+    const mv = (ev: PointerEvent) => { w = Math.min(100, Math.max(10, Math.round(((start + (ev.clientX - x0) * gain) / total) * 100))); setLive(w); };
+    const up = () => { window.removeEventListener("pointermove", mv); window.removeEventListener("pointerup", up); setLive(null); onChange({ ...b, width: w }); };
+    window.addEventListener("pointermove", mv);
+    window.addEventListener("pointerup", up);
+  };
+  return (
+    <div ref={box} className="nb-img-box">
+      <div ref={frame} className="nb-img-frame" style={{ width: `${width}%` }}>
+        <img src={b.src} alt={b.caption ?? ""} draggable={false} onPointerDown={onGrab} title="Drag to move" />
+        <span className={"nb-img-grip" + ((b.align ?? "center") === "right" ? " left" : "")} onPointerDown={resize} title="Drag to resize" />
+        {live !== null && <span className="nb-img-size">{live}%</span>}
+      </div>
+    </div>
+  );
+}
+
+function BlockView({ b, onChange, onGrab, keys }: { b: Block; onChange: (b: Block) => void; onGrab: (e: React.PointerEvent) => void; keys: TextKeys }) {
   const pick = useRef<HTMLInputElement>(null);
   const setItems = (items: Block["items"]) => onChange({ ...b, items });
   switch (b.type) {
     case "heading":
-      return <AutoText className={"nb-h nb-h" + b.level} value={b.text ?? ""} placeholder="Heading" onChange={(text) => onChange({ ...b, text })} />;
+      return <AutoText className={"nb-h nb-h" + b.level} value={b.text ?? ""} placeholder="Heading" onChange={(text) => onChange({ ...b, text })} onKeyDown={keys} />;
     case "text":
-      return <AutoText value={b.text ?? ""} placeholder="Write here…" onChange={(text) => onChange({ ...b, text })} />;
+      return <AutoText value={b.text ?? ""} placeholder="Write here…" onChange={(text) => onChange({ ...b, text })} onKeyDown={keys} />;
     case "code":
       return <AutoText className="nb-code" value={b.text ?? ""} placeholder="Code, commands or formulae" onChange={(text) => onChange({ ...b, text })} />;
     case "callout":
@@ -237,20 +297,11 @@ function BlockView({ b, onChange }: { b: Block; onChange: (b: Block) => void }) 
       const rows = b.rows ?? [[""]];
       const set = (r: number, c: number, v: string) => onChange({ ...b, rows: rows.map((row, i) => (i === r ? row.map((x, j) => (j === c ? v : x)) : row)) });
       return (
-        <div className="nb-table-wrap">
-          <table className="nb-table"><tbody>
-            {rows.map((row, r) => (
-              <tr key={r} className={b.header && r === 0 ? "head" : ""}>{row.map((cell, c) => <td key={c}><AutoText value={cell} onChange={(v) => set(r, c, v)} /></td>)}</tr>
-            ))}
-          </tbody></table>
-          <div className="nb-table-tools">
-            <button onClick={() => onChange({ ...b, rows: [...rows, rows[0].map(() => "")] })}>+ Row</button>
-            <button onClick={() => onChange({ ...b, rows: rows.map((r) => [...r, ""]) })}>+ Column</button>
-            <button disabled={rows.length < 2} onClick={() => onChange({ ...b, rows: rows.slice(0, -1) })}>− Row</button>
-            <button disabled={rows[0].length < 2} onClick={() => onChange({ ...b, rows: rows.map((r) => r.slice(0, -1)) })}>− Column</button>
-            <label><input type="checkbox" checked={!!b.header} onChange={(e) => onChange({ ...b, header: e.target.checked })} /> Header row</label>
-          </div>
-        </div>
+        <table className="nb-table"><tbody>
+          {rows.map((row, r) => (
+            <tr key={r} className={b.header && r === 0 ? "head" : ""}>{row.map((cell, c) => <td key={c}><AutoText value={cell} onChange={(v) => set(r, c, v)} /></td>)}</tr>
+          ))}
+        </tbody></table>
       );
     }
     case "image": {
@@ -263,20 +314,49 @@ function BlockView({ b, onChange }: { b: Block; onChange: (b: Block) => void }) 
         }
       };
       return (
-        <div className="nb-img" onDragOver={(e) => e.preventDefault()} onDrop={(e) => { e.preventDefault(); void load(e.dataTransfer.files[0]); }}>
+        <div className="nb-img" data-replace="" onDragOver={(e) => e.preventDefault()} onDrop={(e) => { e.preventDefault(); void load(e.dataTransfer.files[0]); }}>
           <input ref={pick} type="file" accept="image/png,image/jpeg,image/gif,image/webp" hidden onChange={(e) => { void load(e.target.files?.[0]); e.target.value = ""; }} />
-          {b.src ? <img src={b.src} alt={b.caption ?? ""} style={{ width: `${b.width ?? 70}%` }} /> : <button className="nb-img-pick" onClick={() => pick.current?.click()}><ImageIcon size={22} /> Choose an image, or drop one here</button>}
-          {b.src && (
-            <div className="nb-table-tools">
-              <label>Size <input type="range" min={20} max={100} step={5} value={b.width ?? 70} onChange={(e) => onChange({ ...b, width: Number(e.target.value) })} /></label>
-              <button onClick={() => pick.current?.click()}>Replace</button>
-            </div>
-          )}
-          <AutoText className="nb-cap" value={b.caption ?? ""} placeholder="Caption (optional)" onChange={(caption) => onChange({ ...b, caption })} />
+          {b.src ? <ImageFrame b={b} onChange={onChange} onGrab={onGrab} /> : <button className="nb-img-pick" onClick={() => pick.current?.click()}><ImageIcon size={22} /> Choose an image, or drop one here</button>}
+          {(b.src || b.caption) && <AutoText className="nb-cap" value={b.caption ?? ""} placeholder="Caption (optional)" onChange={(caption) => onChange({ ...b, caption })} />}
         </div>
       );
     }
   }
+}
+
+const ALIGN_ICON = { left: <AlignLeft size={14} />, center: <AlignCenter size={14} />, right: <AlignRight size={14} />, justify: <AlignJustify size={14} /> };
+
+/** The small toolbar that appears above the block being edited. */
+function BlockBar({ b, onChange, onMove, onDelete }: { b: Block; onChange: (b: Block) => void; onMove: (d: number) => void; onDelete: () => void }) {
+  const rows = b.rows ?? [[""]];
+  const align = b.align ?? (b.type === "image" ? "center" : "left");
+  return (
+    <div className="nb-bar" onMouseDown={(e) => { if ((e.target as HTMLElement).tagName !== "INPUT") e.preventDefault(); }}>
+      {canResize(b) && <>
+        <button title={b.type === "image" ? "Smaller picture" : "Smaller text"} onClick={() => onChange(resized(b, -1))}>A<sub>−</sub></button>
+        <button title={b.type === "image" ? "Larger picture" : "Larger text"} onClick={() => onChange(resized(b, 1))}><b>A</b><sup>+</sup></button>
+        <i />
+      </>}
+      {canAlign(b) && <>
+        {(["left", "center", "right", "justify"] as Align[]).filter((a) => !(b.type === "image" && a === "justify")).map((a) => (
+          <button key={a} className={align === a ? "on" : ""} title={`Align ${a}`} onClick={() => onChange({ ...b, align: a })}>{ALIGN_ICON[a]}</button>
+        ))}
+        <i />
+      </>}
+      {b.type === "image" && b.src && <><button className="w" title="Choose a different picture" onClick={(e) => (e.currentTarget.closest(".nb-block")?.querySelector("input[type=file]") as HTMLInputElement | null)?.click()}>Replace</button><i /></>}
+      {b.type === "table" && <>
+        <button className="w" title="Add a row" onClick={() => onChange({ ...b, rows: [...rows, rows[0].map(() => "")] })}>+Row</button>
+        <button className="w" title="Add a column" onClick={() => onChange({ ...b, rows: rows.map((r) => [...r, ""]) })}>+Col</button>
+        <button className="w" title="Remove the last row" disabled={rows.length < 2} onClick={() => onChange({ ...b, rows: rows.slice(0, -1) })}>−Row</button>
+        <button className="w" title="Remove the last column" disabled={rows[0].length < 2} onClick={() => onChange({ ...b, rows: rows.map((r) => r.slice(0, -1)) })}>−Col</button>
+        <label title="Show the first row as a header"><input type="checkbox" checked={!!b.header} onChange={(e) => onChange({ ...b, header: e.target.checked })} /> Header</label>
+        <i />
+      </>}
+      <button title="Move up" onClick={() => onMove(-1)}><ArrowUp size={14} /></button>
+      <button title="Move down" onClick={() => onMove(1)}><ArrowDown size={14} /></button>
+      <button title="Delete" className="del" onClick={onDelete}><Trash2 size={14} /></button>
+    </div>
+  );
 }
 
 const INSERT: { type: BlockType; icon: ReactNode }[] = [
@@ -294,6 +374,9 @@ function NotebookEditor({ file, initial, onClose }: { file: string; initial: Not
   const latest = useRef(nb);
   const dirty = useRef(false);
   const timer = useRef<number | undefined>(undefined);
+  const activeId = useRef<string | null>(null);
+  const [drag, setDrag] = useState<{ id: string; over: number } | null>(null);
+  const [k, setK] = useState(0.36);
 
   const save = useCallback(async () => {
     if (!dirty.current) return true;
@@ -327,17 +410,83 @@ function NotebookEditor({ file, initial, onClose }: { file: string; initial: Not
   const page = nb.pages.find((p) => p.id === pageId) ?? nb.pages[0];
   const setPage = (fn: (p: Page) => Page) => update((n) => ({ ...n, pages: n.pages.map((p) => (p.id === page.id ? fn(p) : p)) }));
   const setBlocks = (fn: (b: Block[]) => Block[]) => setPage((p) => ({ ...p, blocks: fn(p.blocks) }));
-  const insert = (type: BlockType) => {
-    const b = newBlock(type);
-    setBlocks((bs) => [...bs, b]);
-    // Put the cursor in the new block so typing continues there, and bring it into view.
-    window.setTimeout(() => {
-      const el = document.querySelector(`[data-block="${b.id}"]`);
-      el?.scrollIntoView({ block: "center", behavior: "smooth" });
-      (el?.querySelector("textarea, input:not([type=file]), button.nb-img-pick") as HTMLElement | null)?.focus();
-    }, 60);
+  const focusBlock = (id: string, atEnd = false) => window.setTimeout(() => {
+    const el = document.querySelector(`[data-block="${id}"]`);
+    el?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    const t = el?.querySelector("textarea, input:not([type=file]):not([type=checkbox]), button.nb-img-pick") as HTMLElement | null;
+    t?.focus();
+    if (atEnd && t instanceof HTMLTextAreaElement) t.setSelectionRange(t.value.length, t.value.length);
+  }, 60);
+  /** Adds a block after the one being edited (or at the end of the page) and puts the cursor in it. */
+  const insertAfter = (b: Block, afterId = activeId.current) => {
+    setBlocks((bs) => { const i = bs.findIndex((x) => x.id === afterId); return i < 0 ? [...bs, b] : [...bs.slice(0, i + 1), b, ...bs.slice(i + 1)]; });
+    activeId.current = b.id;
+    focusBlock(b.id);
   };
+  const insert = (type: BlockType) => insertAfter(newBlock(type));
   const move = (i: number, d: number) => setBlocks((bs) => { const j = i + d; if (j < 0 || j >= bs.length) return bs; const c = [...bs]; [c[i], c[j]] = [c[j], c[i]]; return c; });
+
+  // Drag a block (by its handle, or a picture by itself) to another place on the page.
+  const grab = (e: React.PointerEvent, id: string) => {
+    if (e.button !== 0) return;
+    const x0 = e.clientX, y0 = e.clientY;
+    const desk = document.querySelector(".nb-desk") as HTMLElement | null;
+    let active = false, y = y0, raf = 0;
+    const indexAt = (py: number) => {
+      const els = Array.from(document.querySelectorAll(".nb-paper > .nb-block"));
+      let i = 0;
+      for (; i < els.length; i++) { const r = els[i].getBoundingClientRect(); if (py < r.top + r.height / 2) break; }
+      return i;
+    };
+    const tick = () => {
+      if (desk) { const r = desk.getBoundingClientRect(); const d = y < r.top + 80 ? -16 : y > r.bottom - 80 ? 16 : 0; if (d) { desk.scrollTop += d; setDrag({ id, over: indexAt(y) }); } }
+      raf = requestAnimationFrame(tick);
+    };
+    const mv = (ev: PointerEvent) => {
+      if (!active) {
+        if (Math.hypot(ev.clientX - x0, ev.clientY - y0) < 6) return;
+        active = true;
+        document.body.classList.add("nb-dragging");
+        raf = requestAnimationFrame(tick);
+      }
+      y = ev.clientY;
+      setDrag({ id, over: indexAt(y) });
+    };
+    const up = (ev: PointerEvent) => {
+      window.removeEventListener("pointermove", mv);
+      window.removeEventListener("pointerup", up);
+      window.removeEventListener("pointercancel", up);
+      cancelAnimationFrame(raf);
+      document.body.classList.remove("nb-dragging");
+      if (active && ev.type === "pointerup") { const to = indexAt(ev.clientY); setBlocks((bs) => moveBlock(bs, id, to)); }
+      setDrag(null);
+    };
+    window.addEventListener("pointermove", mv);
+    window.addEventListener("pointerup", up);
+    window.addEventListener("pointercancel", up);
+  };
+
+  // Enter after a heading starts a paragraph; Backspace in an empty paragraph removes it, as on paper you just carry on.
+  const keysFor = (b: Block, i: number): TextKeys => (e) => {
+    if (b.type === "heading" && e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      insertAfter(newBlock("text"), b.id);
+    } else if (e.key === "Backspace" && (b.text ?? "") === "" && page.blocks.length > 1) {
+      e.preventDefault();
+      const prev = page.blocks[i - 1] ?? page.blocks[i + 1];
+      setBlocks((bs) => bs.filter((x) => x.id !== b.id));
+      if (prev) focusBlock(prev.id, true);
+    }
+  };
+  // Clicking the empty part of the page continues writing at the end.
+  // (Only when the press also began on the empty page: releasing a drag over the page is not a click on it.)
+  const pressedOnPaper = useRef(false);
+  const paperClick = (e: React.MouseEvent) => {
+    if (e.target !== e.currentTarget || !pressedOnPaper.current) return;
+    const last = page.blocks[page.blocks.length - 1];
+    if (last && last.type === "text") focusBlock(last.id, true);
+    else insertAfter(newBlock("text"), last?.id ?? null);
+  };
   const addPage = () => { const p = newPage(`Page ${nb.pages.length + 1}`); update((n) => ({ ...n, pages: [...n.pages, p] })); setPageId(p.id); };
   useEffect(() => { document.querySelector(".nb-desk")?.scrollTo({ top: 0 }); }, [pageId]);
   const movePage = (d: number) => update((n) => { const i = n.pages.findIndex((p) => p.id === page.id); const j = i + d; if (j < 0 || j >= n.pages.length) return n; const c = [...n.pages]; [c[i], c[j]] = [c[j], c[i]]; return { ...n, pages: c }; });
@@ -358,7 +507,7 @@ function NotebookEditor({ file, initial, onClose }: { file: string; initial: Not
     e.preventDefault();
     try {
       const src = await fileToDataUri(f);
-      setBlocks((bs) => [...bs, { ...newBlock("image"), src }]);
+      insertAfter({ ...newBlock("image"), src });
     } catch (err) {
       toast("error", "Could not paste image", errorMessage(err));
     }
@@ -372,6 +521,14 @@ function NotebookEditor({ file, initial, onClose }: { file: string; initial: Not
     "--nb-line": nb.paper.style === "blueprint" ? "#ffffff38" : nb.paper.style === "terminal" ? "#1f8f3a40" : nb.paper.style === "engineering" ? "#7fae6e" : col.line,
     "--nb-font": nb.paper.style === "terminal" ? FONTS[2].css : (FONTS.find((f) => f.id === nb.paper.font) ?? FONTS[0]).css,
   } as CSSProperties;
+  const fontCss = vars["--nb-font" as keyof CSSProperties] as string;
+  useEffect(() => {
+    let live = true;
+    const measure = () => { if (live) setK(baselineFactor(fontCss)); };
+    measure();
+    void document.fonts?.ready.then(measure);
+    return () => { live = false; };
+  }, [fontCss]);
   const sideCover = useMemo(() => coverUri(nb.cover.theme, nb.title, nb.subject, "", nb.cover.color), [nb.cover.theme, nb.cover.color, nb.title, nb.subject]);
   const matches = useMemo(() => { const t = q.trim().toLowerCase(); return t ? new Set(nb.pages.filter((p) => pageText(p).includes(t)).map((p) => p.id)) : null; }, [q, nb.pages]);
 
@@ -413,20 +570,22 @@ function NotebookEditor({ file, initial, onClose }: { file: string; initial: Not
           <div className="nb-insert">
             {INSERT.map((x) => <button key={x.type} className="btn" onClick={() => insert(x.type)} title={`Add ${BLOCK_LABEL[x.type].toLowerCase()}`}>{x.icon} {BLOCK_LABEL[x.type]}</button>)}
           </div>
-          <div className={`nb-paper s-${nb.paper.style}` + (dark ? " dark" : "")} style={vars}>
+          <div className={`nb-paper s-${nb.paper.style}` + (dark ? " dark" : "")} style={{ ...vars, "--k": k } as CSSProperties} onMouseDown={(e) => { pressedOnPaper.current = e.target === e.currentTarget; }} onClick={paperClick}>
             <input className="nb-page-title" value={page.title} aria-label="Page title" onChange={(e) => setPage((p) => ({ ...p, title: e.target.value }))} />
-            {page.blocks.map((b, i) => (
-              <div key={b.id} className="nb-block" data-block={b.id}>
-                <div className="nb-block-tools">
-                  <button title="Move up" onClick={() => move(i, -1)}><ArrowUp size={13} /></button>
-                  <button title="Move down" onClick={() => move(i, 1)}><ArrowDown size={13} /></button>
-                  {b.type === "heading" && <button title="Heading size" onClick={() => setBlocks((bs) => bs.map((x) => (x.id === b.id ? { ...x, level: (((x.level ?? 2) % 3) + 1) as 1 | 2 | 3 } : x)))}>H{b.level}</button>}
-                  <button title="Delete" onClick={() => setBlocks((bs) => bs.filter((x) => x.id !== b.id))}><Trash2 size={13} /></button>
+            {page.blocks.map((b, i) => {
+              const sz = blockSize(b);
+              const style = { ...(sz ? { fontSize: `${sz.px}px`, "--m": sz.lines } : {}), ...(canAlign(b) ? { textAlign: b.align ?? (b.type === "image" ? "center" : "left") } : {}) } as CSSProperties;
+              const cls = "nb-block t-" + b.type + (drag?.id === b.id ? " moving" : "") + (drag && drag.over === i ? " drop-before" : "") + (drag && drag.over === page.blocks.length && i === page.blocks.length - 1 ? " drop-after" : "");
+              const change = (nbk: Block) => setBlocks((bs) => bs.map((x) => (x.id === b.id ? nbk : x)));
+              return (
+                <div key={b.id} className={cls} data-block={b.id} style={style} onFocusCapture={() => { activeId.current = b.id; }}>
+                  <button className="nb-grip" title="Drag to move" aria-label="Drag to move" onPointerDown={(e) => { e.preventDefault(); grab(e, b.id); }}><GripVertical size={16} /></button>
+                  <BlockBar b={b} onChange={change} onMove={(d) => move(i, d)} onDelete={() => setBlocks((bs) => bs.filter((x) => x.id !== b.id))} />
+                  <BlockView b={b} onChange={change} onGrab={(e) => grab(e, b.id)} keys={keysFor(b, i)} />
                 </div>
-                <BlockView b={b} onChange={(nbk) => setBlocks((bs) => bs.map((x) => (x.id === b.id ? nbk : x)))} />
-              </div>
-            ))}
-            {page.blocks.length === 0 && <p style={{ opacity: 0.6 }}>This page is empty. Add a block from the bar above.</p>}
+              );
+            })}
+            {page.blocks.length === 0 && <p style={{ opacity: 0.6, pointerEvents: "none" }}>This page is empty. Click here to start writing.</p>}
           </div>
         </main>
       </div>
